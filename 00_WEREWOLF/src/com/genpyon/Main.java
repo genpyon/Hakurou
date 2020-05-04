@@ -193,7 +193,7 @@ public class Main extends JavaPlugin implements Listener {
 					if(cmd.equalsIgnoreCase("rh")){
 						if (args.length > 1) {
 
-							p.getInventory().addItem(sm.roleHeadSpawn(args[1]));
+							p.getInventory().addItem(sm.roleHead(args[1]));
 
 						} else {
 							s.sendMessage("IDを指定してください。");

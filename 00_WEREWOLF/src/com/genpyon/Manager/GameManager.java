@@ -104,7 +104,7 @@ public class GameManager implements Listener {
 
 	public void roleOpen(int WEREWOLF ,int DETECTIVE , int JACKAL){
 		//白狼,長老の振り分け
-		
+
 		if(plugin.NONROLE.size() >= 1){
 			Collections.shuffle(plugin.NONROLE);
 
@@ -337,7 +337,7 @@ public class GameManager implements Listener {
 		}
 
 		//Spawn Head
-		death.getWorld().dropItemNaturally(loc, plugin.sm.roleHeadSpawn(death.getName()));
+		death.getWorld().dropItemNaturally(loc, plugin.sm.roleHead(death.getName()));
 
 	}
 
