@@ -21,6 +21,7 @@ import com.genpyon.Manager.GameManager;
 import com.genpyon.Manager.PlayerManager;
 import com.genpyon.Manager.SkullManager;
 import com.genpyon.Manager.TeamManager;
+import com.genpyon.Role.DetectiveManager;
 
 import net.md_5.bungee.api.ChatColor;
 
@@ -40,6 +41,8 @@ public class Main extends JavaPlugin implements Listener {
 	int iWEREWOLF = 0;
 	int iDETECTIVE = 0;
 	int iJACKAL = 0;
+
+
 
 
 	//全員の役職まとめ
@@ -83,6 +86,8 @@ public class Main extends JavaPlugin implements Listener {
 	public PlayerManager pm = null;
 	public GameManager gm = null;
 	public SkullManager sm = null;
+	public DetectiveManager dm = null;
+
 
 	Random rnd = new Random();
 
@@ -93,7 +98,7 @@ public class Main extends JavaPlugin implements Listener {
 		pm = new PlayerManager(this);
 		gm = new GameManager(this);
 		sm = new SkullManager(this);
-
+		dm = new DetectiveManager(this);
 
 
 		tm.ScoreboardCreate();

@@ -104,6 +104,7 @@ public class GameManager implements Listener {
 
 	public void roleOpen(int WEREWOLF ,int DETECTIVE , int JACKAL){
 		//白狼,長老の振り分け
+		
 		if(plugin.NONROLE.size() >= 1){
 			Collections.shuffle(plugin.NONROLE);
 
@@ -299,7 +300,7 @@ public class GameManager implements Listener {
 
 		}
 
-		plugin.GameStatus = 3;
+		plugin.GameStatus = 4;
 	}
 
 
@@ -312,20 +313,31 @@ public class GameManager implements Listener {
 		Player killer = b.getEntity().getPlayer();
 		Player death = b.getEntity().getPlayer();
 
+		Location loc = death.getLocation();
+		loc.setY(loc.getY() +1);
+
 
 		if(killer == null){
 
 		}
 
 		//人狼が死ぬ処理
+		if(plugin.ROLE.containsKey(death.getName())){
 
-		if(plugin.ROLE.get(death.getName()).equalsIgnoreCase("HAKUROU")){
-			gameEnd(1, false);
+			if(plugin.ROLE.get(death.getName()).equalsIgnoreCase("HAKUROU")){
+				gameEnd(1, false);
+				return;
+			}
+
+			if(plugin.ROLE.get(death.getName()).equalsIgnoreCase("TYOUROU")){
+				gameEnd(2, false);
+				return;
+			}
+
 		}
 
-		if(plugin.ROLE.get(death.getName()).equalsIgnoreCase("TYOUROU")){
-			gameEnd(2, false);
-		}
+		//Spawn Head
+		death.getWorld().dropItemNaturally(loc, plugin.sm.roleHeadSpawn(death.getName()));
 
 	}
 
