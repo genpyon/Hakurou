@@ -51,7 +51,7 @@ public class SkullManager implements Listener {
 
 		ItemStack head = roleHead(name ,
 		ChatColor.RESET + "" + ChatColor.GRAY + "===========",
-		ChatColor.RESET + "" + ChatColor.GRAY + "ID : " + ChatColor.RED + name,
+		ChatColor.RESET +  name,
 		ChatColor.RESET + "" + ChatColor.GRAY + "役職 : " + ChatColor.RED + "???",
 		ChatColor.RESET + "" + ChatColor.GRAY + "死因 : " + ChatColor.RED + "???",
 		ChatColor.RESET + "" + ChatColor.GRAY + "死亡時間 : " + ChatColor.RED + "???",
@@ -70,7 +70,7 @@ public class SkullManager implements Listener {
 
 		ItemStack head = roleHead(name ,
 		ChatColor.RESET + "" + ChatColor.GRAY + "===========",
-		ChatColor.RESET + "" + ChatColor.GRAY + "ID : " + ChatColor.RED + name,
+		ChatColor.RESET +  name,
 		ChatColor.RESET + "" + ChatColor.GRAY + "役職 : " + ChatColor.RED + role,
 		ChatColor.RESET + "" + ChatColor.GRAY + "死因 : ",
 		ChatColor.RESET + "" + ChatColor.GRAY + "死亡時間 : ",
@@ -88,7 +88,7 @@ public class SkullManager implements Listener {
 
 		SkullMeta meta = (SkullMeta) skull.getItemMeta();
 		meta.setOwner(name);
-		meta.setDisplayName(ChatColor.RESET + name);
+		meta.setDisplayName(ChatColor.RESET + name + " の生首");
 
 		meta.setLore(lore);
 		skull.setItemMeta(meta);

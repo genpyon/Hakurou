@@ -39,20 +39,25 @@ public class DetectiveManager implements Listener {
 
 			if(p.getInventory().getItemInMainHand() != null && p.getInventory().getItemInMainHand().getType().equals(Material.SKULL_ITEM)){
 
-				String name = p.getInventory().getItemInMainHand().getItemMeta().getDisplayName();
+				String name = p.getInventory().getItemInMainHand().getItemMeta().getLore().get(1);
+
 				Bukkit.broadcastMessage("それです!!1 - " + name);
 
 				if(plugin.ROLE.containsKey(name)){
+
 					Bukkit.broadcastMessage("それです!!2");
 					p.getInventory().remove(p.getInventory().getItemInMainHand());
 					p.getInventory().addItem(plugin.sm.roleHeadChange(name));
 
 					Bukkit.broadcastMessage("それです!!3");
 					return;
+				} else {
+					Bukkit.broadcastMessage("それですけど、それじゃないです。");
+					Bukkit.broadcastMessage(plugin.ROLE.toString());
 				}
 
 			} else {
-				Bukkit.broadcastMessage("それじゃありません!!");
+				//Bukkit.broadcastMessage("それじゃありません!!");
 			}
 
 
