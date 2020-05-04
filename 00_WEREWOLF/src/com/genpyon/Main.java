@@ -223,6 +223,10 @@ public class Main extends JavaPlugin implements Listener {
 						return ret;
 					}
 
+					if(cmd.equalsIgnoreCase("test2")){
+						return ret;
+					}
+
 					if(cmd.equalsIgnoreCase("game")){
 						if(GameStatus == 1){
 							GameStatus = 2;
