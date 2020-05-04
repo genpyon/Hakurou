@@ -43,7 +43,7 @@ public class DetectiveManager implements Listener {
 
 				Bukkit.broadcastMessage("それです!!1 - " + name);
 
-				if(plugin.ROLE.containsKey(name)){
+				if(isPlayer(name)){
 
 					Bukkit.broadcastMessage("それです!!2");
 					p.getInventory().remove(p.getInventory().getItemInMainHand());
@@ -67,5 +67,11 @@ public class DetectiveManager implements Listener {
 		}
 	}
 
+	private boolean isPlayer(String string) {
+		for (String s: plugin.ROLE.keySet()) {
+			if (s.equalsIgnoreCase(string)) return true;
+		}
+		return false;
+	}
 
 }
