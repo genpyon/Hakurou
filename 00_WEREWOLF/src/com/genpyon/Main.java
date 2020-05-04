@@ -38,9 +38,9 @@ public class Main extends JavaPlugin implements Listener {
 	public int Preparation = getConfig().getInt("PREPARATION");
 
 
-	int iWEREWOLF = 0;
-	int iDETECTIVE = 0;
-	int iJACKAL = 0;
+	public int iWEREWOLF = 0;
+	public int iDETECTIVE = 0;
+	public int iJACKAL = 0;
 
 
 
@@ -49,6 +49,7 @@ public class Main extends JavaPlugin implements Listener {
 	public HashMap <String, String> ROLE = new HashMap<String, String>();
 	public ArrayList<String> PLAYER = new ArrayList<String>();
 	public ArrayList<String> NONROLE = new ArrayList<String>();
+	public ArrayList<String> TYOUROU = new ArrayList<String>();
 	public ArrayList<String> WEREWOLF = new ArrayList<String>();
 	public ArrayList<String> HAKUROU = new ArrayList<String>();
 
@@ -62,6 +63,8 @@ public class Main extends JavaPlugin implements Listener {
 	 * 長老 = TYOUROU;
 	 * 	- 	村人の長。死んだら村人陣営の負け。
 	 *
+	 * 孫 = MAGO;
+	 *  -	唯一、長老を知る男。
 	 *
 	 * 探偵 = DETECTIVE;
 	 * 	- 	村人陣営。一定時間に一人、陣営を見ることができる。

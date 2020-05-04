@@ -145,7 +145,7 @@ public class SkullManager implements Listener {
 							p.getInventory().addItem(roleHeadChange(name));
 						}
 
-						if(hakken.equalsIgnoreCase("未発見")){
+						if(hakken.equalsIgnoreCase(ChatColor.YELLOW + "未発見")){
 							Bukkit.broadcastMessage(ChatColor.RESET + p.getName() + " が " + ChatColor.RED + name + ChatColor.WHITE + "の生首を発見した。");
 						}
 

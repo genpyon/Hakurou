@@ -35,6 +35,7 @@ public class PlayerManager implements Listener {
 		inv.clear();
 
 		p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40);
+		p.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(100);
 		p.setHealth(40);
 		p.setFoodLevel(20);
 
@@ -56,8 +57,11 @@ public class PlayerManager implements Listener {
 		p.setGameMode(GameMode.ADVENTURE);
 		inv.clear();
 
+		p.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(100);
+
 		p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40);
 		p.setHealth(40);
+
 		p.setFoodLevel(20);
 
 		p.getInventory().clear();

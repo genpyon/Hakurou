@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Sound;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -65,17 +66,19 @@ public class GameManager implements Listener {
 
 	// /ww ro [人狼の数] [探偵の数] [妖狐の数]
 	public void start(Player p){
+		int plus = plugin.iWEREWOLF + plugin.iDETECTIVE + plugin.iJACKAL;
+
 
 
 		Location loc = p.getLocation();
 
 
 		//ロールのリセット
+
 		plugin.ROLE.clear();
 		plugin.PLAYER.clear();
 		plugin.NONROLE.clear();
-		plugin.WEREWOLF.clear();
-		plugin.HAKUROU.clear();
+
 
 		plugin.GameStatus = 2;
 
@@ -98,6 +101,13 @@ public class GameManager implements Listener {
 			}
 		}
 
+		if(plugin.NONROLE.size()-4 < plus){
+			int in = plugin.NONROLE.size()-4;
+			Bukkit.broadcastMessage("指定人数が超過しています。" + in + "人以下になるように設定してください。" );
+			Reset();
+			return;
+		}
+
 		lib.sendTitle(ChatColor.BOLD + "白狼", plugin.Preparation +" 秒後に役職が割り当てられます。");
 	}
 
@@ -106,6 +116,11 @@ public class GameManager implements Listener {
 		//白狼,長老の振り分け
 
 		if(plugin.NONROLE.size() >= 1){
+
+			plugin.WEREWOLF.clear();
+			plugin.HAKUROU.clear();
+			plugin.TYOUROU.clear();
+
 			Collections.shuffle(plugin.NONROLE);
 
 			roleFor("HAKUROU", 1);
@@ -113,6 +128,10 @@ public class GameManager implements Listener {
 			Collections.shuffle(plugin.NONROLE);
 
 			roleFor("TYOUROU", 1);
+
+			Collections.shuffle(plugin.NONROLE);
+
+			roleFor("MAGO", 1);
 		}
 
 		if(plugin.NONROLE.size() >= WEREWOLF){
@@ -123,6 +142,7 @@ public class GameManager implements Listener {
 
 		} else {
 			Bukkit.broadcastMessage("人数が足りません。 - 人狼");
+			return;
 		}
 
 		if(plugin.NONROLE.size() >= DETECTIVE){
@@ -133,6 +153,7 @@ public class GameManager implements Listener {
 
 		} else {
 			Bukkit.broadcastMessage("人数が足りません。 - 探偵");
+			return;
 		}
 
 		if(plugin.NONROLE.size() >= JACKAL){
@@ -160,48 +181,74 @@ public class GameManager implements Listener {
 		String name = p.getName();
 		String role = null;
 		String desc = null;
+		String zinei = null;
 
 		if(plugin.ROLE.get(name) != null){
 			if(plugin.ROLE.get(name).equalsIgnoreCase("INNOCENT")){
 				role = ChatColor.GREEN + "村人";
 				desc = ChatColor.RESET + "長老を守り、白狼を狩れ。";
+				zinei = ChatColor.GREEN + "村人陣営";
+
 			}
 
 			if(plugin.ROLE.get(name) == "TYOUROU"){
 				lib.sendTitleTarget(p, ChatColor.GREEN + "長老", "死ぬな、白狼を狩れ。");
 				role = ChatColor.GREEN + "長老";
 				desc = ChatColor.RESET + "長老を守り、白狼を狩れ。";
+				zinei = ChatColor.GREEN + "村人陣営";
+
+				p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(60);
+				p.setHealth(60);
+			}
+
+			if(plugin.ROLE.get(name) == "MAGO"){
+
+				role = ChatColor.GREEN + "孫";
+				desc = ChatColor.RESET + "お前だけが長老を知っている。";
+				zinei = ChatColor.GREEN + "村人陣営";
+
+				p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20);
+				p.setHealth(20);
 			}
 
 			if(plugin.ROLE.get(name) == "DETECTIVE"){
 				role = ChatColor.BLUE + "探偵";
 				desc = ChatColor.RESET + "長老を守り、白狼を見つけろ。";
+				zinei = ChatColor.GREEN + "村人陣営";
 			}
 
 			if(plugin.ROLE.get(name) == "WEREWOLF"){
 				role = ChatColor.RED + "人狼";
 				desc = ChatColor.RESET + "白狼を守り、長老を狩れ。";
+				zinei = ChatColor.RED + "人狼陣営";
 			}
 
 			if(plugin.ROLE.get(name) == "HAKUROU"){
 				role = ChatColor.RED + "白狼";
 				desc = ChatColor.RESET + "死ぬな、長老を狩れ。";
+				zinei = ChatColor.RED + "人狼陣営";
+
 			}
 
 			if(plugin.ROLE.get(name) == "JACKAL"){
 				role = ChatColor.AQUA + "妖狐";
 				desc = ChatColor.RESET + "見つからずに、長老と白狼を呪え。";
+				zinei = ChatColor.AQUA + "妖狐陣営";
 			}
 
 			lib.sendTitleTarget(p, role, desc);
-
-			lib.sendPlayer(p, ChatColor.RED + "ゲームが開始されました。");
-
+			lib.sendPlayer(p, "");
+			lib.sendPlayer(p, "========================");
+			lib.sendPlayer(p, "");
+			lib.sendPlayer(p, ChatColor.RED + " ゲームが開始されました。");
+			lib.sendPlayer(p, "  " + plugin.Preparation + " 秒後に役職が割り振られます。");
 			lib.sendPlayer(p, "");
 			lib.sendPlayer(p, "========================");
 			lib.sendPlayer(p, "");
 			lib.sendPlayer(p, " あなたの役職 : " + role);
 			lib.sendPlayer(p, " " + desc);
+			lib.sendPlayer(p, "");
+			lib.sendPlayer(p, " あなたの陣営 : " + zinei);
 			lib.sendPlayer(p, "");
 			lib.sendPlayer(p, "========================");
 			lib.sendPlayer(p, "");
@@ -209,6 +256,10 @@ public class GameManager implements Listener {
 			if(plugin.ROLE.get(name).equals("WEREWOLF") || plugin.ROLE.get(name).equals("HAKUROU")){
 				lib.sendPlayer(p, ChatColor.RED + "仲間の人狼 : " + plugin.WEREWOLF.toString());
 				lib.sendPlayer(p, ChatColor.RED + "白狼 : " + plugin.HAKUROU.toString());
+			}
+
+			if(plugin.ROLE.get(name).equals("MAGO")){
+				lib.sendPlayer(p, ChatColor.GREEN + "長老 : " + plugin.TYOUROU.toString());
 			}
 
 			lib.SoundPlayer(p, Sound.ENTITY_WOLF_HOWL, 2F);
@@ -235,6 +286,9 @@ public class GameManager implements Listener {
 				}
 				if(ROLE.equalsIgnoreCase("HAKUROU")){
 					plugin.HAKUROU.add(plugin.NONROLE.get(i));
+				}
+				if(ROLE.equalsIgnoreCase("TYOUROU")){
+					plugin.TYOUROU.add(plugin.NONROLE.get(i));
 				}
 
 				plugin.NONROLE.remove(i);
@@ -321,6 +375,10 @@ public class GameManager implements Listener {
 
 		}
 
+		if(plugin.GameStatus != 3){
+			return;
+		}
+
 		//人狼が死ぬ処理
 		if(plugin.ROLE.containsKey(death.getName())){
 
@@ -348,6 +406,7 @@ public class GameManager implements Listener {
 		plugin.NONROLE.clear();
 		plugin.WEREWOLF.clear();
 		plugin.HAKUROU.clear();
+		plugin.TYOUROU.clear();
 
 		plugin.GameStatus = 1;
 
