@@ -93,11 +93,6 @@ public class EventListener implements Listener {
 					}
 				}
 			}
-
-			if (b.getCause() == DamageCause.VOID){
-				b.setCancelled(true);
-				plugin.configLocationTeleport("Lobby", (Player)b.getEntity(), true);
-			}
 		}
 	}
 
