@@ -65,7 +65,6 @@ public class PlayerManager implements Listener {
 
 		p.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(100);
 
-		p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40);
 		p.setHealth(40);
 
 		p.setFoodLevel(15);

@@ -133,8 +133,6 @@ public class GameManager implements Listener {
 		for(Player a : Bukkit.getOnlinePlayers()){
 			if(a.getGameMode().equals(GameMode.ADVENTURE)){
 
-				plugin.pm.GamePlayerStuff(a);
-
 				plugin.ROLE.put(a.getName(), "INNOCENT");
 
 				plugin.INNOCENT.add(a.getName());
@@ -149,7 +147,10 @@ public class GameManager implements Listener {
 
 				lib.SoundPlayer(p, Sound.ENTITY_ENDERMEN_TELEPORT, 0.2F);
 
+				p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40);
+
 			}
+
 			plugin.StartLocation = loc;
 		}
 
@@ -244,6 +245,8 @@ public class GameManager implements Listener {
 		String role = null;
 		String desc = null;
 		String zinei = null;
+
+		plugin.pm.GamePlayerStuff(p);
 
 		if(plugin.ROLE.get(name) != null){
 			if(plugin.ROLE.get(name).equalsIgnoreCase("INNOCENT")){
