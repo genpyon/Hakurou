@@ -39,10 +39,11 @@ public class Main extends JavaPlugin implements Listener {
 
 	public Location StartLocation = null;
 
-
+	public int iMAGO = 0;
 	public int iWEREWOLF = 0;
 	public int iDETECTIVE = 0;
 	public int iJACKAL = 0;
+
 
 
 
@@ -166,16 +167,17 @@ public class Main extends JavaPlugin implements Listener {
 
 					//ゲーム開始
 					if(cmd.equalsIgnoreCase("start")){
-						if (args.length > 3) {
-							iWEREWOLF = Integer.parseInt(args[1]);
+						if (args.length > 4) {
+							iMAGO = Integer.parseInt(args[1]);
 							iDETECTIVE = Integer.parseInt(args[2]);
-							iJACKAL = Integer.parseInt(args[3]);
+							iWEREWOLF = Integer.parseInt(args[3]);
+							iJACKAL = Integer.parseInt(args[4]);
 
 							gm.start(p);
 
 						} else {
 							lib.sendPlayer(p, "引数が足りません。");
-							lib.sendPlayer(p, "/ww ro [人狼の数] [探偵の数] [妖狐の数]");
+							lib.sendPlayer(p, "/ww ro [孫の数][探偵の数][人狼の数][妖狐の数]");
 							return ret;
 						}
 						return ret;
@@ -187,7 +189,7 @@ public class Main extends JavaPlugin implements Listener {
 					}
 
 					if(cmd.equalsIgnoreCase("open")){
-						gm.roleOpen();
+						gm.openRole();
 					}
 
 					if(cmd.equalsIgnoreCase("head")){
@@ -336,7 +338,7 @@ public class Main extends JavaPlugin implements Listener {
 						Preparation--;
 
 					} else {
-						gm.roleOpen(iWEREWOLF, iDETECTIVE, iJACKAL);
+						gm.roleOpen(iMAGO,iDETECTIVE, iWEREWOLF, iJACKAL);
 					}
 				}
 
