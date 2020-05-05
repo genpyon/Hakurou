@@ -1,8 +1,15 @@
 package com.genpyon.Shop;
 
+import java.util.ArrayList;
+
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+
+import com.genpyon.Item.CommonItemType;
+import com.genpyon.Item.DetItemType;
+import com.genpyon.Item.WolfItemType;
 
 /**
  * プレイヤーがショップを開いたりとかのクラス
@@ -25,8 +32,57 @@ public class ShopManager {
 	 * @return ショップのインベントリ
 	 */
 	private static Inventory getInventory(ShopType type) {
-		Inventory inv = Bukkit.createInventory(null, 9, type.getTitle());
-		// TODO アイテム一覧を取得してforでセットする
+		// アイテムのリストを作成
+		ArrayList<ItemStack> shopItemList = new ArrayList<>();
+
+		// 共通アイテムをリストに追加
+		for (CommonItemType item : CommonItemType.values()) {
+			shopItemList.add(item.toItemStack());
+		}
+
+		// タイプによってListにアイテムを加える
+		if (type == ShopType.WEREWOLF_SHOP) {
+			for (WolfItemType item : WolfItemType.values()) {
+				shopItemList.add(item.toItemStack());
+			}
+		} else if (type == ShopType.DETECTIVE_SHOP) {
+			for (DetItemType item : DetItemType.values()) {
+				shopItemList.add(item.toItemStack());
+			}
+		}
+
+		//インベントリを作成
+		Inventory inv = Bukkit.createInventory(null, getInventorySize(shopItemList.size()), type.getTitle());
+
+		//Listのアイテムをインベントリに追加
+		for (ItemStack item : shopItemList) {
+			inv.addItem(item);
+		}
 		return inv;
+	}
+
+	/**
+	 * インベントリサイズをどうにかするためのメソッド
+	 * @param size
+	 * @return
+	 */
+	private static int getInventorySize(int size) {
+		int ret = 9;
+		if (size > 9) {
+			ret = 18;
+		}
+		if (size > 18) {
+			ret = 27;
+		}
+		if (size > 27) {
+			ret = 36;
+		}
+		if (size > 36) {
+			ret = 45;
+		}
+		if (size > 45) {
+			ret = 54;
+		}
+		return ret;
 	}
 }
