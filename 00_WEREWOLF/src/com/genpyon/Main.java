@@ -50,10 +50,16 @@ public class Main extends JavaPlugin implements Listener {
 	//全員の役職まとめ
 	public HashMap <String, String> ROLE = new HashMap<String, String>();
 	public ArrayList<String> PLAYER = new ArrayList<String>();
+	public ArrayList<String> DEATH = new ArrayList<String>();
+
+
 	public ArrayList<String> NONROLE = new ArrayList<String>();
 	public ArrayList<String> TYOUROU = new ArrayList<String>();
 	public ArrayList<String> WEREWOLF = new ArrayList<String>();
 	public ArrayList<String> HAKUROU = new ArrayList<String>();
+
+	//最後にロール公開するやつ
+
 
 
 	/**
@@ -180,9 +186,9 @@ public class Main extends JavaPlugin implements Listener {
 						return ret;
 					}
 
-
-
-
+					if(cmd.equalsIgnoreCase("open")){
+						gm.roleOpen();
+					}
 
 					if(cmd.equalsIgnoreCase("head")){
 						if (args.length > 1) {

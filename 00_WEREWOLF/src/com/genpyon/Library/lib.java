@@ -50,6 +50,20 @@ public class lib {
 		}
 	}
 
+	public static ItemStack createItem(Material material,int am, String name, String... list){
+		List<String> lore = Arrays.asList(list);
+		ItemStack item = new ItemStack(material,am);
+		ItemMeta meta = item.getItemMeta();
+		if(name.equals(null)){
+
+		} else {
+			meta.setDisplayName(name);
+		}
+		meta.setLore(lore);
+		item.setItemMeta(meta);
+		return item;
+	}
+
 	public static ItemStack createEnchantItem(Material material, int am ,Enchantment enc,int Lv, String name, String... list){
 		List<String> lore = Arrays.asList(list);
 		ItemStack item = new ItemStack(material,am);

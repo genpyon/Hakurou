@@ -5,12 +5,16 @@ import java.util.Random;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.Inventory;
 
 import com.genpyon.Main;
+import com.genpyon.Library.lib;
+
+import net.md_5.bungee.api.ChatColor;
 
 
 
@@ -31,7 +35,7 @@ public class PlayerManager implements Listener {
 	public void DefaultStuff(Player p){
 		Inventory inv = p.getInventory();
 		p.setSneaking(false);
-
+		p.getInventory().clear();
 
 		p.setGameMode(GameMode.ADVENTURE);
 		inv.clear();
@@ -39,7 +43,7 @@ public class PlayerManager implements Listener {
 		p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40);
 		p.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(100);
 		p.setHealth(40);
-		p.setFoodLevel(20);
+		p.setFoodLevel(15);
 
 		plugin.configLocationTeleport("Lobby", p, true);
 
@@ -54,7 +58,7 @@ public class PlayerManager implements Listener {
 	public void GamePlayerStuff(Player p){
 		Inventory inv = p.getInventory();
 		p.setSneaking(true);
-
+		p.getInventory().clear();
 
 		p.setGameMode(GameMode.ADVENTURE);
 		inv.clear();
@@ -64,16 +68,18 @@ public class PlayerManager implements Listener {
 		p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40);
 		p.setHealth(40);
 
-		p.setFoodLevel(20);
+		p.setFoodLevel(15);
 
-		p.getInventory().clear();
+
+		inv.setItem(0, lib.createItem(Material.WOOD_SWORD, 1, ChatColor.BOLD + "傷だらけの古びた剣", "" ,ChatColor.RESET + "今にも折れそうなほど",ChatColor.RESET + "使い込まれている"));
+
 
 	}
 
 	public void DeathPlayer(Player p, Location loc){
 
 		Bukkit.broadcastMessage(p.getName() + "が死んだ。");
-		plugin.PLAYER.remove(p.getName());
+		plugin.DEATH.add(p.getName());
 
 		p.getWorld().dropItemNaturally(loc, plugin.sm.roleHead(p.getName()));
 
@@ -92,7 +98,7 @@ public class PlayerManager implements Listener {
 		p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40);
 		p.setHealth(40);
 
-		p.setFoodLevel(20);
+		p.setFoodLevel(15);
 
 		p.getInventory().clear();
 

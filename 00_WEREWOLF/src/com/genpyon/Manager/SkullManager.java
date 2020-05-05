@@ -139,10 +139,10 @@ public class SkullManager implements Listener {
 					return;
 				}
 
-				Bukkit.broadcastMessage(hakken);
+				//Bukkit.broadcastMessage(hakken);
 
 
-				if(plugin.ROLE.containsKey(name)){
+				if(plugin.ROLE.containsKey(name) && plugin.PLAYER.contains(p.getName())){
 
 					if(plugin.ROLE.get(p.getName()).equalsIgnoreCase("DETECTIVE")){
 						p.getInventory().remove(p.getInventory().getItemInMainHand());
