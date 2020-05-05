@@ -26,6 +26,8 @@ public class ShopManager {
 	 *  4. EventListenerに登録
 	 * *************************************/
 
+	//TODO インベントリクリックのEqualsを定義
+
 	/**
 	 * プレイヤーにショップを開かせるためのめそっど
 	 * @param p 対象のプレイヤー
