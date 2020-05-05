@@ -37,6 +37,8 @@ public class Main extends JavaPlugin implements Listener {
 	public int GameTime = getConfig().getInt("GAMETIME");
 	public int Preparation = getConfig().getInt("PREPARATION");
 
+	public Location StartLocation = null;
+
 
 	public int iWEREWOLF = 0;
 	public int iDETECTIVE = 0;

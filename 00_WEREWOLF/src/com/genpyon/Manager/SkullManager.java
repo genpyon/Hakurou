@@ -127,27 +127,36 @@ public class SkullManager implements Listener {
 
 
 			if(p.getInventory().getItemInMainHand() != null && p.getInventory().getItemInMainHand().getType().equals(Material.SKULL_ITEM)){
+				String name = null;
+				String hakken = null;
 
-				String name = p.getInventory().getItemInMainHand().getItemMeta().getLore().get(2);
-				String hakken = p.getInventory().getItemInMainHand().getItemMeta().getLore().get(1);
+
+				try {
+					name = p.getInventory().getItemInMainHand().getItemMeta().getLore().get(2);
+					hakken = p.getInventory().getItemInMainHand().getItemMeta().getLore().get(1);
+
+				} catch (Exception e) {
+					return;
+				}
+
 				Bukkit.broadcastMessage(hakken);
 
 
 				if(plugin.ROLE.containsKey(name)){
 
-						if(plugin.ROLE.get(p.getName()).equalsIgnoreCase("DETECTIVE")){
-							p.getInventory().remove(p.getInventory().getItemInMainHand());
-							p.getInventory().addItem(roleHeadChangeDetective(name));
+					if(plugin.ROLE.get(p.getName()).equalsIgnoreCase("DETECTIVE")){
+						p.getInventory().remove(p.getInventory().getItemInMainHand());
+						p.getInventory().addItem(roleHeadChangeDetective(name));
 
-						} else if(hakken.equalsIgnoreCase(ChatColor.YELLOW + "未発見")){
+					} else if(hakken.equalsIgnoreCase(ChatColor.YELLOW + "未発見")){
 
-							p.getInventory().remove(p.getInventory().getItemInMainHand());
-							p.getInventory().addItem(roleHeadChange(name));
-						}
+						p.getInventory().remove(p.getInventory().getItemInMainHand());
+						p.getInventory().addItem(roleHeadChange(name));
+					}
 
-						if(hakken.equalsIgnoreCase(ChatColor.YELLOW + "未発見")){
-							Bukkit.broadcastMessage(ChatColor.RESET + p.getName() + " が " + ChatColor.RED + name + ChatColor.WHITE + "の生首を発見した。");
-						}
+					if(hakken.equalsIgnoreCase(ChatColor.YELLOW + "未発見")){
+						Bukkit.broadcastMessage(ChatColor.RESET + p.getName() + " が " + ChatColor.RED + name + ChatColor.WHITE + "の生首を発見した。");
+					}
 
 
 					return;

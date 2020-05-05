@@ -4,22 +4,26 @@ import java.util.List;
 import java.util.Random;
 
 import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.util.Vector;
 
 import com.genpyon.Main;
+import com.genpyon.Library.lib;
 
 
 
@@ -49,15 +53,6 @@ public class EventListener implements Listener {
 
 
 
-	@EventHandler
-	public void PlayerJoinEvent(PlayerJoinEvent b){
-		Player p = b.getPlayer();
-
-		if(!p.getGameMode().equals(GameMode.CREATIVE)){
-			plugin.pm.DefaultStuff(p);
-		}
-
-	}
 
 	@EventHandler
 	public void foodLevelChange(FoodLevelChangeEvent b){
@@ -95,6 +90,67 @@ public class EventListener implements Listener {
 			}
 		}
 	}
+
+	@EventHandler
+	public void onSignCreate(SignChangeEvent e) {
+
+		String line1 = e.getLine(0);
+		//String line2 = e.getLine(1);
+		if(e.getPlayer().isOp()){
+
+			if (line1.equals("gent")) {
+				e.setLine(0, ChatColor.RED + "[GenT]");
+			}
+		}
+	}
+
+	@EventHandler
+	public void Teleport(PlayerMoveEvent b){
+		Player p = b.getPlayer();
+		Location loc = p.getLocation();
+		//Location bed = p.getLocation();
+
+		loc.setY(loc.getY() -0.5F);
+		//Material blockOn = loc.getWorld().getBlockAt(loc).getType();
+
+
+		if(p !=null){
+			Location sign = p.getLocation();
+			sign.setY(sign.getY() -1.5F);
+			Block bl = sign.getWorld().getBlockAt(sign);
+			if(bl.getType() == Material.SIGN_POST){
+
+
+				if (bl !=null){
+					Sign sign2 = (Sign) bl.getState();
+					if(sign2 == null){
+						return;
+					} else {
+
+
+						String line4 = sign2.getLine(0);
+						if (line4.contains(ChatColor.RED + "[GenT]")) {
+							double line1 = Double.parseDouble(sign2.getLine(1).split(" ")[0]);
+							double line2 = Double.parseDouble(sign2.getLine(2).split(" ")[0]);
+							double line3 = Double.parseDouble(sign2.getLine(3).split(" ")[0]);
+							Location world = p.getPlayer().getLocation();
+							World world2 = world.getWorld();
+
+							Location l = new Location(world2, line1 + 0.5D, line2 + 0.5D, line3 + 0.5D);
+							l.setPitch(p.getLocation().getPitch());
+							l.setYaw(p.getLocation().getYaw());
+
+							p.teleport(l);
+							p.setBedSpawnLocation(l,true);
+							lib.SoundPlayer(p, Sound.ENTITY_ENDERMEN_TELEPORT, 0.2F);
+						}
+					}
+				}
+			}
+
+		}
+	}
+
 
 
 	/**

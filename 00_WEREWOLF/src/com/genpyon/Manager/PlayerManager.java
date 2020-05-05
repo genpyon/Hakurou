@@ -2,7 +2,9 @@ package com.genpyon.Manager;
 
 import java.util.Random;
 
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -59,6 +61,34 @@ public class PlayerManager implements Listener {
 
 		p.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(100);
 
+		p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40);
+		p.setHealth(40);
+
+		p.setFoodLevel(20);
+
+		p.getInventory().clear();
+
+	}
+
+	public void DeathPlayer(Player p, Location loc){
+
+		Bukkit.broadcastMessage(p.getName() + "が死んだ。");
+		plugin.PLAYER.remove(p.getName());
+
+		p.getWorld().dropItemNaturally(loc, plugin.sm.roleHead(p.getName()));
+
+	}
+
+
+	public void RespawnStuff(Player p){
+		Inventory inv = p.getInventory();
+		p.setSneaking(true);
+
+
+		p.setGameMode(GameMode.SPECTATOR);
+		inv.clear();
+
+		p.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(100);
 		p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40);
 		p.setHealth(40);
 

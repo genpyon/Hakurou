@@ -12,6 +12,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 
 import com.genpyon.Main;
@@ -33,6 +36,32 @@ public class GameManager implements Listener {
 
 		return;
 
+	}
+
+	public void Reset(){
+
+		plugin.ROLE.clear();
+		plugin.PLAYER.clear();
+		plugin.NONROLE.clear();
+		plugin.WEREWOLF.clear();
+		plugin.HAKUROU.clear();
+		plugin.TYOUROU.clear();
+
+		plugin.GameStatus = 1;
+
+		plugin.reloadConfig();
+
+		plugin.Preparation = plugin.getConfig().getInt("PREPARATION");
+		plugin.GameTime = plugin.getConfig().getInt("GAMETIME");
+
+
+		for(Player a : Bukkit.getOnlinePlayers()){
+
+			if(!a.getGameMode().equals(GameMode.CREATIVE)){
+				plugin.pm.DefaultStuff(a);
+			}
+
+		}
 	}
 
 	public void setTabName(){
@@ -96,9 +125,13 @@ public class GameManager implements Listener {
 				loc.setPitch(a.getLocation().getPitch());
 				a.teleport(loc);
 
+				a.setBedSpawnLocation(loc, true);
+
 				lib.SoundPlayer(p, Sound.ENTITY_ENDERMEN_TELEPORT, 0.2F);
 
 			}
+
+			plugin.StartLocation = loc;
 		}
 
 		if(plugin.NONROLE.size()-4 < plus){
@@ -357,13 +390,46 @@ public class GameManager implements Listener {
 		plugin.GameStatus = 4;
 	}
 
+	@EventHandler
+	public void PlayerJoinEvent(PlayerJoinEvent b){
+		Player p = b.getPlayer();
 
+		if(plugin.GameStatus != 3){
 
+			plugin.pm.DefaultStuff(p);
 
+		} else {
+
+			plugin.pm.RespawnStuff(p);
+
+		}
+	}
+
+	@EventHandler
+	public void PlayerQuitEvent(PlayerQuitEvent b){
+		Player p = b.getPlayer();
+
+		if(plugin.GameStatus != 3){
+
+			plugin.pm.DefaultStuff(p);
+
+		} else {
+
+			plugin.pm.DeathPlayer(p, p.getLocation());
+
+		}
+	}
 
 
 	@EventHandler
-	public void PlayerKillEvent(PlayerDeathEvent b){
+	public void playerKillEvent(PlayerDeathEvent b){
+
+		if(plugin.GameStatus != 3){
+			return;
+		}
+
+		b.setDeathMessage("");
+
 		Player killer = b.getEntity().getPlayer();
 		Player death = b.getEntity().getPlayer();
 
@@ -375,12 +441,11 @@ public class GameManager implements Listener {
 
 		}
 
-		if(plugin.GameStatus != 3){
-			return;
-		}
+
 
 		//人狼が死ぬ処理
 		if(plugin.ROLE.containsKey(death.getName())){
+			Bukkit.broadcastMessage("2");
 
 			if(plugin.ROLE.get(death.getName()).equalsIgnoreCase("HAKUROU")){
 				gameEnd(1, false);
@@ -392,38 +457,29 @@ public class GameManager implements Listener {
 				return;
 			}
 
-		}
+			plugin.pm.DeathPlayer(death ,loc);
 
-		//Spawn Head
-		death.getWorld().dropItemNaturally(loc, plugin.sm.roleHead(death.getName()));
+		}
 
 	}
 
-	public void Reset(){
+	@EventHandler
+	public void respawnEvent(PlayerRespawnEvent b){
 
-		plugin.ROLE.clear();
-		plugin.PLAYER.clear();
-		plugin.NONROLE.clear();
-		plugin.WEREWOLF.clear();
-		plugin.HAKUROU.clear();
-		plugin.TYOUROU.clear();
+		if(plugin.GameStatus != 3){
+			return;
+		} else {
+			Bukkit.broadcastMessage("1-2");
 
-		plugin.GameStatus = 1;
+			Player p = b.getPlayer();
+			plugin.pm.RespawnStuff(p);
 
-		plugin.reloadConfig();
-
-		plugin.Preparation = plugin.getConfig().getInt("PREPARATION");
-		plugin.GameTime = plugin.getConfig().getInt("GAMETIME");
-
-
-		for(Player a : Bukkit.getOnlinePlayers()){
-
-			if(!a.getGameMode().equals(GameMode.CREATIVE)){
-				plugin.pm.DefaultStuff(a);
-			}
 
 		}
+
+
 	}
+
 
 
 }
