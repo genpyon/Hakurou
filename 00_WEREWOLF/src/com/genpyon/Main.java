@@ -55,9 +55,12 @@ public class Main extends JavaPlugin implements Listener {
 
 
 	public ArrayList<String> NONROLE = new ArrayList<String>();
+	public ArrayList<String> INNOCENT = new ArrayList<String>();
+
 	public ArrayList<String> TYOUROU = new ArrayList<String>();
 	public ArrayList<String> WEREWOLF = new ArrayList<String>();
 	public ArrayList<String> HAKUROU = new ArrayList<String>();
+	public ArrayList<String> JACKAL = new ArrayList<String>();
 
 	//最後にロール公開するやつ
 
@@ -190,6 +193,15 @@ public class Main extends JavaPlugin implements Listener {
 
 					if(cmd.equalsIgnoreCase("open")){
 						gm.openRole();
+					}
+
+					if(cmd.equalsIgnoreCase("test")){
+						
+						lib.sendPlayer(p, JACKAL.size() + " : " + INNOCENT.size() + " : " + WEREWOLF.size());
+						Bukkit.broadcastMessage(JACKAL.toString());
+						Bukkit.broadcastMessage(INNOCENT.toString());
+						Bukkit.broadcastMessage(WEREWOLF.toString());
+
 					}
 
 					if(cmd.equalsIgnoreCase("head")){

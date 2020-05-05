@@ -41,12 +41,19 @@ public class GameManager implements Listener {
 	public void Reset(){
 
 		plugin.ROLE.clear();
+
 		plugin.PLAYER.clear();
-		plugin.NONROLE.clear();
-		plugin.WEREWOLF.clear();
-		plugin.HAKUROU.clear();
-		plugin.TYOUROU.clear();
 		plugin.DEATH.clear();
+
+		plugin.NONROLE.clear();
+		plugin.INNOCENT.clear();
+
+		plugin.TYOUROU.clear();
+		plugin.WEREWOLF.clear();
+
+		plugin.HAKUROU.clear();
+		plugin.JACKAL.clear();
+
 
 		plugin.GameStatus = 1;
 
@@ -106,12 +113,18 @@ public class GameManager implements Listener {
 		//ロールのリセット
 
 		plugin.ROLE.clear();
+
 		plugin.PLAYER.clear();
-		plugin.NONROLE.clear();
-		plugin.WEREWOLF.clear();
-		plugin.HAKUROU.clear();
-		plugin.TYOUROU.clear();
 		plugin.DEATH.clear();
+
+		plugin.NONROLE.clear();
+		plugin.INNOCENT.clear();
+
+		plugin.TYOUROU.clear();
+		plugin.WEREWOLF.clear();
+
+		plugin.HAKUROU.clear();
+		plugin.JACKAL.clear();
 
 
 		plugin.GameStatus = 2;
@@ -123,6 +136,8 @@ public class GameManager implements Listener {
 				plugin.pm.GamePlayerStuff(a);
 
 				plugin.ROLE.put(a.getName(), "INNOCENT");
+
+				plugin.INNOCENT.add(a.getName());
 				plugin.PLAYER.add(a.getName());
 				plugin.NONROLE.add(a.getName());
 
@@ -338,12 +353,18 @@ public class GameManager implements Listener {
 				if(ROLE.equalsIgnoreCase("WEREWOLF")){
 					plugin.WEREWOLF.add(plugin.NONROLE.get(i));
 				}
+
 				if(ROLE.equalsIgnoreCase("HAKUROU")){
 					plugin.HAKUROU.add(plugin.NONROLE.get(i));
 				}
 
+				if(ROLE.equalsIgnoreCase("JACKAL")){
+					plugin.JACKAL.add(plugin.NONROLE.get(i));
+				}
 
+				plugin.INNOCENT.remove(plugin.NONROLE.get(i));
 				plugin.NONROLE.remove(i);
+
 
 			} else {
 
@@ -482,7 +503,7 @@ public class GameManager implements Listener {
 
 		} else {
 			if(plugin.PLAYER.contains(p.getName())&& !plugin.DEATH.contains(p.getName())){
-			plugin.pm.DeathPlayer(p, p.getLocation());
+				plugin.pm.DeathPlayer(p, p.getLocation());
 			}
 
 		}
@@ -511,8 +532,16 @@ public class GameManager implements Listener {
 
 
 
-		//人狼が死ぬ処理
+		//
 		if(plugin.ROLE.containsKey(death.getName())){
+
+			if(plugin.ROLE.get(death.getName()).equalsIgnoreCase("WEREWOLF")){
+				plugin.WEREWOLF.remove(death.getName());
+			}
+
+			if(plugin.ROLE.get(death.getName()).equalsIgnoreCase("INNOCENT")){
+				plugin.INNOCENT.remove(death.getName());
+			}
 
 			if(plugin.ROLE.get(death.getName()).equalsIgnoreCase("HAKUROU")){
 				gameEnd(1, false);
@@ -522,6 +551,10 @@ public class GameManager implements Listener {
 			if(plugin.ROLE.get(death.getName()).equalsIgnoreCase("TYOUROU")){
 				gameEnd(2, false);
 				return;
+			}
+
+			if(plugin.WEREWOLF.size() == 0 && plugin.INNOCENT.size() == 0 && plugin.JACKAL.size() >= 1){
+				gameEnd(3, false);
 			}
 
 			if(plugin.PLAYER.contains(death.getName()) && !plugin.DEATH.contains(death.getName())){
