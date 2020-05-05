@@ -17,6 +17,15 @@ import com.genpyon.Item.WolfItemType;
  *
  */
 public class ShopManager {
+
+	/** ***********************************
+	 *  アイテムの追加手順
+	 *  1. Item packageのenumにtypeを追加
+	 *  2. 追加したtypeに対応するItemのクラスをAbstractItemを継承して作成
+	 *  3. 各TypeのenumのgetItemStackとgetIconを追記
+	 *  4. EventListenerに登録
+	 * *************************************/
+
 	/**
 	 * プレイヤーにショップを開かせるためのめそっど
 	 * @param p 対象のプレイヤー
