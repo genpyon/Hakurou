@@ -150,12 +150,12 @@ public class GameManager implements Listener {
 				lib.SoundPlayer(p, Sound.ENTITY_ENDERMEN_TELEPORT, 0.2F);
 
 			}
-
 			plugin.StartLocation = loc;
 		}
 
-		if(plugin.NONROLE.size()-3 < plus){
-			int in = plugin.NONROLE.size()-3;
+		if(plugin.NONROLE.size()-1 <= plus){
+			int in = plugin.NONROLE.size()-1;
+
 			Bukkit.broadcastMessage("指定人数が超過しています。" + in + "人以下になるように設定してください。" );
 			Reset();
 			return;
@@ -168,18 +168,12 @@ public class GameManager implements Listener {
 	public void roleOpen(int MAGO ,int DETECTIVE ,int WEREWOLF , int JACKAL){
 		//白狼,長老の振り分け
 
-		if(plugin.NONROLE.size() >= 1){
-
-			plugin.WEREWOLF.clear();
-			plugin.HAKUROU.clear();
-			plugin.TYOUROU.clear();
+		if(plugin.NONROLE.size() > 1){
 
 			Collections.shuffle(plugin.NONROLE);
-
 			roleFor("HAKUROU", 1);
 
 			Collections.shuffle(plugin.NONROLE);
-
 			roleFor("TYOUROU", 1);
 
 		}
@@ -192,6 +186,8 @@ public class GameManager implements Listener {
 
 		} else {
 			Bukkit.broadcastMessage("人数が足りません。 - 孫");
+			Bukkit.broadcastMessage(plugin.NONROLE.toString());
+			Reset();
 			return;
 		}
 
@@ -203,9 +199,10 @@ public class GameManager implements Listener {
 
 		} else {
 			Bukkit.broadcastMessage("人数が足りません。 - 探偵");
+			Bukkit.broadcastMessage(plugin.NONROLE.toString());
+			Reset();
 			return;
 		}
-
 		if(plugin.NONROLE.size() >= WEREWOLF){
 
 			//人狼の振り分け
@@ -214,6 +211,8 @@ public class GameManager implements Listener {
 
 		} else {
 			Bukkit.broadcastMessage("人数が足りません。 - 人狼");
+			Bukkit.broadcastMessage(plugin.NONROLE.toString());
+			Reset();
 			return;
 		}
 
@@ -225,6 +224,8 @@ public class GameManager implements Listener {
 
 		} else {
 			Bukkit.broadcastMessage("人数が足りません。 - 妖狐");
+			Bukkit.broadcastMessage(plugin.NONROLE.toString());
+			Reset();
 			return;
 		}
 
@@ -363,14 +364,18 @@ public class GameManager implements Listener {
 				}
 
 				plugin.INNOCENT.remove(plugin.NONROLE.get(i));
-				plugin.NONROLE.remove(i);
-
 
 			} else {
 
 				Collections.shuffle(plugin.PLAYER);
 				i--;
 
+			}
+		}
+
+		for(Player a : Bukkit.getOnlinePlayers()){
+			if(plugin.ROLE.get(a.getName()) != null && !plugin.ROLE.get(a.getName()).equalsIgnoreCase("INNOCENT")){
+				plugin.NONROLE.remove(a.getName());
 			}
 		}
 	}

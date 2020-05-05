@@ -196,11 +196,11 @@ public class Main extends JavaPlugin implements Listener {
 					}
 
 					if(cmd.equalsIgnoreCase("test")){
-						
-						lib.sendPlayer(p, JACKAL.size() + " : " + INNOCENT.size() + " : " + WEREWOLF.size());
-						Bukkit.broadcastMessage(JACKAL.toString());
-						Bukkit.broadcastMessage(INNOCENT.toString());
-						Bukkit.broadcastMessage(WEREWOLF.toString());
+
+						Bukkit.broadcastMessage(JACKAL.size() + " : " + INNOCENT.size() + " : " + WEREWOLF.size());
+						Bukkit.broadcastMessage("妖狐" + JACKAL.toString());
+						Bukkit.broadcastMessage("村人" + INNOCENT.toString());
+						Bukkit.broadcastMessage("人狼" + WEREWOLF.toString());
 
 					}
 
