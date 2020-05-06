@@ -2,6 +2,7 @@ package com.genpyon.Item;
 
 import org.bukkit.inventory.ItemStack;
 
+import com.genpyon.Main;
 import com.genpyon.Item.Wolf.Teleport;
 
 public enum WolfItemType {
@@ -12,7 +13,7 @@ public enum WolfItemType {
 		ItemStack item = null;
 		switch (this) {
 		case TELEPORT:
-			item = new Teleport().getItemStack();
+			item = new Teleport(Main.getMain()).getItemStack();
 			break;
 		default:
 			break;
@@ -24,7 +25,7 @@ public enum WolfItemType {
 		ItemStack item = null;
 		switch (this) {
 		case TELEPORT:
-			item = new Teleport().getIcon();
+			item = new Teleport(Main.getMain()).getIcon();
 			break;
 		default:
 			break;

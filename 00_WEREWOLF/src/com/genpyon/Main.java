@@ -29,6 +29,8 @@ import net.md_5.bungee.api.ChatColor;
 
 public class Main extends JavaPlugin implements Listener {
 
+	public static Main main;
+
 	public Team USER;
 
 	//1待機 2準備 3ゲーム 4終了
@@ -107,6 +109,7 @@ public class Main extends JavaPlugin implements Listener {
 	Random rnd = new Random();
 
 	public void onEnable(){
+		main = this;
 
 		el = new EventListener(this);
 		tm = new TeamManager(this);
@@ -114,7 +117,6 @@ public class Main extends JavaPlugin implements Listener {
 		gm = new GameManager(this);
 		sm = new SkullManager(this);
 		dm = new DetectiveManager(this);
-
 
 		tm.ScoreboardCreate();
 		saveConfig();
@@ -412,6 +414,10 @@ public class Main extends JavaPlugin implements Listener {
 		}
 
 		lib.SoundPlayer(p, Sound.ENTITY_ENDERMEN_TELEPORT, 0.2F);
+	}
+
+	public static Main getMain() {
+		return main;
 	}
 
 }
