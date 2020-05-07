@@ -64,6 +64,9 @@ public class Main extends JavaPlugin implements Listener {
 	public ArrayList<String> HAKUROU = new ArrayList<String>();
 	public ArrayList<String> JACKAL = new ArrayList<String>();
 
+	//ショップの金
+	public HashMap <String, Integer> COIN = new HashMap<String, Integer>();
+
 	//最後にロール公開するやつ
 
 
