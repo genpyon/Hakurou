@@ -16,6 +16,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Team;
 
 import com.genpyon.Event.EventListener;
+import com.genpyon.Item.CommonItemType;
 import com.genpyon.Library.lib;
 import com.genpyon.Manager.GameManager;
 import com.genpyon.Manager.PlayerManager;
@@ -258,6 +259,7 @@ public class Main extends JavaPlugin implements Listener {
 					}
 
 					if(cmd.equalsIgnoreCase("test2")){
+						p.getInventory().addItem(CommonItemType.STONE_SWORD.toItemStack());
 						return ret;
 					}
 

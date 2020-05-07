@@ -4,6 +4,7 @@ import org.bukkit.inventory.ItemStack;
 
 import com.genpyon.Main;
 import com.genpyon.Item.AbstractItem;
+import com.genpyon.ItemStack.GameItemManager;
 
 public class StoneSword extends AbstractItem {
 
@@ -14,14 +15,14 @@ public class StoneSword extends AbstractItem {
 
 	@Override
 	public ItemStack getItemStack() {
-		// TODO 自動生成されたメソッド・スタブ
-		return null;
+		ItemStack is = GameItemManager.STONE_SWORD_ITEM();
+		return is;
 	}
 
 	@Override
 	public ItemStack getIcon() {
-		// TODO 自動生成されたメソッド・スタブ
-		return null;
+		ItemStack is = GameItemManager.STONE_SWORD_ICON();
+		return is;
 	}
 
 }

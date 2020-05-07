@@ -20,7 +20,6 @@ public class Uranai extends AbstractItem {
 
 	@Override
 	public ItemStack getIcon() {
-		// TODO 自動生成されたメソッド・スタブ
 		return null;
 	}
 
