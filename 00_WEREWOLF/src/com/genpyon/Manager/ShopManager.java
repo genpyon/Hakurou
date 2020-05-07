@@ -53,6 +53,7 @@ public class ShopManager {
 		}
 
 		// タイプによってListにアイテムを加える
+		// XXX: Typeを増やしたときはここに追加
 		if (type == ShopType.WEREWOLF_SHOP) {
 			for (WolfItemType item : WolfItemType.values()) {
 				shopItemList.add(item.toItemStack());

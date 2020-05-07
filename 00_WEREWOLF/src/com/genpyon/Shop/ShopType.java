@@ -1,5 +1,12 @@
 package com.genpyon.Shop;
 
+/**
+ * ShopType追加の手順
+ * ここに追記してShopManagerにも追加する
+ * ItemPackageに新しいパッケージとItemTypeを追加
+ * @author gutitubo
+ *
+ */
 public enum ShopType {
 	COMMON_SHOP("アイテムショップ"), /* 共通ショップ */
 	WEREWOLF_SHOP("人狼ショップ"), /* 人狼ショップ */
