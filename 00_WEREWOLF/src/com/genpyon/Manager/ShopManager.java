@@ -98,4 +98,13 @@ public class ShopManager {
 		}
 		return ret;
 	}
+
+	/**
+	 * Playerにアイテムを買わせるためのメソッド
+	 * @param p 購入する人
+	 * @param item 購入するアイテム
+	 */
+	public static void purchaseItem(Player p, ItemStack item) {
+
+	}
 }

@@ -18,12 +18,20 @@ import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
 import com.genpyon.Main;
+import com.genpyon.Item.CommonItemType;
+import com.genpyon.Item.DetItemType;
+import com.genpyon.Item.WolfItemType;
 import com.genpyon.Library.lib;
+import com.genpyon.Manager.ShopManager;
+import com.genpyon.Shop.ShopType;
 
 
 
@@ -203,6 +211,52 @@ public class EventListener implements Listener {
 		}
 	}
 
+	/**
+	 * Shopをクリックした際のイベントを定義する
+	 * @param e
+	 */
+	@EventHandler
+	public void whenShopClicked(InventoryClickEvent e) {
+		// インベントリを取得してタイトルがあるかどうかを確認する
+		Inventory inv = e.getInventory();
+		String invTitle = inv.getTitle();
+		if (invTitle == null) return;
 
+		// ShopInventoryのTitleにあってるかどうか
+		boolean isShop = false;
+		for (ShopType type :ShopType.values()) {
+			if (type.getTitle().equals(invTitle)) isShop = true;
+		}
+		if (!isShop) return;
+		e.setCancelled(true);
+
+		// クリックしたプレイヤーとアイテムを取得
+		Player p = null;
+		ItemStack item = e.getCurrentItem();
+		if (e.getWhoClicked() instanceof Player)
+		p = (Player) e.getWhoClicked();
+		if (p == null || item == null) return;
+
+		// 各ショップタイプの購入処理
+		// FIXME: ちょっと原始的でムカつくので開いてるときに方法考える
+		for (CommonItemType type : CommonItemType.values()) {
+			if (type.toItemIcon().equals(item)) {
+				ShopManager.purchaseItem(p, type.toItemStack());
+				return;
+			}
+		}
+		for (DetItemType type : DetItemType.values()) {
+			if (type.toItemIcon().equals(item)) {
+				ShopManager.purchaseItem(p, type.toItemStack());
+				return;
+			}
+		}
+		for (WolfItemType type : WolfItemType.values()) {
+			if (type.toItemIcon().equals(item)) {
+				ShopManager.purchaseItem(p, type.toItemStack());
+				return;
+			}
+		}
+	}
 
 }
