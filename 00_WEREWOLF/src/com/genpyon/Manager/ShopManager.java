@@ -7,10 +7,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import com.genpyon.Main;
 import com.genpyon.Item.CommonItemType;
 import com.genpyon.Item.DetItemType;
 import com.genpyon.Item.WolfItemType;
 import com.genpyon.Shop.ShopType;
+
+import net.md_5.bungee.api.ChatColor;
 
 /**
  * プレイヤーがショップを開いたりとかのクラス
@@ -105,6 +108,17 @@ public class ShopManager {
 	 * @param item 購入するアイテム
 	 */
 	public static void purchaseItem(Player p, ItemStack item) {
+		// 使うやつを取得 なかったら困る
+		String name = p.getName();
+		Integer integer = Main.COIN.get(name);
+		if (name == null || integer == null) return;
 
+		// お金が足りないときのやつ
+		if (integer <= 0) p.sendMessage(ChatColor.RED + "コインが足りません");
+
+		// 購入してもいいよの処理
+		Main.COIN.put(name, integer - 1);
+		p.getInventory().addItem(item);
+		p.sendMessage(item.getItemMeta().getDisplayName() + "を購入しました");
 	}
 }
