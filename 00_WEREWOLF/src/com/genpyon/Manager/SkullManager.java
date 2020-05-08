@@ -49,11 +49,9 @@ public class SkullManager implements Listener {
 		}
 	}
 
-
-
 	public ItemStack roleHead(String name){
 
-		ItemStack head = roleHead(name ,
+		ItemStack head = roleHeads(name ,
 				ChatColor.RESET + "" + ChatColor.GRAY + "===========",
 				ChatColor.YELLOW + "未発見",
 				name,
@@ -68,7 +66,7 @@ public class SkullManager implements Listener {
 
 	public ItemStack roleHeadChange(String name){
 
-		ItemStack head = roleHead(name ,
+		ItemStack head = roleHeads(name ,
 				ChatColor.RESET + "" + ChatColor.GRAY + "===========",
 				ChatColor.GREEN + "発見済み",
 				name,
@@ -83,11 +81,11 @@ public class SkullManager implements Listener {
 	public ItemStack roleHeadChangeDetective(String name){
 
 		String role = null;
-		if(plugin.ROLE.containsKey(name)){
-			role = plugin.ROLE.get(name);
+		if(Main.ROLE.containsKey(name)){
+			role = Main.ROLE.get(name);
 		}
 
-		ItemStack head = roleHead(name ,
+		ItemStack head = roleHeads(name ,
 				ChatColor.RESET + "" + ChatColor.GRAY + "===========",
 				ChatColor.GREEN + "発見済み",
 				name,
@@ -100,7 +98,7 @@ public class SkullManager implements Listener {
 	}
 
 
-	public ItemStack roleHead(String name, String... list){
+	public ItemStack roleHeads(String name, String... list){
 
 		List<String> lore = Arrays.asList(list);
 
@@ -109,6 +107,23 @@ public class SkullManager implements Listener {
 		SkullMeta meta = (SkullMeta) skull.getItemMeta();
 		meta.setOwner(name);
 		meta.setDisplayName(ChatColor.RESET + name + " の生首");
+
+		meta.setLore(lore);
+		skull.setItemMeta(meta);
+
+		return skull;
+	}
+
+	public static ItemStack uranaiHeads(String name, String... list){
+
+		List<String> lore = Arrays.asList(list);
+
+		ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.PLAYER.ordinal());
+
+		SkullMeta meta = (SkullMeta) skull.getItemMeta();
+		meta.setOwner(name);
+
+		meta.setDisplayName(ChatColor.RESET + name + " の役職を見る。");
 
 		meta.setLore(lore);
 		skull.setItemMeta(meta);
@@ -142,9 +157,9 @@ public class SkullManager implements Listener {
 				//Bukkit.broadcastMessage(hakken);
 
 
-				if(plugin.ROLE.containsKey(name) && plugin.PLAYER.contains(p.getName())){
+				if(Main.ROLE.containsKey(name) && Main.PLAYER.contains(p.getName())){
 
-					if(plugin.ROLE.get(p.getName()).equalsIgnoreCase("DETECTIVE")){
+					if(Main.ROLE.get(p.getName()).equalsIgnoreCase("DETECTIVE")){
 						p.getInventory().remove(p.getInventory().getItemInMainHand());
 						p.getInventory().addItem(roleHeadChangeDetective(name));
 
@@ -162,7 +177,7 @@ public class SkullManager implements Listener {
 					return;
 				} else {
 					Bukkit.broadcastMessage("それですけど、それじゃないです。");
-					Bukkit.broadcastMessage(plugin.ROLE.toString());
+					Bukkit.broadcastMessage(Main.ROLE.toString());
 				}
 
 			} else {

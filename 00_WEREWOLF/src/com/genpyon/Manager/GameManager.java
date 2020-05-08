@@ -40,19 +40,19 @@ public class GameManager implements Listener {
 
 	public void Reset(){
 
-		plugin.ROLE.clear();
+		Main.ROLE.clear();
 
-		plugin.PLAYER.clear();
-		plugin.DEATH.clear();
+		Main.PLAYER.clear();
+		Main.DEATH.clear();
 
-		plugin.NONROLE.clear();
-		plugin.INNOCENT.clear();
+		Main.NONROLE.clear();
+		Main.INNOCENT.clear();
 
-		plugin.TYOUROU.clear();
-		plugin.WEREWOLF.clear();
+		Main.TYOUROU.clear();
+		Main.WEREWOLF.clear();
 
-		plugin.HAKUROU.clear();
-		plugin.JACKAL.clear();
+		Main.HAKUROU.clear();
+		Main.JACKAL.clear();
 
 
 		plugin.GameStatus = 1;
@@ -98,10 +98,6 @@ public class GameManager implements Listener {
 	 */
 
 
-
-
-
-	// /ww ro [人狼の数] [探偵の数] [妖狐の数]
 	public void start(Player p){
 		int plus = plugin.iMAGO + plugin.iWEREWOLF + plugin.iDETECTIVE + plugin.iJACKAL;
 
@@ -112,19 +108,19 @@ public class GameManager implements Listener {
 
 		//ロールのリセット
 
-		plugin.ROLE.clear();
+		Main.ROLE.clear();
 
-		plugin.PLAYER.clear();
-		plugin.DEATH.clear();
+		Main.PLAYER.clear();
+		Main.DEATH.clear();
 
-		plugin.NONROLE.clear();
-		plugin.INNOCENT.clear();
+		Main.NONROLE.clear();
+		Main.INNOCENT.clear();
 
-		plugin.TYOUROU.clear();
-		plugin.WEREWOLF.clear();
+		Main.TYOUROU.clear();
+		Main.WEREWOLF.clear();
 
-		plugin.HAKUROU.clear();
-		plugin.JACKAL.clear();
+		Main.HAKUROU.clear();
+		Main.JACKAL.clear();
 
 
 		plugin.GameStatus = 2;
@@ -133,11 +129,11 @@ public class GameManager implements Listener {
 		for(Player a : Bukkit.getOnlinePlayers()){
 			if(a.getGameMode().equals(GameMode.ADVENTURE)){
 
-				plugin.ROLE.put(a.getName(), "INNOCENT");
+				Main.ROLE.put(a.getName(), "INNOCENT");
 
-				plugin.INNOCENT.add(a.getName());
-				plugin.PLAYER.add(a.getName());
-				plugin.NONROLE.add(a.getName());
+				Main.INNOCENT.add(a.getName());
+				Main.PLAYER.add(a.getName());
+				Main.NONROLE.add(a.getName());
 
 				loc.setYaw(a.getLocation().getYaw());
 				loc.setPitch(a.getLocation().getPitch());
@@ -154,8 +150,8 @@ public class GameManager implements Listener {
 			plugin.StartLocation = loc;
 		}
 
-		if(plugin.NONROLE.size()-1 <= plus){
-			int in = plugin.NONROLE.size()-1;
+		if(Main.NONROLE.size()-1 <= plus){
+			int in = Main.NONROLE.size()-1;
 
 			Bukkit.broadcastMessage("指定人数が超過しています。" + in + "人以下になるように設定してください。" );
 			Reset();
@@ -169,71 +165,71 @@ public class GameManager implements Listener {
 	public void roleOpen(int MAGO ,int DETECTIVE ,int WEREWOLF , int JACKAL){
 		//白狼,長老の振り分け
 
-		if(plugin.NONROLE.size() > 1){
+		if(Main.NONROLE.size() > 1){
 
-			Collections.shuffle(plugin.NONROLE);
+			Collections.shuffle(Main.NONROLE);
 			roleFor("HAKUROU", 1);
 
-			Collections.shuffle(plugin.NONROLE);
+			Collections.shuffle(Main.NONROLE);
 			roleFor("TYOUROU", 1);
 
 		}
 
-		if(plugin.NONROLE.size() >= MAGO){
+		if(Main.NONROLE.size() >= MAGO){
 
 			//孫の振り分け
-			Collections.shuffle(plugin.NONROLE);
+			Collections.shuffle(Main.NONROLE);
 			roleFor("MAGO", MAGO);
 
 		} else {
 			Bukkit.broadcastMessage("人数が足りません。 - 孫");
-			Bukkit.broadcastMessage(plugin.NONROLE.toString());
+			Bukkit.broadcastMessage(Main.NONROLE.toString());
 			Reset();
 			return;
 		}
 
-		if(plugin.NONROLE.size() >= DETECTIVE){
+		if(Main.NONROLE.size() >= DETECTIVE){
 
 			//探偵の振り分け
-			Collections.shuffle(plugin.NONROLE);
+			Collections.shuffle(Main.NONROLE);
 			roleFor("DETECTIVE", DETECTIVE);
 
 		} else {
 			Bukkit.broadcastMessage("人数が足りません。 - 探偵");
-			Bukkit.broadcastMessage(plugin.NONROLE.toString());
+			Bukkit.broadcastMessage(Main.NONROLE.toString());
 			Reset();
 			return;
 		}
-		if(plugin.NONROLE.size() >= WEREWOLF){
+		if(Main.NONROLE.size() >= WEREWOLF){
 
 			//人狼の振り分け
-			Collections.shuffle(plugin.NONROLE);
+			Collections.shuffle(Main.NONROLE);
 			roleFor("WEREWOLF", WEREWOLF);
 
 		} else {
 			Bukkit.broadcastMessage("人数が足りません。 - 人狼");
-			Bukkit.broadcastMessage(plugin.NONROLE.toString());
+			Bukkit.broadcastMessage(Main.NONROLE.toString());
 			Reset();
 			return;
 		}
 
-		if(plugin.NONROLE.size() >= JACKAL){
+		if(Main.NONROLE.size() >= JACKAL){
 
 			//妖狐の振り分け
-			Collections.shuffle(plugin.NONROLE);
+			Collections.shuffle(Main.NONROLE);
 			roleFor("JACKAL", JACKAL);
 
 		} else {
 			Bukkit.broadcastMessage("人数が足りません。 - 妖狐");
-			Bukkit.broadcastMessage(plugin.NONROLE.toString());
+			Bukkit.broadcastMessage(Main.NONROLE.toString());
 			Reset();
 			return;
 		}
 
-		lib.sendPlayer(null, plugin.ROLE.toString());
+		lib.sendPlayer(null, Main.ROLE.toString());
 
 		for(Player a : Bukkit.getOnlinePlayers()){
-			if(plugin.ROLE.containsKey(a.getName())){
+			if(Main.ROLE.containsKey(a.getName())){
 				roleChat(a);
 			}
 		}
@@ -248,8 +244,8 @@ public class GameManager implements Listener {
 
 		plugin.pm.GamePlayerStuff(p);
 
-		if(plugin.ROLE.get(name) != null){
-			if(plugin.ROLE.get(name).equalsIgnoreCase("INNOCENT")){
+		if(Main.ROLE.get(name) != null){
+			if(Main.ROLE.get(name).equalsIgnoreCase("INNOCENT")){
 				role = ChatColor.GREEN + "村人";
 				desc = ChatColor.RESET + "長老を守り、白狼を狩れ。";
 				zinei = ChatColor.GREEN + "村人陣営";
@@ -257,7 +253,7 @@ public class GameManager implements Listener {
 			}
 
 
-			if(plugin.ROLE.get(name) == "TYOUROU"){
+			if(Main.ROLE.get(name) == "TYOUROU"){
 				lib.sendTitleTarget(p, ChatColor.GREEN + "長老", "死ぬな、白狼を狩れ。");
 				role = ChatColor.DARK_GREEN + "長老";
 				desc = ChatColor.RESET + "死ぬな、白狼を狩れ。";
@@ -268,7 +264,7 @@ public class GameManager implements Listener {
 			}
 
 
-			if(plugin.ROLE.get(name) == "MAGO"){
+			if(Main.ROLE.get(name) == "MAGO"){
 				role = ChatColor.GREEN + "孫";
 				desc = ChatColor.RESET + "お前だけが長老を知っている。";
 				zinei = ChatColor.GREEN + "村人陣営";
@@ -277,28 +273,28 @@ public class GameManager implements Listener {
 				p.setHealth(20);
 			}
 
-			if(plugin.ROLE.get(name) == "DETECTIVE"){
+			if(Main.ROLE.get(name) == "DETECTIVE"){
 				role = ChatColor.BLUE + "探偵";
 				desc = ChatColor.RESET + "長老を守り、白狼を見つけろ。";
 				zinei = ChatColor.GREEN + "村人陣営";
 			}
 
 
-			if(plugin.ROLE.get(name) == "WEREWOLF"){
+			if(Main.ROLE.get(name) == "WEREWOLF"){
 				role = ChatColor.RED + "人狼";
 				desc = ChatColor.RESET + "白狼を守り、長老を狩れ。";
 				zinei = ChatColor.RED + "人狼陣営";
 			}
 
 
-			if(plugin.ROLE.get(name) == "HAKUROU"){
+			if(Main.ROLE.get(name) == "HAKUROU"){
 				role = ChatColor.DARK_RED + "白狼";
 				desc = ChatColor.RESET + "死ぬな、長老を狩れ。";
 				zinei = ChatColor.RED + "人狼陣営";
 			}
 
 
-			if(plugin.ROLE.get(name) == "JACKAL"){
+			if(Main.ROLE.get(name) == "JACKAL"){
 				role = ChatColor.AQUA + "妖狐";
 				desc = ChatColor.RESET + "見つからずに、長老と白狼を呪え。";
 				zinei = ChatColor.AQUA + "妖狐陣営";
@@ -321,13 +317,13 @@ public class GameManager implements Listener {
 			lib.sendPlayer(p, "========================");
 			lib.sendPlayer(p, "");
 
-			if(plugin.ROLE.get(name).equals("WEREWOLF") || plugin.ROLE.get(name).equals("HAKUROU")){
-				lib.sendPlayer(p, ChatColor.RED + "仲間の人狼 : " + plugin.WEREWOLF.toString());
-				lib.sendPlayer(p, ChatColor.DARK_RED + "白狼 : " + plugin.HAKUROU.toString());
+			if(Main.ROLE.get(name).equals("WEREWOLF") || Main.ROLE.get(name).equals("HAKUROU")){
+				lib.sendPlayer(p, ChatColor.RED + "仲間の人狼 : " + Main.WEREWOLF.toString());
+				lib.sendPlayer(p, ChatColor.DARK_RED + "白狼 : " + Main.HAKUROU.toString());
 			}
 
-			if(plugin.ROLE.get(name).equals("MAGO")){
-				lib.sendPlayer(p, ChatColor.DARK_GREEN + "長老 : " + plugin.TYOUROU.toString());
+			if(Main.ROLE.get(name).equals("MAGO")){
+				lib.sendPlayer(p, ChatColor.DARK_GREEN + "長老 : " + Main.TYOUROU.toString());
 			}
 
 			lib.SoundPlayer(p, Sound.ENTITY_WOLF_HOWL, 2F);
@@ -340,45 +336,45 @@ public class GameManager implements Listener {
 	//ロール振り分けちゃん
 	public void roleFor(String ROLE, int math){
 
-		Collections.shuffle(plugin.PLAYER);
+		Collections.shuffle(Main.PLAYER);
 
 		for (int i = 0; i < math; i++){
 
-			if(plugin.ROLE.get(plugin.NONROLE.get(i)) == "INNOCENT"){
+			if(Main.ROLE.get(Main.NONROLE.get(i)) == "INNOCENT"){
 
-				plugin.ROLE.put(plugin.NONROLE.get(i), ROLE);
+				Main.ROLE.put(Main.NONROLE.get(i), ROLE);
 
-				lib.sendPlayer(null, ROLE + " --> " + plugin.NONROLE.get(i));
+				lib.sendPlayer(null, ROLE + " --> " + Main.NONROLE.get(i));
 
 				if(ROLE.equalsIgnoreCase("TYOUROU")){
-					plugin.TYOUROU.add(plugin.NONROLE.get(i));
+					Main.TYOUROU.add(Main.NONROLE.get(i));
 				}
 
 				if(ROLE.equalsIgnoreCase("WEREWOLF")){
-					plugin.WEREWOLF.add(plugin.NONROLE.get(i));
+					Main.WEREWOLF.add(Main.NONROLE.get(i));
 				}
 
 				if(ROLE.equalsIgnoreCase("HAKUROU")){
-					plugin.HAKUROU.add(plugin.NONROLE.get(i));
+					Main.HAKUROU.add(Main.NONROLE.get(i));
 				}
 
 				if(ROLE.equalsIgnoreCase("JACKAL")){
-					plugin.JACKAL.add(plugin.NONROLE.get(i));
+					Main.JACKAL.add(Main.NONROLE.get(i));
 				}
 
-				plugin.INNOCENT.remove(plugin.NONROLE.get(i));
+				Main.INNOCENT.remove(Main.NONROLE.get(i));
 
 			} else {
 
-				Collections.shuffle(plugin.PLAYER);
+				Collections.shuffle(Main.PLAYER);
 				i--;
 
 			}
 		}
 
 		for(Player a : Bukkit.getOnlinePlayers()){
-			if(plugin.ROLE.get(a.getName()) != null && !plugin.ROLE.get(a.getName()).equalsIgnoreCase("INNOCENT")){
-				plugin.NONROLE.remove(a.getName());
+			if(Main.ROLE.get(a.getName()) != null && !Main.ROLE.get(a.getName()).equalsIgnoreCase("INNOCENT")){
+				Main.NONROLE.remove(a.getName());
 			}
 		}
 	}
@@ -450,9 +446,9 @@ public class GameManager implements Listener {
 
 		String rolename = null;
 
-		for (int i = 0; i < plugin.PLAYER.size(); i++){
+		for (int i = 0; i < Main.PLAYER.size(); i++){
 
-			String ROLE = plugin.ROLE.get(plugin.PLAYER.get(i));
+			String ROLE = Main.ROLE.get(Main.PLAYER.get(i));
 
 			if(ROLE.equalsIgnoreCase("INNOCENT")){
 				rolename = ChatColor.GREEN + "村人" + ChatColor.RESET;
@@ -481,7 +477,7 @@ public class GameManager implements Listener {
 				rolename = ChatColor.AQUA + "妖狐" + ChatColor.RESET;
 			}
 
-			Bukkit.broadcastMessage("  [ " + rolename + " ] : " +  plugin.PLAYER.get(i));
+			Bukkit.broadcastMessage("  [ " + rolename + " ] : " +  Main.PLAYER.get(i));
 		}
 
 	}
@@ -510,7 +506,7 @@ public class GameManager implements Listener {
 			plugin.pm.DefaultStuff(p);
 
 		} else {
-			if(plugin.PLAYER.contains(p.getName())&& !plugin.DEATH.contains(p.getName())){
+			if(Main.PLAYER.contains(p.getName())&& !Main.DEATH.contains(p.getName())){
 				plugin.pm.DeathPlayer(p, p.getLocation());
 			}
 
@@ -541,31 +537,31 @@ public class GameManager implements Listener {
 
 
 		//
-		if(plugin.ROLE.containsKey(death.getName())){
+		if(Main.ROLE.containsKey(death.getName())){
 
-			if(plugin.ROLE.get(death.getName()).equalsIgnoreCase("WEREWOLF")){
-				plugin.WEREWOLF.remove(death.getName());
+			if(Main.ROLE.get(death.getName()).equalsIgnoreCase("WEREWOLF")){
+				Main.WEREWOLF.remove(death.getName());
 			}
 
-			if(plugin.ROLE.get(death.getName()).equalsIgnoreCase("INNOCENT")){
-				plugin.INNOCENT.remove(death.getName());
+			if(Main.ROLE.get(death.getName()).equalsIgnoreCase("INNOCENT")){
+				Main.INNOCENT.remove(death.getName());
 			}
 
-			if(plugin.ROLE.get(death.getName()).equalsIgnoreCase("HAKUROU")){
+			if(Main.ROLE.get(death.getName()).equalsIgnoreCase("HAKUROU")){
 				gameEnd(1, false);
 				return;
 			}
 
-			if(plugin.ROLE.get(death.getName()).equalsIgnoreCase("TYOUROU")){
+			if(Main.ROLE.get(death.getName()).equalsIgnoreCase("TYOUROU")){
 				gameEnd(2, false);
 				return;
 			}
 
-			if(plugin.WEREWOLF.size() == 0 && plugin.INNOCENT.size() == 0 && plugin.JACKAL.size() >= 1){
+			if(Main.WEREWOLF.size() == 0 && Main.INNOCENT.size() == 0 && Main.JACKAL.size() >= 1){
 				gameEnd(3, false);
 			}
 
-			if(plugin.PLAYER.contains(death.getName()) && !plugin.DEATH.contains(death.getName())){
+			if(Main.PLAYER.contains(death.getName()) && !Main.DEATH.contains(death.getName())){
 
 				plugin.pm.DeathPlayer(death ,loc);
 

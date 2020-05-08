@@ -10,11 +10,10 @@ import com.genpyon.Library.lib;
 import net.md_5.bungee.api.ChatColor;
 
 
-
-
 public class GameItemManager {
 
 	static Random rnd = new Random();
+	static String Cost = ChatColor.YELLOW + "Cost : ";
 
 	/**
 	 * ■ 初期アイテム ■
@@ -26,25 +25,40 @@ public class GameItemManager {
 	}
 
 	/**
-	 * ■ コモンアイテム ■
+	 * ■ ショップアイテム - コモン  ■
 	 */
 
-	static int STONE_SWORD_ITEM_COST = 200;
+	static int STONE_SWORD_COST = 200;
 
 	static public ItemStack STONE_SWORD_ITEM() {
-		ItemStack is = lib.createItem(Material.STONE_SWORD, 1, ChatColor.BOLD + "傷のついた石の剣", "" ,ChatColor.RESET + "ごく普通だ。");
+		ItemStack is = lib.createItem(Material.STONE_SWORD, 1, ChatColor.BOLD + "傷のついた石の剣", "" ,ChatColor.RESET + "普通の剣。");
 		return is;
 	}
 
 	static public ItemStack STONE_SWORD_ICON() {
-		ItemStack is = lib.createItem(Material.STONE_SWORD, 1, ChatColor.BOLD + "傷のついた石の剣", "" ,ChatColor.RESET + "ごく普通だ。" + "" + ChatColor.YELLOW + " COST : " + STONE_SWORD_ITEM_COST);
+		ItemStack is = lib.createItem(Material.STONE_SWORD, 1, ChatColor.BOLD + "傷のついた石の剣", "" ,ChatColor.RESET + "普通の剣。" , "" , Cost + STONE_SWORD_COST);
 		return is;
 	}
 
 
 
 	/**
-	 * ■ 特殊アイテム ■
+	 * ■ ショップアイテム - 人狼向け  ■
 	 */
 
+	/**
+	 * ■ ショップアイテム - 探偵向け  ■
+	 */
+
+	static int URANAI_BOOK_COST = 200;
+
+	static public ItemStack URANAI_BOOK_ITEM() {
+		ItemStack is = lib.createItem(Material.BOOK, 1, ChatColor.BOLD + "探偵の手帳", "" ,ChatColor.RESET + "一定時間のうちに一人だけ", ChatColor.RESET + "役職を知ることができる。");
+		return is;
+	}
+
+	static public ItemStack URANAI_BOOK_ICON() {
+		ItemStack is = lib.createItem(Material.BOOK, 1, ChatColor.BOLD + "探偵の手帳", "" ,ChatColor.RESET + "一定時間のうちに一人だけ", ChatColor.RESET + "役職を知ることができる。" , "" , Cost + + STONE_SWORD_COST);
+		return is;
+	}
 }

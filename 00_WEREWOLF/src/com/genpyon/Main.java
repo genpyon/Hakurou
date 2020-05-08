@@ -17,6 +17,7 @@ import org.bukkit.scoreboard.Team;
 
 import com.genpyon.Event.EventListener;
 import com.genpyon.Item.CommonItemType;
+import com.genpyon.Item.DetItemType;
 import com.genpyon.Library.lib;
 import com.genpyon.Manager.GameManager;
 import com.genpyon.Manager.PlayerManager;
@@ -52,21 +53,21 @@ public class Main extends JavaPlugin implements Listener {
 
 
 	//全員の役職まとめ
-	public HashMap <String, String> ROLE = new HashMap<String, String>();
-	public ArrayList<String> PLAYER = new ArrayList<String>();
-	public ArrayList<String> DEATH = new ArrayList<String>();
+	public static HashMap <String, String> ROLE = new HashMap<String, String>();
+	public static ArrayList<String> PLAYER = new ArrayList<String>();
+	public static ArrayList<String> DEATH = new ArrayList<String>();
 
 
-	public ArrayList<String> NONROLE = new ArrayList<String>();
-	public ArrayList<String> INNOCENT = new ArrayList<String>();
+	public static ArrayList<String> NONROLE = new ArrayList<String>();
+	public static ArrayList<String> INNOCENT = new ArrayList<String>();
 
-	public ArrayList<String> TYOUROU = new ArrayList<String>();
-	public ArrayList<String> WEREWOLF = new ArrayList<String>();
-	public ArrayList<String> HAKUROU = new ArrayList<String>();
-	public ArrayList<String> JACKAL = new ArrayList<String>();
+	public static ArrayList<String> TYOUROU = new ArrayList<String>();
+	public static ArrayList<String> WEREWOLF = new ArrayList<String>();
+	public static ArrayList<String> HAKUROU = new ArrayList<String>();
+	public static ArrayList<String> JACKAL = new ArrayList<String>();
 
 	//ショップの金
-	public HashMap <String, Integer> COIN = new HashMap<String, Integer>();
+	public static  HashMap <String, Integer> COIN = new HashMap<String, Integer>();
 
 	//最後にロール公開するやつ
 
@@ -259,7 +260,12 @@ public class Main extends JavaPlugin implements Listener {
 					}
 
 					if(cmd.equalsIgnoreCase("test2")){
+
 						p.getInventory().addItem(CommonItemType.STONE_SWORD.toItemStack());
+						p.getInventory().addItem(CommonItemType.STONE_SWORD.toItemIcon());
+
+						p.getInventory().addItem(DetItemType.URANAI.toItemStack());
+						p.getInventory().addItem(DetItemType.URANAI.toItemIcon());
 						return ret;
 					}
 

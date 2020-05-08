@@ -78,7 +78,7 @@ public class PlayerManager implements Listener {
 	public void DeathPlayer(Player p, Location loc){
 
 		Bukkit.broadcastMessage(p.getName() + "が死んだ。");
-		plugin.DEATH.add(p.getName());
+		Main.DEATH.add(p.getName());
 
 		p.getWorld().dropItemNaturally(loc, plugin.sm.roleHead(p.getName()));
 
