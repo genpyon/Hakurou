@@ -101,12 +101,11 @@ public class SkullManager implements Listener {
 	public ItemStack roleHeads(String name, String... list){
 
 		List<String> lore = Arrays.asList(list);
-
 		ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.PLAYER.ordinal());
 
 		SkullMeta meta = (SkullMeta) skull.getItemMeta();
 		meta.setOwner(name);
-		meta.setDisplayName(ChatColor.RESET + name + " の生首");
+		meta.setDisplayName(name + "の頭");
 
 		meta.setLore(lore);
 		skull.setItemMeta(meta);
@@ -114,22 +113,6 @@ public class SkullManager implements Listener {
 		return skull;
 	}
 
-	public static ItemStack uranaiHeads(String name, String... list){
-
-		List<String> lore = Arrays.asList(list);
-
-		ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.PLAYER.ordinal());
-
-		SkullMeta meta = (SkullMeta) skull.getItemMeta();
-		meta.setOwner(name);
-
-		meta.setDisplayName(ChatColor.RESET + name + " の役職を見る。");
-
-		meta.setLore(lore);
-		skull.setItemMeta(meta);
-
-		return skull;
-	}
 
 
 	@EventHandler
@@ -188,5 +171,30 @@ public class SkullManager implements Listener {
 
 		}
 	}
+
+
+
+
+	public static ItemStack uranaiHeads(String name, String... list){
+
+		List<String> lore = Arrays.asList(list);
+
+		ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.PLAYER.ordinal());
+
+		SkullMeta meta = (SkullMeta) skull.getItemMeta();
+		meta.setOwner(name);
+
+		meta.setDisplayName(name);
+
+		meta.setLore(lore);
+		skull.setItemMeta(meta);
+
+		return skull;
+	}
+
+
+
+
+
 
 }

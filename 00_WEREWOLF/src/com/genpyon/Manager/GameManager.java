@@ -54,6 +54,8 @@ public class GameManager implements Listener {
 		Main.HAKUROU.clear();
 		Main.JACKAL.clear();
 
+		Main.USER.setAllowFriendlyFire(false);
+
 
 		plugin.GameStatus = 1;
 

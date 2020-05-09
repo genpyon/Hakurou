@@ -47,10 +47,10 @@ public class PlayerManager implements Listener {
 
 		plugin.configLocationTeleport("Lobby", p, true);
 
-		if(plugin.USER.hasEntry(p.getName())){
+		if(Main.USER.hasEntry(p.getName())){
 
 		} else {
-			plugin.USER.addEntry(p.getName());
+			Main.USER.addEntry(p.getName());
 		}
 
 	}

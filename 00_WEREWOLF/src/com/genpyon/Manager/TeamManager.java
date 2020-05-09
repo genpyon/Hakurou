@@ -34,14 +34,14 @@ public class TeamManager implements Listener {
 		Scoreboard board = manager.getMainScoreboard();
 
 
-		plugin.USER = board.getTeam("USER");
+		Main.USER = board.getTeam("USER");
 
-		if(plugin.USER  != null){
-			plugin.USER.unregister();
+		if(Main.USER  != null){
+			Main.USER.unregister();
 		}
 
-		plugin.USER = board.registerNewTeam("USER");
-		plugin.USER.setOption(Option.COLLISION_RULE , OptionStatus.NEVER);
+		Main.USER = board.registerNewTeam("USER");
+		Main.USER.setOption(Option.COLLISION_RULE , OptionStatus.NEVER);
 
 
 	}

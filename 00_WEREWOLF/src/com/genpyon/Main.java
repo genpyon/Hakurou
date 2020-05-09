@@ -33,7 +33,7 @@ public class Main extends JavaPlugin implements Listener {
 
 	public static Main main;
 
-	public Team USER;
+	public static Team USER;
 
 	//1待機 2準備 3ゲーム 4終了
 	public int GameStatus = 1;
@@ -369,9 +369,13 @@ public class Main extends JavaPlugin implements Listener {
 
 				if(GameStatus == 3){
 
+					USER.setAllowFriendlyFire(true);
+
 					for(Player a : Bukkit.getOnlinePlayers()){
 						sm.haveSkullCheck(a);
 					}
+
+
 
 					if(GameTime != 0){
 

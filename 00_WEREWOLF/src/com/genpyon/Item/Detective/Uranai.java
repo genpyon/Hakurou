@@ -1,10 +1,10 @@
 package com.genpyon.Item.Detective;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -12,6 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import com.genpyon.Main;
 import com.genpyon.Item.AbstractItem;
 import com.genpyon.ItemStack.GameItemManager;
+import com.genpyon.Library.lib;
 import com.genpyon.Manager.ItemManager;
 import com.genpyon.Manager.SkullManager;
 
@@ -39,7 +40,7 @@ public class Uranai extends AbstractItem {
 
 		int RoleSize = Main.PLAYER.size();
 		int Size = Main.PLAYER.size();
-		Bukkit.broadcastMessage(RoleSize + " : 1");
+		//Bukkit.broadcastMessage(RoleSize + " : 1");
 
 
 		if(RoleSize <= 9) {
@@ -54,13 +55,13 @@ public class Uranai extends AbstractItem {
 
 
 
-		Bukkit.broadcastMessage(RoleSize + " : 2");
+		//Bukkit.broadcastMessage(RoleSize + " : 2");
 
-		Inventory inv = Bukkit.createInventory(null, RoleSize, ChatColor.BOLD + "探偵の手帳");
+		Inventory inv = Bukkit.createInventory(null, RoleSize, GameItemManager.URANAI_INV_NAME);
 
 		for (int i = 0; i < Size; i++){
-			Bukkit.broadcastMessage(Size + " : 3");
-			inv.addItem(SkullManager.uranaiHeads(Main.PLAYER.get(i), "すごい"));
+			//Bukkit.broadcastMessage(Size + " : 3");
+			inv.addItem(SkullManager.uranaiHeads(Main.PLAYER.get(i), Main.PLAYER.get(i) + "の頭を見る"));
 		}
 
 		return inv;
@@ -80,6 +81,31 @@ public class Uranai extends AbstractItem {
 			}
 
 		}
-
 	}
+
+
+	@EventHandler
+	public void uranaiBookInventory(InventoryClickEvent b) {
+		Player p = (Player) b.getWhoClicked();
+		ItemStack click = b.getCurrentItem();
+		Inventory openInv = b.getInventory();
+
+		if(click == null){
+			return;
+		}
+
+		if (openInv.getName().equalsIgnoreCase(GameItemManager.URANAI_INV_NAME)){
+			if(click.getItemMeta() != null) {
+				String name = Main.ROLE.get(click.getItemMeta().getDisplayName());
+				if(click.getItemMeta().getDisplayName().equalsIgnoreCase(name)) {
+					lib.sendPlayer(p, "それは" + Main.ROLE.get(name));
+				} else {
+					lib.sendPlayer(p, "それじゃないです!");
+				}
+				b.setCancelled(true);
+			}
+			return;
+		}
+	}
+
 }

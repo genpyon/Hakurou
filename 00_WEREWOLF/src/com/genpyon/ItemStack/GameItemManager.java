@@ -41,15 +41,17 @@ public class GameItemManager {
 	}
 
 
-
 	/**
 	 * ■ ショップアイテム - 人狼向け  ■
 	 */
 
+
+
+
 	/**
 	 * ■ ショップアイテム - 探偵向け  ■
 	 */
-
+	public static String URANAI_INV_NAME = ChatColor.BOLD + "探偵の手帳";
 	static int URANAI_BOOK_COST = 200;
 
 	static public ItemStack URANAI_BOOK_ITEM() {
