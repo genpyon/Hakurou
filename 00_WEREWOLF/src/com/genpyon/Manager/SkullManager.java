@@ -19,6 +19,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import com.genpyon.Main;
+import com.genpyon.Role.RoleManager;
 
 import net.md_5.bungee.api.ChatColor;
 
@@ -89,7 +90,7 @@ public class SkullManager implements Listener {
 				ChatColor.RESET + "" + ChatColor.GRAY + "===========",
 				ChatColor.GREEN + "発見済み",
 				name,
-				ChatColor.RESET + "" + ChatColor.GRAY + "役職 : " + ChatColor.RED + role,
+				ChatColor.RESET + "" + ChatColor.GRAY + "役職 : " + ChatColor.RED + RoleManager.roleNameChanger(role),
 				ChatColor.RESET + "" + ChatColor.GRAY + "死因 : " + ChatColor.RED + "???",
 				ChatColor.RESET + "" + ChatColor.GRAY + "死亡時間 : " + ChatColor.RED + "???",
 				ChatColor.RESET + "" + ChatColor.GRAY + "===========");
@@ -143,8 +144,17 @@ public class SkullManager implements Listener {
 				if(Main.ROLE.containsKey(name) && Main.PLAYER.contains(p.getName())){
 
 					if(Main.ROLE.get(p.getName()).equalsIgnoreCase("DETECTIVE")){
-						p.getInventory().remove(p.getInventory().getItemInMainHand());
-						p.getInventory().addItem(roleHeadChangeDetective(name));
+
+						if(Main.DetectiveMode == true) {
+							//頭から役職をわかるようにする。
+							p.getInventory().remove(p.getInventory().getItemInMainHand());
+							p.getInventory().addItem(roleHeadChangeDetective(name));
+
+						} else {
+							//頭から役職をわかるようにしない。
+							p.getInventory().remove(p.getInventory().getItemInMainHand());
+							p.getInventory().addItem(roleHeadChange(name));
+						}
 
 					} else if(hakken.equalsIgnoreCase(ChatColor.YELLOW + "未発見")){
 
@@ -153,7 +163,7 @@ public class SkullManager implements Listener {
 					}
 
 					if(hakken.equalsIgnoreCase(ChatColor.YELLOW + "未発見")){
-						Bukkit.broadcastMessage(ChatColor.RESET + p.getName() + " が " + ChatColor.RED + name + ChatColor.WHITE + "の生首を発見した。");
+						Bukkit.broadcastMessage(" " +ChatColor.RESET + p.getName() + " が " + ChatColor.RED + name + ChatColor.WHITE + "の生首を発見した。");
 					}
 
 

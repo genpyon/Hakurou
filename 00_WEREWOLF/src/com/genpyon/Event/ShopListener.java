@@ -17,6 +17,9 @@ import com.genpyon.ItemStack.GameItemManager;
 import com.genpyon.Library.lib;
 import com.genpyon.Manager.ItemManager;
 import com.genpyon.Manager.SkullManager;
+import com.genpyon.Role.RoleManager;
+
+import net.md_5.bungee.api.ChatColor;
 
 
 
@@ -66,6 +69,11 @@ public class ShopListener implements Listener {
 
 	}
 
+	/**
+	 * 占い本の処理関係
+	 * @param e event
+	 */
+
 
 	@EventHandler
 	public void uranaiBookEvent (PlayerInteractEvent b){
@@ -94,18 +102,30 @@ public class ShopListener implements Listener {
 
 		if (openInv.getName().equalsIgnoreCase(GameItemManager.URANAI_INV_NAME)){
 			if(click.getItemMeta() != null) {
-				String name = Main.ROLE.get(click.getItemMeta().getDisplayName());
-				if(click.getItemMeta().getDisplayName().equalsIgnoreCase(name)) {
-					lib.sendPlayer(p, "それは" + Main.ROLE.get(name));
+
+				String name = click.getItemMeta().getDisplayName();
+
+				if(Main.ROLE.containsKey(name)) {
+
+					String role = Main.ROLE.get(name);
+					lib.sendPlayer(p, "");
+					lib.sendPlayer(p, " " + ChatColor.BLUE + GameItemManager.URANAI_INV_NAME + ChatColor.RESET + " を使用し");
+					lib.sendPlayer(p, "  " + ChatColor.GOLD +  name + ChatColor.WHITE +" は " + RoleManager.bookRoleNameChanger(role) + " であることが分かりました。");
+					lib.sendPlayer(p, "");
+
+					p.closeInventory();
+					p.getInventory().removeItem(GameItemManager.URANAI_BOOK_ITEM());
+
+
 				} else {
-					lib.sendPlayer(p, "それじゃないです!");
+
+					Bukkit.broadcastMessage("そんなことはありませんエラー");
 				}
-				b.setCancelled(true);
 			}
-			return;
+			b.setCancelled(true);
 		}
+		return;
 	}
-
-
-
 }
+
+

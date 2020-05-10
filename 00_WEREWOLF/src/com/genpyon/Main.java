@@ -22,9 +22,11 @@ import com.genpyon.Item.DetItemType;
 import com.genpyon.Library.lib;
 import com.genpyon.Manager.GameManager;
 import com.genpyon.Manager.PlayerManager;
+import com.genpyon.Manager.ShopManager;
 import com.genpyon.Manager.SkullManager;
 import com.genpyon.Manager.TeamManager;
-import com.genpyon.Role.DetectiveManager;
+import com.genpyon.Role.RoleManager;
+import com.genpyon.Shop.ShopType;
 
 import net.md_5.bungee.api.ChatColor;
 
@@ -48,6 +50,9 @@ public class Main extends JavaPlugin implements Listener {
 	public int iWEREWOLF = 0;
 	public int iDETECTIVE = 0;
 	public int iJACKAL = 0;
+
+
+	public static boolean DetectiveMode = true;
 
 
 
@@ -109,7 +114,7 @@ public class Main extends JavaPlugin implements Listener {
 	public PlayerManager pm = null;
 	public GameManager gm = null;
 	public SkullManager sm = null;
-	public DetectiveManager dm = null;
+	public RoleManager rm = null;
 	public ShopListener sl= null;
 
 
@@ -123,7 +128,7 @@ public class Main extends JavaPlugin implements Listener {
 		pm = new PlayerManager(this);
 		gm = new GameManager(this);
 		sm = new SkullManager(this);
-		dm = new DetectiveManager(this);
+		rm = new RoleManager(this);
 		sl = new ShopListener(this);
 
 		tm.ScoreboardCreate();
@@ -184,12 +189,15 @@ public class Main extends JavaPlugin implements Listener {
 							iDETECTIVE = Integer.parseInt(args[2]);
 							iWEREWOLF = Integer.parseInt(args[3]);
 							iJACKAL = Integer.parseInt(args[4]);
-
-							gm.start(p);
+							if(GameStatus != 1) {
+								lib.sendPlayer(p, "リセットしてください。");
+							} else {
+								gm.start(p);
+							}
 
 						} else {
 							lib.sendPlayer(p, "引数が足りません。");
-							lib.sendPlayer(p, "/ww ro [孫の数][探偵の数][人狼の数][妖狐の数]");
+							lib.sendPlayer(p, "/ww start [孫の数][探偵の数][人狼の数][妖狐の数]");
 							return ret;
 						}
 						return ret;
@@ -198,6 +206,18 @@ public class Main extends JavaPlugin implements Listener {
 					if(cmd.equalsIgnoreCase("reset")){
 						gm.Reset();
 						return ret;
+					}
+
+					if(cmd.equalsIgnoreCase("det")){
+						if(DetectiveMode == false) {
+							Bukkit.broadcastMessage(" 探偵モードオフッッッッッッッッッッッッ！！！！！！");
+							DetectiveMode = true;
+							return ret;
+						} else {
+							Bukkit.broadcastMessage(" 探偵モードオンッッッッッッッッッッッッ！！！！！！");
+							DetectiveMode = false;
+							return ret;
+						}
 					}
 
 					if(cmd.equalsIgnoreCase("open")){
@@ -212,6 +232,17 @@ public class Main extends JavaPlugin implements Listener {
 						Bukkit.broadcastMessage("人狼" + WEREWOLF.toString());
 
 					}
+
+					if(cmd.equalsIgnoreCase("shop1")) {
+						ShopManager.openShop(p, ShopType.COMMON_SHOP);
+					}
+					if(cmd.equalsIgnoreCase("shop2")) {
+						ShopManager.openShop(p, ShopType.WEREWOLF_SHOP);
+					}
+					if(cmd.equalsIgnoreCase("shop3")) {
+						ShopManager.openShop(p, ShopType.DETECTIVE_SHOP);
+					}
+
 
 					if(cmd.equalsIgnoreCase("head")){
 						if (args.length > 1) {
@@ -395,7 +426,7 @@ public class Main extends JavaPlugin implements Listener {
 
 
 				for(Player a : Bukkit.getOnlinePlayers()){
-					lib.sendActionBar(a, Preparation + " / " + GameTime + " / " + ChatColor.RED + ROLE.get(a.getName()) + ChatColor.RESET + " / " + "Status : " + GameStatus );
+					lib.sendActionBar(a, Preparation + " / " + GameTime + " / " + ChatColor.RED + ROLE.get(a.getName()) + ChatColor.RESET + " / " + "Status : " + GameStatus + " Coin : " + COIN.get(a.getName()));
 				}
 
 			}

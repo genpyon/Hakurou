@@ -140,11 +140,11 @@ public class GameManager implements Listener {
 				loc.setYaw(a.getLocation().getYaw());
 				loc.setPitch(a.getLocation().getPitch());
 				a.teleport(loc);
-
 				a.setBedSpawnLocation(loc, true);
 
-				lib.SoundPlayer(p, Sound.ENTITY_ENDERMEN_TELEPORT, 0.2F);
+				lib.SoundPlayer(a, Sound.ENTITY_ENDERMEN_TELEPORT, 0.2F);
 
+				Main.COIN.put(a.getName(), 20000);
 				p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40);
 
 			}

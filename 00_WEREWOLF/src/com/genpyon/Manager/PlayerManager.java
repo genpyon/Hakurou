@@ -82,6 +82,13 @@ public class PlayerManager implements Listener {
 
 		p.getWorld().dropItemNaturally(loc, plugin.sm.roleHead(p.getName()));
 
+		Inventory inv = p.getInventory();
+		for(int i = 0; i < inv.getSize(); i++) {
+			if(inv.getItem(i) !=null && inv.getItem(i).getType().equals(Material.SKULL_ITEM)) {
+				p.getWorld().dropItemNaturally(loc, inv.getItem(i));
+				inv.removeItem(inv.getItem(i));
+			}
+		}
 	}
 
 
