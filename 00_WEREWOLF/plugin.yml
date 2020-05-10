@@ -4,12 +4,17 @@ version: 1.0.0
 author: Genpyon
 commands:
     ww:
-       description: main command
        permission: werewolf.ww
+    s:
+       permission: werewolf.s
+    shop:
+       permission: werewolf.shop
 permissions:
     werewolf.*:
-       description: LastManStanding no Command dayo
        default: op
     werewolf.ww:
-       description: LastManStanding no Command dayo
        default: op
+    werewolf.s:
+       default: true
+    werewolf.shop:
+       default: true

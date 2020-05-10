@@ -54,6 +54,13 @@ public class GameManager implements Listener {
 		Main.HAKUROU.clear();
 		Main.JACKAL.clear();
 
+		Main.cINNOCENT = plugin.getConfig().getInt("COIN.INNOCENT");
+		Main.cWEREWOLF = plugin.getConfig().getInt("COIN.WEREWOLF");
+		Main.cHAKUROU = plugin.getConfig().getInt("COIN.HAKUROU");
+		Main.cDETECTIVE = plugin.getConfig().getInt("COIN.DETECTIVE");
+		Main.cTYOUROU = plugin.getConfig().getInt("COIN.TYOUROU");
+		Main.cJACKAL = plugin.getConfig().getInt("COIN.JACKAL");
+
 		Main.USER.setAllowFriendlyFire(false);
 
 
@@ -144,12 +151,12 @@ public class GameManager implements Listener {
 
 				lib.SoundPlayer(a, Sound.ENTITY_ENDERMEN_TELEPORT, 0.2F);
 
-				Main.COIN.put(a.getName(), 20000);
 				p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40);
 
 			}
 
-			plugin.StartLocation = loc;
+			Main.StartLocation = loc;
+			Main.dropedItemsClear();
 		}
 
 		if(Main.NONROLE.size()-1 <= plus){
@@ -243,6 +250,7 @@ public class GameManager implements Listener {
 		String role = null;
 		String desc = null;
 		String zinei = null;
+		int coin = 0;
 
 		plugin.pm.GamePlayerStuff(p);
 
@@ -252,6 +260,8 @@ public class GameManager implements Listener {
 				desc = ChatColor.RESET + "長老を守り、白狼を狩れ。";
 				zinei = ChatColor.GREEN + "村人陣営";
 
+				coin = Main.cINNOCENT;
+
 			}
 
 
@@ -260,6 +270,9 @@ public class GameManager implements Listener {
 				role = ChatColor.DARK_GREEN + "長老";
 				desc = ChatColor.RESET + "死ぬな、白狼を狩れ。";
 				zinei = ChatColor.GREEN + "村人陣営";
+
+				coin = Main.cINNOCENT;
+
 
 				p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(60);
 				p.setHealth(60);
@@ -273,12 +286,19 @@ public class GameManager implements Listener {
 
 				p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20);
 				p.setHealth(20);
+
+
+				coin = Main.cINNOCENT;
+
 			}
 
 			if(Main.ROLE.get(name) == "DETECTIVE"){
 				role = ChatColor.BLUE + "探偵";
 				desc = ChatColor.RESET + "長老を守り、白狼を見つけろ。";
 				zinei = ChatColor.GREEN + "村人陣営";
+
+				coin = Main.cDETECTIVE;
+
 			}
 
 
@@ -286,6 +306,10 @@ public class GameManager implements Listener {
 				role = ChatColor.RED + "人狼";
 				desc = ChatColor.RESET + "白狼を守り、長老を狩れ。";
 				zinei = ChatColor.RED + "人狼陣営";
+
+
+				coin = Main.cWEREWOLF;
+
 			}
 
 
@@ -293,6 +317,10 @@ public class GameManager implements Listener {
 				role = ChatColor.DARK_RED + "白狼";
 				desc = ChatColor.RESET + "死ぬな、長老を狩れ。";
 				zinei = ChatColor.RED + "人狼陣営";
+
+
+				coin = Main.cHAKUROU;
+
 			}
 
 
@@ -300,6 +328,10 @@ public class GameManager implements Listener {
 				role = ChatColor.AQUA + "妖狐";
 				desc = ChatColor.RESET + "見つからずに、長老と白狼を呪え。";
 				zinei = ChatColor.AQUA + "妖狐陣営";
+
+
+				coin = Main.cJACKAL;
+
 			}
 
 			lib.sendTitleTarget(p, role, desc);
@@ -315,9 +347,16 @@ public class GameManager implements Listener {
 			lib.sendPlayer(p, " " + desc);
 			lib.sendPlayer(p, "");
 			lib.sendPlayer(p, " あなたの陣営 : " + zinei);
+
+			if(coin != 0) {
+				lib.sendPlayer(p, " " + ChatColor.YELLOW + coin + " COIN" + ChatColor.RESET + " 付与されました。");
+			}
+
 			lib.sendPlayer(p, "");
 			lib.sendPlayer(p, "========================");
 			lib.sendPlayer(p, "");
+
+			Main.COIN.put(p.getName(), coin);
 
 			if(Main.ROLE.get(name).equals("WEREWOLF") || Main.ROLE.get(name).equals("HAKUROU")){
 				lib.sendPlayer(p, ChatColor.RED + "仲間の人狼 : " + Main.WEREWOLF.toString());

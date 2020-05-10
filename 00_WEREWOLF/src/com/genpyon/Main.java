@@ -10,6 +10,8 @@ import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -44,12 +46,21 @@ public class Main extends JavaPlugin implements Listener {
 	public int GameTime = getConfig().getInt("GAMETIME");
 	public int Preparation = getConfig().getInt("PREPARATION");
 
-	public Location StartLocation = null;
+	public static Location StartLocation;
 
 	public int iMAGO = 0;
 	public int iWEREWOLF = 0;
 	public int iDETECTIVE = 0;
 	public int iJACKAL = 0;
+
+	//コインをあげる量
+
+	public static int cINNOCENT = 0;
+	public static int cWEREWOLF = 0;
+	public static int cHAKUROU = 0;
+	public static int cDETECTIVE = 0;
+	public static int cTYOUROU = 0;
+	public static int cJACKAL = 0;
 
 
 	public static boolean DetectiveMode = true;
@@ -135,9 +146,10 @@ public class Main extends JavaPlugin implements Listener {
 		saveConfig();
 		Timer();
 
+		StartLocation = configLocation("Lobby");
 		gm.Reset();
-	}
 
+	}
 
 
 	@Override
@@ -149,7 +161,45 @@ public class Main extends JavaPlugin implements Listener {
 
 		//float pitch = rnd.nextInt(4) * 0.2F;
 
+		if (c.getName().equalsIgnoreCase("s") || c.getName().equalsIgnoreCase("shop")) {
 
+			if(ROLE.containsKey(p.getName())) {
+				if(ROLE.get(p.getName()).equalsIgnoreCase("INNOCENT")) {
+					ShopManager.openShop(p, ShopType.COMMON_SHOP);
+					return ret;
+				}
+				if(ROLE.get(p.getName()).equalsIgnoreCase("MAGO")) {
+					ShopManager.openShop(p, ShopType.COMMON_SHOP);
+					return ret;
+				}
+				if(ROLE.get(p.getName()).equalsIgnoreCase("TYOUROU")) {
+					ShopManager.openShop(p, ShopType.COMMON_SHOP);
+					return ret;
+				}
+				if(ROLE.get(p.getName()).equalsIgnoreCase("DETECTIVE")) {
+					ShopManager.openShop(p, ShopType.DETECTIVE_SHOP);
+					return ret;
+				}
+				if(ROLE.get(p.getName()).equalsIgnoreCase("WEREWOLF")) {
+					ShopManager.openShop(p, ShopType.WEREWOLF_SHOP);
+					return ret;
+				}
+				if(ROLE.get(p.getName()).equalsIgnoreCase("HAKUROU")) {
+					ShopManager.openShop(p, ShopType.WEREWOLF_SHOP);
+					return ret;
+				}
+				if(ROLE.get(p.getName()).equalsIgnoreCase("JACKAL")) {
+					ShopManager.openShop(p, ShopType.COMMON_SHOP);
+					return ret;
+				}
+
+
+			} else {
+
+			}
+
+			return ret;
+		}
 
 		if (c.getName().equalsIgnoreCase("ww")) {
 
@@ -433,6 +483,16 @@ public class Main extends JavaPlugin implements Listener {
 		}, 0L, 20L * 1);
 
 	}
+
+
+	public static void dropedItemsClear() {
+		for(Entity e : StartLocation.getWorld().getNearbyEntities(StartLocation, 200, 100, 200)) {
+			if(e instanceof Item){
+				e.remove();
+			}
+		}
+	}
+
 
 	public Location configLocation(String xyz) {
 		int x1 = getConfig().getInt(xyz + ".x");
