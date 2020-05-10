@@ -1,5 +1,6 @@
 package com.genpyon.Item;
 
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import com.genpyon.Main;
@@ -18,6 +19,7 @@ public enum CommonItemType {
 			item = new StoneSword(Main.getMain()).getItemStack();
 			break;
 		default:
+			item = new ItemStack(Material.PAPER);
 			break;
 		}
 		return item;
@@ -30,6 +32,7 @@ public enum CommonItemType {
 			item = new StoneSword(Main.getMain()).getIcon();
 			break;
 		default:
+			item = new ItemStack(Material.PAPER);
 			break;
 		}
 		return item;
