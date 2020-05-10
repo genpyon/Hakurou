@@ -63,6 +63,21 @@ public class GameItemManager {
 	public static final String TELEPORT_INV_NAME = ChatColor.BOLD + "てれぽーたー";
 	public static final int TELEPORT_COST = 300;
 
+	public static ItemStack TELEPORT_ITEM() {
+		return lib.createItem(Material.DIAMOND, 1, TELEPORT_INV_NAME, "",
+				ChatColor.RESET + "右クリックで座標を登録する",
+				ChatColor.RESET + "座標登録後殴ると相手をテレポート",
+				ChatColor.RESET + "座標登録後右クリックで自分をテレポート");
+	}
+
+	public static ItemStack TELEPORT_ICON() {
+		return lib.createItem(Material.DIAMOND, 1, TELEPORT_INV_NAME, "",
+				ChatColor.RESET + "右クリックで座標を登録する",
+				ChatColor.RESET + "座標登録後殴ると相手をテレポート",
+				ChatColor.RESET + "座標登録後右クリックで自分をテレポート",
+				"" , Cost + + TELEPORT_COST);
+	}
+
 
 	/**
 	 * ■ ショップアイテム - 探偵向け  ■
@@ -79,4 +94,7 @@ public class GameItemManager {
 		ItemStack is = lib.createItem(Material.BOOK, 1, ChatColor.BOLD + "探偵の手帳", "" ,ChatColor.RESET + "一定時間のうちに一人だけ", ChatColor.RESET + "役職を知ることができる。" , "" , Cost + + STONE_SWORD_COST);
 		return is;
 	}
+
+	public static String SENRIGAN_INV_NAME = ChatColor.BOLD + "千里眼";
+	public static final int SENRIGAN_COST = 200;
 }

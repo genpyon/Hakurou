@@ -10,6 +10,7 @@ import com.genpyon.Item.Detective.Uranai;
 
 public enum DetItemType {
 	URANAI_BOOK(URANAI_BOOK_COST), //占うヤツ
+	SENRIGAN(SENRIGAN_COST);
 	;
 
 	private final int cost;
