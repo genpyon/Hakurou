@@ -3,6 +3,7 @@ package com.genpyon.ItemStack;
 import java.util.Random;
 
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 
 import com.genpyon.Library.lib;
@@ -28,7 +29,7 @@ public class GameItemManager {
 	 * ■ ショップアイテム - コモン  ■
 	 */
 
-	static int STONE_SWORD_COST = 200;
+	public static final int STONE_SWORD_COST = 200;
 
 	static public ItemStack STONE_SWORD_ITEM() {
 		ItemStack is = lib.createItem(Material.STONE_SWORD, 1, ChatColor.BOLD + "傷のついた石の剣", "" ,ChatColor.RESET + "普通の剣。");
@@ -40,19 +41,34 @@ public class GameItemManager {
 		return is;
 	}
 
+	public static final int TSUYOI_BOW_COST = 200;
+
+	static public ItemStack TSUYOI_BOW_ITEM() {
+		ItemStack is = lib.createEnchantItem(Material.BOW, 1, Enchantment.ARROW_DAMAGE, 50, ChatColor.BOLD + "イカれた弓", "" ,ChatColor.RESET + "普通の剣。");
+		return is;
+	}
+
+	static public ItemStack TSUYOI_BOW_ICON() {
+		ItemStack is = lib.createEnchantItem(Material.BOW, 1, Enchantment.ARROW_DAMAGE, 50, ChatColor.BOLD + "イカれた弓", "" ,ChatColor.RESET + "強めの弓。" , "" , Cost + TSUYOI_BOW_COST);
+		return is;
+	}
+
+	public static final int SPEED_POT_COST = 200;
+
 
 	/**
 	 * ■ ショップアイテム - 人狼向け  ■
 	 */
 
-
+	public static final String TELEPORT_INV_NAME = ChatColor.BOLD + "てれぽーたー";
+	public static final int TELEPORT_COST = 300;
 
 
 	/**
 	 * ■ ショップアイテム - 探偵向け  ■
 	 */
 	public static String URANAI_INV_NAME = ChatColor.BOLD + "探偵の手帳";
-	static int URANAI_BOOK_COST = 200;
+	public static final int URANAI_BOOK_COST = 200;
 
 	static public ItemStack URANAI_BOOK_ITEM() {
 		ItemStack is = lib.createItem(Material.BOOK, 1, ChatColor.BOLD + "探偵の手帳", "" ,ChatColor.RESET + "一定時間のうちに一人だけ", ChatColor.RESET + "役職を知ることができる。");

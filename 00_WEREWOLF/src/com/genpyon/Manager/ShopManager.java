@@ -107,17 +107,17 @@ public class ShopManager {
 	 * @param p 購入する人
 	 * @param item 購入するアイテム
 	 */
-	public static void purchaseItem(Player p, ItemStack item) {
+	public static void purchaseItem(Player p, ItemStack item, int cost) {
 		// 使うやつを取得 なかったら困る
 		String name = p.getName();
-		Integer integer = Main.COIN.get(name);
-		if (name == null || integer == null) return;
+		Integer coin = Main.COIN.get(name);
+		if (name == null || coin == null) return;
 
 		// お金が足りないときのやつ
-		if (integer <= 0) p.sendMessage(ChatColor.RED + "コインが足りません");
+		if (coin < cost) p.sendMessage(ChatColor.RED + "コインが足りません");
 
 		// 購入してもいいよの処理
-		Main.COIN.put(name, integer - 1);
+		Main.COIN.put(name, coin - cost);
 		p.getInventory().addItem(item);
 		p.sendMessage(item.getItemMeta().getDisplayName() + "を購入しました");
 	}

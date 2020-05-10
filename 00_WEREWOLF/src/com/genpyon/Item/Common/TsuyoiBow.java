@@ -4,6 +4,7 @@ import org.bukkit.inventory.ItemStack;
 
 import com.genpyon.Main;
 import com.genpyon.Item.AbstractItem;
+import com.genpyon.ItemStack.GameItemManager;
 
 public class TsuyoiBow extends AbstractItem {
 
@@ -14,14 +15,11 @@ public class TsuyoiBow extends AbstractItem {
 
 	@Override
 	public ItemStack getItemStack() {
-		// TODO 自動生成されたメソッド・スタブ
-
-		return null;
+		return GameItemManager.TSUYOI_BOW_ITEM();
 	}
 
 	@Override
 	public ItemStack getIcon() {
-		// TODO 自動生成されたメソッド・スタブ
-		return null;
+		return GameItemManager.TSUYOI_BOW_ICON();
 	}
 }

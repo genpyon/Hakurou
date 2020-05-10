@@ -1,5 +1,7 @@
 package com.genpyon.Item;
 
+import static com.genpyon.ItemStack.GameItemManager.*;
+
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -7,8 +9,14 @@ import com.genpyon.Main;
 import com.genpyon.Item.Wolf.Teleport;
 
 public enum WolfItemType {
-	TELEPORT, /* テレポートアイテム */
+	TELEPORT(TELEPORT_COST), /* テレポートアイテム */
 	;
+
+	private final int cost;
+
+	private WolfItemType(int cost) {
+		this.cost = cost;
+	}
 
 	public ItemStack toItemStack() {
 		ItemStack item = null;
@@ -34,5 +42,9 @@ public enum WolfItemType {
 			break;
 		}
 		return item;
+	}
+
+	public int getCost() {
+		return this.cost;
 	}
 }

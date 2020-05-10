@@ -241,13 +241,13 @@ public class EventListener implements Listener {
 		// FIXME: ちょっと原始的でムカつくので開いてるときに方法考える
 		for (CommonItemType type : CommonItemType.values()) {
 			if (type.toItemIcon().equals(item)) {
-				ShopManager.purchaseItem(p, type.toItemStack());
+				ShopManager.purchaseItem(p, type.toItemStack(), type.getCost());
 				return;
 			}
 		}
 		for (DetItemType type : DetItemType.values()) {
 			if (type.toItemIcon().equals(item)) {
-				ShopManager.purchaseItem(p, type.toItemStack());
+				ShopManager.purchaseItem(p, type.toItemStack(), type.getCost());
 				return;
 			}
 		}
