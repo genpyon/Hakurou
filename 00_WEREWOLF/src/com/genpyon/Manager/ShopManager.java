@@ -52,18 +52,18 @@ public class ShopManager {
 
 		// 共通アイテムをリストに追加
 		for (CommonItemType item : CommonItemType.values()) {
-			shopItemList.add(item.toItemStack());
+			shopItemList.add(item.toItemIcon());
 		}
 
 		// タイプによってListにアイテムを加える
 		// XXX: Typeを増やしたときはここに追加
 		if (type == ShopType.WEREWOLF_SHOP) {
 			for (WolfItemType item : WolfItemType.values()) {
-				shopItemList.add(item.toItemStack());
+				shopItemList.add(item.toItemIcon());
 			}
 		} else if (type == ShopType.DETECTIVE_SHOP) {
 			for (DetItemType item : DetItemType.values()) {
-				shopItemList.add(item.toItemStack());
+				shopItemList.add(item.toItemIcon());
 			}
 		}
 
