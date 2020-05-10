@@ -253,7 +253,7 @@ public class EventListener implements Listener {
 		}
 		for (WolfItemType type : WolfItemType.values()) {
 			if (type.toItemIcon().equals(item)) {
-				ShopManager.purchaseItem(p, type.toItemStack());
+				ShopManager.purchaseItem(p, type.toItemStack(), type.getCost());
 				return;
 			}
 		}

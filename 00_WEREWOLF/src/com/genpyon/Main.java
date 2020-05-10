@@ -348,8 +348,8 @@ public class Main extends JavaPlugin implements Listener {
 						p.getInventory().addItem(CommonItemType.STONE_SWORD.toItemStack());
 						p.getInventory().addItem(CommonItemType.STONE_SWORD.toItemIcon());
 
-						p.getInventory().addItem(DetItemType.URANAI.toItemStack());
-						p.getInventory().addItem(DetItemType.URANAI.toItemIcon());
+						p.getInventory().addItem(DetItemType.URANAI_BOOK.toItemStack());
+						p.getInventory().addItem(DetItemType.URANAI_BOOK.toItemIcon());
 						return ret;
 					}
 
