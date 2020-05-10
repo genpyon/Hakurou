@@ -114,7 +114,10 @@ public class ShopManager {
 		if (name == null || coin == null) return;
 
 		// お金が足りないときのやつ
-		if (coin < cost) p.sendMessage(ChatColor.RED + "コインが足りません");
+		if (coin < cost) {
+			p.sendMessage(ChatColor.RED + "コインが足りません");
+			return;
+		}
 
 		// 購入してもいいよの処理
 		Main.COIN.put(name, coin - cost);
