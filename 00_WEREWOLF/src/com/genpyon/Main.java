@@ -16,6 +16,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Team;
 
 import com.genpyon.Event.EventListener;
+import com.genpyon.Event.ShopListener;
 import com.genpyon.Item.CommonItemType;
 import com.genpyon.Item.DetItemType;
 import com.genpyon.Library.lib;
@@ -109,6 +110,7 @@ public class Main extends JavaPlugin implements Listener {
 	public GameManager gm = null;
 	public SkullManager sm = null;
 	public DetectiveManager dm = null;
+	public ShopListener sl= null;
 
 
 	Random rnd = new Random();
@@ -122,6 +124,7 @@ public class Main extends JavaPlugin implements Listener {
 		gm = new GameManager(this);
 		sm = new SkullManager(this);
 		dm = new DetectiveManager(this);
+		sl = new ShopListener(this);
 
 		tm.ScoreboardCreate();
 		saveConfig();
