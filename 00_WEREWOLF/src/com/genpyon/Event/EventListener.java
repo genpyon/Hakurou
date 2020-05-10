@@ -218,6 +218,7 @@ public class EventListener implements Listener {
 	@EventHandler
 	public void whenShopClicked(InventoryClickEvent e) {
 		// インベントリを取得してタイトルがあるかどうかを確認する
+		try {
 		Inventory inv = e.getInventory();
 		String invTitle = inv.getTitle();
 		if (invTitle == null) return;
@@ -256,6 +257,9 @@ public class EventListener implements Listener {
 				ShopManager.purchaseItem(p, type.toItemStack(), type.getCost());
 				return;
 			}
+		}
+		} catch (Exception exception) {
+
 		}
 	}
 
