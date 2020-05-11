@@ -31,7 +31,7 @@ public enum CommonItemType {
 			item = new TsuyoiBow(Main.getMain()).getItemStack();
 			break;
 		default:
-			item = new ItemStack(Material.PAPER);
+			item = new ItemStack(Material.AIR);
 			break;
 		}
 		return item;
@@ -47,7 +47,7 @@ public enum CommonItemType {
 			item = new TsuyoiBow(Main.getMain()).getIcon();
 			break;
 		default:
-			item = new ItemStack(Material.PAPER);
+			item = new ItemStack(Material.AIR);
 			break;
 		}
 		return item;

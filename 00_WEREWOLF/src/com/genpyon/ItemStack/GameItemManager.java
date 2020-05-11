@@ -78,6 +78,23 @@ public class GameItemManager {
 				"" , Cost + + TELEPORT_COST);
 	}
 
+	public static final String BLINK_INV_NAME = ChatColor.BOLD + "ブリンク";
+	public static final int BLINK_COST = 150;
+
+	public static ItemStack BLINK_ITEM() {
+		return lib.createItem(Material.BLAZE_POWDER, 1, BLINK_INV_NAME, "",
+				ChatColor.RESET + "オフハンドにこのアイテムをもつ",
+				ChatColor.RESET + "Shiftを押してブリンクチャージ",
+				ChatColor.RESET + "Shiftを離してその方向にブリンクする");
+	}
+
+	public static ItemStack BLINK_ICON() {
+		return lib.createItem(Material.BLAZE_POWDER, 1, BLINK_INV_NAME, "",
+				ChatColor.RESET + "オフハンドにこのアイテムをもつ",
+				ChatColor.RESET + "Shiftを押してブリンクチャージ",
+				ChatColor.RESET + "Shiftを離してその方向にブリンクする",
+				"" , Cost + + BLINK_COST);
+	}
 
 	/**
 	 * ■ ショップアイテム - 探偵向け  ■
@@ -97,4 +114,19 @@ public class GameItemManager {
 
 	public static String SENRIGAN_INV_NAME = ChatColor.BOLD + "千里眼";
 	public static final int SENRIGAN_COST = 200;
+
+	public static ItemStack SENRIGAN_ITEM() {
+		return lib.createItem(Material.EYE_OF_ENDER, 1, TELEPORT_INV_NAME, "",
+				ChatColor.RESET + "右クリックで座標を登録する",
+				ChatColor.RESET + "座標登録後殴ると相手をテレポート",
+				ChatColor.RESET + "座標登録後右クリックで自分をテレポート");
+	}
+
+	public static ItemStack SENRIGAN_ICON() {
+		return lib.createItem(Material.DIAMOND, 1, TELEPORT_INV_NAME, "",
+				ChatColor.RESET + "右クリックで座標を登録する",
+				ChatColor.RESET + "座標登録後殴ると相手をテレポート",
+				ChatColor.RESET + "座標登録後右クリックで自分をテレポート",
+				"" , Cost + + TELEPORT_COST);
+	}
 }

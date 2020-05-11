@@ -26,7 +26,7 @@ public enum DetItemType {
 			item = new Uranai(Main.getMain()).getItemStack();
 			break;
 		default:
-			item = new ItemStack(Material.PAPER);
+			item = new ItemStack(Material.AIR);
 			break;
 		}
 		return item;
@@ -39,7 +39,7 @@ public enum DetItemType {
 			item = new Uranai(Main.getMain()).getIcon();
 			break;
 		default:
-			item = new ItemStack(Material.PAPER);
+			item = new ItemStack(Material.AIR);
 			break;
 		}
 		return item;

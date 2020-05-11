@@ -10,6 +10,7 @@ import com.genpyon.Item.Wolf.Teleport;
 
 public enum WolfItemType {
 	TELEPORT(TELEPORT_COST), /* テレポートアイテム */
+	BLINK(BLINK_COST),
 	;
 
 	private final int cost;
@@ -25,7 +26,7 @@ public enum WolfItemType {
 			item = new Teleport(Main.getMain()).getItemStack();
 			break;
 		default:
-			item = new ItemStack(Material.PAPER);
+			item = new ItemStack(Material.AIR);
 			break;
 		}
 		return item;
@@ -38,7 +39,7 @@ public enum WolfItemType {
 			item = new Teleport(Main.getMain()).getIcon();
 			break;
 		default:
-			item = new ItemStack(Material.PAPER);
+			item = new ItemStack(Material.AIR);
 			break;
 		}
 		return item;

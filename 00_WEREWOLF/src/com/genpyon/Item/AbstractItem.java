@@ -24,7 +24,7 @@ public abstract class AbstractItem implements Listener {
 	 */
 	void init(Main plugin) {
 		this.plugin = plugin;
-		this.plugin.getServer().getPluginManager().registerEvents(this, this.plugin);
+		//this.plugin.getServer().getPluginManager().registerEvents(this, this.plugin);
 	}
 
 	/**
@@ -38,5 +38,9 @@ public abstract class AbstractItem implements Listener {
 	 * @return
 	 */
 	public abstract ItemStack getIcon();
+
+	public Main getMain() {
+		return this.plugin;
+	}
 
 }
