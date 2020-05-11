@@ -6,16 +6,19 @@ import java.util.Random;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
+import org.bukkit.inventory.ItemStack;
 
 import com.genpyon.Main;
 import com.genpyon.Library.lib;
@@ -38,6 +41,18 @@ public class GameManager implements Listener {
 		return;
 
 	}
+
+
+	@EventHandler
+	public void onDropedItems(PlayerDropItemEvent b){
+		ItemStack is = b.getItemDrop().getItemStack();
+		if(is.getType().equals(Material.SKULL_ITEM)) {
+
+		} else {
+			b.setCancelled(true);
+		}
+	}
+
 
 	public void Reset(){
 
@@ -67,6 +82,7 @@ public class GameManager implements Listener {
 
 		plugin.GameStatus = 1;
 
+		plugin.PlayTime = 0;
 
 		plugin.reloadConfig();
 

@@ -15,12 +15,15 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.inventory.Inventory;
@@ -33,6 +36,7 @@ import com.genpyon.Item.DetItemType;
 import com.genpyon.Item.WolfItemType;
 import com.genpyon.Library.lib;
 import com.genpyon.Manager.ShopManager;
+import com.genpyon.Manager.SkullManager;
 import com.genpyon.Shop.ShopType;
 
 
@@ -49,6 +53,126 @@ public class EventListener implements Listener {
 
 		return;
 
+	}
+
+
+	@EventHandler
+	public void PlayerChatEvent(AsyncPlayerChatEvent b) {
+		b.setCancelled(true);
+
+		String message = b.getMessage();
+
+		String name = "[ " + b.getPlayer().getName() + " ] ";
+
+		String CO = null;
+
+		if(CO == null) {
+			CO = "";
+		}
+
+		String sendMessage = CO + name + message;
+
+		Bukkit.broadcastMessage(sendMessage);
+	}
+
+
+	@EventHandler
+	public void playerHeadChange (PlayerInteractEvent b){
+		Player p = b.getPlayer();
+
+		Action act = b.getAction();
+
+		if(act == Action.LEFT_CLICK_AIR || act == Action.RIGHT_CLICK_AIR || act == Action.LEFT_CLICK_BLOCK || act == Action.RIGHT_CLICK_BLOCK){
+
+
+			if(p.getInventory().getItemInMainHand() != null && p.getInventory().getItemInMainHand().getType().equals(Material.DOUBLE_PLANT)){
+				if(Main.ROLE.containsKey(p.getName())) {
+					if(Main.ROLE.get(p.getName()).equalsIgnoreCase("INNOCENT")) {
+						ShopManager.openShop(p, ShopType.COMMON_SHOP);
+						return;
+					}
+					if(Main.ROLE.get(p.getName()).equalsIgnoreCase("MAGO")) {
+						ShopManager.openShop(p, ShopType.COMMON_SHOP);
+						return;
+					}
+					if(Main.ROLE.get(p.getName()).equalsIgnoreCase("TYOUROU")) {
+						ShopManager.openShop(p, ShopType.COMMON_SHOP);
+						return;
+					}
+					if(Main.ROLE.get(p.getName()).equalsIgnoreCase("DETECTIVE")) {
+						ShopManager.openShop(p, ShopType.DETECTIVE_SHOP);
+						return;
+					}
+					if(Main.ROLE.get(p.getName()).equalsIgnoreCase("WEREWOLF")) {
+						ShopManager.openShop(p, ShopType.WEREWOLF_SHOP);
+						return;
+					}
+					if(Main.ROLE.get(p.getName()).equalsIgnoreCase("HAKUROU")) {
+						ShopManager.openShop(p, ShopType.WEREWOLF_SHOP);
+						return;
+					}
+					if(Main.ROLE.get(p.getName()).equalsIgnoreCase("JACKAL")) {
+						ShopManager.openShop(p, ShopType.COMMON_SHOP);
+						return;
+					}
+				}
+			}
+
+			if(p.getInventory().getItemInMainHand() != null && p.getInventory().getItemInMainHand().getType().equals(Material.SKULL_ITEM)){
+				String name = null;
+				String hakken = null;
+
+
+				try {
+					name = p.getInventory().getItemInMainHand().getItemMeta().getLore().get(2);
+					hakken = p.getInventory().getItemInMainHand().getItemMeta().getLore().get(1);
+
+				} catch (Exception e) {
+					return;
+				}
+
+				//Bukkit.broadcastMessage(hakken);
+
+
+				if(Main.ROLE.containsKey(name) && Main.PLAYER.contains(p.getName())){
+
+					if(Main.ROLE.get(p.getName()).equalsIgnoreCase("DETECTIVE")){
+
+						if(Main.DetectiveMode == true) {
+							//頭から役職をわかるようにする。
+							p.getInventory().remove(p.getInventory().getItemInMainHand());
+							p.getInventory().addItem(SkullManager.roleHeadChangeDetective(name));
+
+						} else {
+							//頭から役職をわかるようにしない。
+							p.getInventory().remove(p.getInventory().getItemInMainHand());
+							p.getInventory().addItem(SkullManager.roleHeadChange(name));
+						}
+
+					} else if(hakken.equalsIgnoreCase(ChatColor.YELLOW + "未発見")){
+
+						p.getInventory().remove(p.getInventory().getItemInMainHand());
+						p.getInventory().addItem(SkullManager.roleHeadChange(name));
+					}
+
+					if(hakken.equalsIgnoreCase(ChatColor.YELLOW + "未発見")){
+						Bukkit.broadcastMessage(" " +ChatColor.RESET + p.getName() + " が " + ChatColor.RED + name + ChatColor.WHITE + "の生首を発見した。");
+					}
+
+
+					return;
+				} else {
+					Bukkit.broadcastMessage("それですけど、それじゃないです。");
+					Bukkit.broadcastMessage(Main.ROLE.toString());
+				}
+
+			} else {
+				//Bukkit.broadcastMessage("それじゃありません!!");
+			}
+
+		} else {
+
+		}
 	}
 
 

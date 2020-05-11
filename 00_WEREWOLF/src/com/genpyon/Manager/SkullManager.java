@@ -4,16 +4,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.SkullType;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
@@ -65,7 +61,7 @@ public class SkullManager implements Listener {
 	}
 
 
-	public ItemStack roleHeadChange(String name){
+	public static ItemStack roleHeadChange(String name){
 
 		ItemStack head = roleHeads(name ,
 				ChatColor.RESET + "" + ChatColor.GRAY + "===========",
@@ -79,7 +75,7 @@ public class SkullManager implements Listener {
 		return head;
 	}
 
-	public ItemStack roleHeadChangeDetective(String name){
+	public static ItemStack roleHeadChangeDetective(String name){
 
 		String role = null;
 		if(Main.ROLE.containsKey(name)){
@@ -99,7 +95,7 @@ public class SkullManager implements Listener {
 	}
 
 
-	public ItemStack roleHeads(String name, String... list){
+	public static ItemStack roleHeads(String name, String... list){
 
 		List<String> lore = Arrays.asList(list);
 		ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.PLAYER.ordinal());
@@ -113,76 +109,6 @@ public class SkullManager implements Listener {
 
 		return skull;
 	}
-
-
-
-	@EventHandler
-	public void playerHeadChange (PlayerInteractEvent b){
-		Player p = b.getPlayer();
-
-		Action act = b.getAction();
-
-		if(act == Action.LEFT_CLICK_AIR || act == Action.RIGHT_CLICK_AIR || act == Action.LEFT_CLICK_BLOCK || act == Action.RIGHT_CLICK_BLOCK){
-
-
-			if(p.getInventory().getItemInMainHand() != null && p.getInventory().getItemInMainHand().getType().equals(Material.SKULL_ITEM)){
-				String name = null;
-				String hakken = null;
-
-
-				try {
-					name = p.getInventory().getItemInMainHand().getItemMeta().getLore().get(2);
-					hakken = p.getInventory().getItemInMainHand().getItemMeta().getLore().get(1);
-
-				} catch (Exception e) {
-					return;
-				}
-
-				//Bukkit.broadcastMessage(hakken);
-
-
-				if(Main.ROLE.containsKey(name) && Main.PLAYER.contains(p.getName())){
-
-					if(Main.ROLE.get(p.getName()).equalsIgnoreCase("DETECTIVE")){
-
-						if(Main.DetectiveMode == true) {
-							//頭から役職をわかるようにする。
-							p.getInventory().remove(p.getInventory().getItemInMainHand());
-							p.getInventory().addItem(roleHeadChangeDetective(name));
-
-						} else {
-							//頭から役職をわかるようにしない。
-							p.getInventory().remove(p.getInventory().getItemInMainHand());
-							p.getInventory().addItem(roleHeadChange(name));
-						}
-
-					} else if(hakken.equalsIgnoreCase(ChatColor.YELLOW + "未発見")){
-
-						p.getInventory().remove(p.getInventory().getItemInMainHand());
-						p.getInventory().addItem(roleHeadChange(name));
-					}
-
-					if(hakken.equalsIgnoreCase(ChatColor.YELLOW + "未発見")){
-						Bukkit.broadcastMessage(" " +ChatColor.RESET + p.getName() + " が " + ChatColor.RED + name + ChatColor.WHITE + "の生首を発見した。");
-					}
-
-
-					return;
-				} else {
-					Bukkit.broadcastMessage("それですけど、それじゃないです。");
-					Bukkit.broadcastMessage(Main.ROLE.toString());
-				}
-
-			} else {
-				//Bukkit.broadcastMessage("それじゃありません!!");
-			}
-
-		} else {
-
-		}
-	}
-
-
 
 
 	public static ItemStack uranaiHeads(String name, String... list){

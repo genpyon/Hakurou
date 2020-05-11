@@ -30,6 +30,11 @@ public class GameItemManager {
 		return is;
 	}
 
+	static public ItemStack SHOP_FLOWER() {
+		ItemStack is = lib.createItem(Material.DOUBLE_PLANT, 1, ChatColor.BOLD + "ショップ", "" ,ChatColor.RESET + "ショップを開くためのやつ");
+		return is;
+	}
+
 	/**
 	 * ■ ショップアイテム - コモン  ■
 	 *

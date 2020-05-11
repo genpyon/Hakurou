@@ -2,7 +2,6 @@ package com.genpyon.Manager;
 
 import java.util.Random;
 
-import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -40,7 +39,6 @@ public class PlayerManager implements Listener {
 
 		p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40);
 		p.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(100);
-		p.setHealth(40);
 		p.setFoodLevel(15);
 
 		plugin.configLocationTeleport("Lobby", p, true);
@@ -72,6 +70,8 @@ public class PlayerManager implements Listener {
 		inv.setItem(1, GameItemManager.WOODEN_BOW());
 		inv.setItem(2, GameItemManager.ARROW_ITEM());
 
+		inv.setItem(8, GameItemManager.SHOP_FLOWER());
+
 		if(Main.ROLE.get(p.getName()).equalsIgnoreCase("DETECTIVE")){
 			inv.setItem(4, GameItemManager.URANAI_BOOK_ITEM());
 		}
@@ -79,7 +79,6 @@ public class PlayerManager implements Listener {
 
 	public void DeathPlayer(Player p, Location loc){
 
-		Bukkit.broadcastMessage(p.getName() + "が死んだ。");
 		Main.DEATH.add(p.getName());
 
 		p.getWorld().dropItemNaturally(loc, plugin.sm.roleHead(p.getName()));

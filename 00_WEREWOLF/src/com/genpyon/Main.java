@@ -44,6 +44,11 @@ public class Main extends JavaPlugin implements Listener {
 	public int GameTime = getConfig().getInt("GAMETIME");
 	public int Preparation = getConfig().getInt("PREPARATION");
 
+	public int PlayTime = 0;
+	public int MoneyTime = 30;
+
+	public int MoneyMoneyMoney = 50;
+
 	public static Location StartLocation;
 
 	public int iMAGO = 0;
@@ -258,11 +263,11 @@ public class Main extends JavaPlugin implements Listener {
 
 					if(cmd.equalsIgnoreCase("det")){
 						if(DetectiveMode == false) {
-							Bukkit.broadcastMessage(" 探偵モードオフッッッッッッッッッッッッ！！！！！！");
+							Bukkit.broadcastMessage(" 探偵モードオンッッッッッッッッッッッッ！！！！！！");
 							DetectiveMode = true;
 							return ret;
 						} else {
-							Bukkit.broadcastMessage(" 探偵モードオンッッッッッッッッッッッッ！！！！！！");
+							Bukkit.broadcastMessage(" 探偵モードオフッッッッッッッッッッッッ！！！！！！");
 							DetectiveMode = false;
 							return ret;
 						}
@@ -442,12 +447,20 @@ public class Main extends JavaPlugin implements Listener {
 
 				if(GameStatus == 3){
 
+					PlayTime++;
+
 					USER.setAllowFriendlyFire(true);
 
 					for(Player a : Bukkit.getOnlinePlayers()){
-
 						sm.haveSkullCheck(a);
+					}
 
+					if(PlayTime >= MoneyTime){
+						for(Player a : Bukkit.getOnlinePlayers()){
+							COIN.put(a.getName(), COIN.get(a.getName())+MoneyMoneyMoney);
+							lib.sendPlayer(a, " " + ChatColor.YELLOW + MoneyMoneyMoney + " COIN" + ChatColor.RESET + " 付与されました。 ");
+						}
+						PlayTime = 0;
 					}
 
 					if(GameTime != 0){
@@ -458,15 +471,13 @@ public class Main extends JavaPlugin implements Listener {
 						//イノセントの勝ち
 						gm.gameEnd(1, true);
 					}
+
+					for(Player a : Bukkit.getOnlinePlayers()){
+						lib.sendActionBar(a,  RoleManager.roleNameChanger(ROLE.get(a.getName())) + ChatColor.RESET + " | " + "COIN : " + COIN.get(a.getName()));
+					}
 				}
 
 				gm.setTabName();
-
-
-
-				for(Player a : Bukkit.getOnlinePlayers()){
-					lib.sendActionBar(a, Preparation + " / " + GameTime + " / " + ChatColor.RED + ROLE.get(a.getName()) + ChatColor.RESET + " / " + "Status : " + GameStatus + " Coin : " + COIN.get(a.getName()));
-				}
 
 			}
 		}, 0L, 20L * 1);
