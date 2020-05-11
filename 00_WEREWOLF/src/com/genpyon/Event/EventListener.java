@@ -66,6 +66,7 @@ public class EventListener implements Listener {
 
 			if(p.getInventory().getItemInMainHand() != null && p.getInventory().getItemInMainHand().getType().equals(Material.DOUBLE_PLANT)){
 				if(Main.ROLE.containsKey(p.getName())) {
+					
 					if(Main.ROLE.get(p.getName()).equalsIgnoreCase("INNOCENT")) {
 						ShopManager.openShop(p, ShopType.COMMON_SHOP);
 						return;

@@ -46,11 +46,11 @@ public class Main extends JavaPlugin implements Listener {
 	public int Preparation = getConfig().getInt("PREPARATION");
 
 	public int PlayTime = 0;
-	public int MoneyTime = 30;
+	public int MoneyTime = 45;
 
 	public int MoneyMoneyMoney = 50;
 
-	public static Location StartLocation;
+	public static Location StartLocation = null;
 
 	public int iMAGO = 0;
 	public int iWEREWOLF = 0;
@@ -422,10 +422,10 @@ public class Main extends JavaPlugin implements Listener {
 							if(PLAYER.contains(a.getName()) && !DEATH.contains(a.getName())) {
 								COIN.put(a.getName(), COIN.get(a.getName())+MoneyMoneyMoney);
 								lib.sendTitleTarget(a, "", ChatColor.YELLOW + "" + MoneyMoneyMoney + " COIN" + ChatColor.RESET + " 付与されました。 ");
-								lib.SoundPlayer(a, Sound.ENTITY_PLAYER_LEVELUP, 1.4F);
+								//lib.SoundPlayer(a, Sound.ENTITY_PLAYER_LEVELUP, 1.4F);
 							}
 						}
-						
+
 						PlayTime = 0;
 					}
 
@@ -439,7 +439,9 @@ public class Main extends JavaPlugin implements Listener {
 					}
 
 					for(Player a : Bukkit.getOnlinePlayers()){
-						lib.sendActionBar(a,  RoleManager.roleNameChanger(ROLE.get(a.getName())) + ChatColor.RESET + " | " + "COIN : " + COIN.get(a.getName()));
+						if(ROLE.containsKey(a.getName())) {
+							lib.sendActionBar(a,  RoleManager.roleNameChanger(ROLE.get(a.getName())) + ChatColor.RESET + " | " + "COIN : " + COIN.get(a.getName()));
+						}
 					}
 				}
 

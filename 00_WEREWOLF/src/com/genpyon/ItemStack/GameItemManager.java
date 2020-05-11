@@ -35,6 +35,11 @@ public class GameItemManager {
 		return is;
 	}
 
+	static public ItemStack WEREWOLF_BOOK() {
+		ItemStack is = lib.createItem(Material.BOOK, 1, ChatColor.BOLD + "偽物の本", "" ,ChatColor.RESET + "な役に立たない。");
+		return is;
+	}
+
 
 
 	static public ItemStack CO_INNOCENT() {
@@ -53,7 +58,7 @@ public class GameItemManager {
 	}
 
 	static public ItemStack CO_DETECTIVE() {
-		ItemStack is = lib.createItemMeta(Material.WOOL, 1 ,(byte) 11, ChatColor.RESET + "全体に " +  ChatColor.BLUE + "" + ChatColor.BOLD + "長老" + ChatColor.RESET + " を宣言する。");
+		ItemStack is = lib.createItemMeta(Material.WOOL, 1 ,(byte) 11, ChatColor.RESET + "全体に " +  ChatColor.BLUE + "" + ChatColor.BOLD + "探偵" + ChatColor.RESET + " を宣言する。");
 		return is;
 	}
 

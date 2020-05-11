@@ -70,6 +70,8 @@ public class GameManager implements Listener {
 		Main.HAKUROU.clear();
 		Main.JACKAL.clear();
 
+		Main.CO.clear();
+
 		Main.cINNOCENT = plugin.getConfig().getInt("COIN.INNOCENT");
 		Main.cWEREWOLF = plugin.getConfig().getInt("COIN.WEREWOLF");
 		Main.cHAKUROU = plugin.getConfig().getInt("COIN.HAKUROU");
@@ -95,6 +97,9 @@ public class GameManager implements Listener {
 			if(!a.getGameMode().equals(GameMode.CREATIVE)){
 				plugin.pm.DefaultStuff(a);
 			}
+
+			//クールダウンの初期化
+			a.setCooldown(Material.BOOK, 0);
 		}
 
 		Main.dropedItemsClear();
@@ -113,7 +118,7 @@ public class GameManager implements Listener {
 	@EventHandler
 	public void sneakCanceled(PlayerToggleSneakEvent b){
 
-		if(plugin.GameStatus == 3){
+		if(plugin.GameStatus == 3 && !b.getPlayer().getGameMode().equals(GameMode.SPECTATOR)){
 			b.setCancelled(true);
 		}
 	}
@@ -156,6 +161,7 @@ public class GameManager implements Listener {
 		//全員イノセントにし、ゲームプレイヤーに設定する。
 		for(Player a : Bukkit.getOnlinePlayers()){
 			if(a.getGameMode().equals(GameMode.ADVENTURE)){
+
 
 				Main.ROLE.put(a.getName(), "INNOCENT");
 

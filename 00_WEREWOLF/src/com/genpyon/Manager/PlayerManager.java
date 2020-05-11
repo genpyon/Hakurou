@@ -98,7 +98,7 @@ public class PlayerManager implements Listener {
 		if(role != null) {
 			String sengen = ChatColor.RED + " [!] " + ChatColor.YELLOW + p.getName() + ChatColor.RESET +  " は " + role + " を宣言しました。";
 			Bukkit.broadcastMessage(sengen);
-			lib.SoundAllPlayer(Sound.ENTITY_PLAYER_LEVELUP, 2F);
+			lib.SoundAllPlayer(Sound.ENTITY_CHICKEN_EGG, 1.6F);
 		} else {
 			return;
 		}
@@ -117,8 +117,11 @@ public class PlayerManager implements Listener {
 		p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40);
 		p.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(100);
 		p.setFoodLevel(15);
-
+		if(Main.StartLocation == null) {
 		plugin.configLocationTeleport("Lobby", p, true);
+		} else {
+			p.teleport(Main.StartLocation);
+		}
 
 		if(Main.USER.hasEntry(p.getName())){
 
@@ -163,6 +166,10 @@ public class PlayerManager implements Listener {
 
 		if(Main.ROLE.containsKey(p.getName()) && Main.ROLE.get(p.getName()).equalsIgnoreCase("DETECTIVE")){
 			inv.setItem(4, GameItemManager.URANAI_BOOK_ITEM());
+		}
+
+		if(Main.ROLE.containsKey(p.getName()) && Main.ROLE.get(p.getName()).equalsIgnoreCase("WEREWOLF")){
+			inv.setItem(4, GameItemManager.WEREWOLF_BOOK());
 		}
 	}
 

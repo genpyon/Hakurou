@@ -36,9 +36,15 @@ public class ChatListener implements Listener {
 		b.setCancelled(true);
 		Player p = b.getPlayer();
 
+
 		String message = b.getMessage();
 
 		String name = "<" + b.getPlayer().getName() + ">";
+
+		if(Main.DEATH.contains(p.getName())) {
+			b.setCancelled(true);
+			return;
+		}
 
 		String CO = null;
 
