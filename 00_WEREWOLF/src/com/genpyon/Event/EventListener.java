@@ -22,7 +22,6 @@ import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
@@ -53,26 +52,6 @@ public class EventListener implements Listener {
 
 		return;
 
-	}
-
-
-	@EventHandler
-	public void PlayerChatEvent(AsyncPlayerChatEvent b) {
-		b.setCancelled(true);
-
-		String message = b.getMessage();
-
-		String name = "[ " + b.getPlayer().getName() + " ] ";
-
-		String CO = null;
-
-		if(CO == null) {
-			CO = "";
-		}
-
-		String sendMessage = CO + name + message;
-
-		Bukkit.broadcastMessage(sendMessage);
 	}
 
 

@@ -17,6 +17,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Team;
 
+import com.genpyon.Event.ChatListener;
 import com.genpyon.Event.EventListener;
 import com.genpyon.Event.ShopListener;
 import com.genpyon.Library.lib;
@@ -86,6 +87,8 @@ public class Main extends JavaPlugin implements Listener {
 	public static ArrayList<String> HAKUROU = new ArrayList<String>();
 	public static ArrayList<String> JACKAL = new ArrayList<String>();
 
+	public static HashMap <String, String> CO = new HashMap<String, String>();
+
 	//ショップの金
 	public static  HashMap <String, Integer> COIN = new HashMap<String, Integer>();
 
@@ -130,6 +133,7 @@ public class Main extends JavaPlugin implements Listener {
 	public SkullManager sm = null;
 	public RoleManager rm = null;
 	public ShopListener sl= null;
+	public ChatListener cl = null;
 
 
 	Random rnd = new Random();
@@ -144,6 +148,7 @@ public class Main extends JavaPlugin implements Listener {
 		sm = new SkullManager(this);
 		rm = new RoleManager(this);
 		sl = new ShopListener(this);
+		cl = new ChatListener(this);
 
 		tm.ScoreboardCreate();
 		saveConfig();
@@ -275,15 +280,12 @@ public class Main extends JavaPlugin implements Listener {
 
 					if(cmd.equalsIgnoreCase("open")){
 						gm.openRole();
+						return ret;
 					}
 
-					if(cmd.equalsIgnoreCase("test")){
-
-						Bukkit.broadcastMessage(JACKAL.size() + " : " + INNOCENT.size() + " : " + WEREWOLF.size());
-						Bukkit.broadcastMessage("妖狐" + JACKAL.toString());
-						Bukkit.broadcastMessage("村人" + INNOCENT.toString());
-						Bukkit.broadcastMessage("人狼" + WEREWOLF.toString());
-
+					if(cmd.equalsIgnoreCase("sf")){
+						pm.GamePlayerStuff(p);
+						return ret;
 					}
 
 					if(cmd.equalsIgnoreCase("shop1")) {
@@ -318,57 +320,6 @@ public class Main extends JavaPlugin implements Listener {
 						}
 						return ret;
 					}
-
-
-					if(cmd.equalsIgnoreCase("sneak")){
-						if (args.length > 1) {
-							Player t = Bukkit.getServer().getPlayer(args[1]);
-
-							if (t == null) {
-								s.sendMessage(args[1] + " が存在しません。");
-								return true;
-
-							}
-							if(t !=null){
-
-								if(t.isSneaking() == false){
-									t.setSneaking(true);
-									lib.sendPlayer(p, "スニーク状態");
-								} else {
-									t.setSneaking(false);
-									lib.sendPlayer(p, "スニーク状態じゃないよ");
-								}
-							}
-
-						} else {
-							s.sendMessage("IDを指定してください。");
-						}
-						return ret;
-					}
-
-
-					if(cmd.equalsIgnoreCase("game")){
-						if(GameStatus == 1){
-							GameStatus = 2;
-							lib.sendPlayer(p, "GameStatus is "+ GameStatus);
-							return ret;
-						}
-
-						if(GameStatus == 2){
-							GameStatus = 3;
-							lib.sendPlayer(p, "GameStatus is "+ GameStatus);
-							return ret;
-						}
-
-						if(GameStatus == 3){
-							GameStatus = 1;
-							lib.sendPlayer(p, "GameStatus is "+ GameStatus);
-							return ret;
-						}
-
-						return ret;
-					}
-
 
 					if(cmd.equalsIgnoreCase("loc")){
 						if(args.length > 1){
@@ -432,12 +383,22 @@ public class Main extends JavaPlugin implements Listener {
 			@Override
 			public void run() {
 
+				if(GameStatus == 1){
+					for(Player a : Bukkit.getOnlinePlayers()){
+						lib.sendActionBar(a,  ChatColor.GRAY + "ゲーム準備中");
+					}
+				}
+
 
 				if(GameStatus == 2){
 
 					if(Preparation != 0){
 
 						Preparation--;
+
+						for(Player a : Bukkit.getOnlinePlayers()){
+							lib.sendActionBar(a,  ChatColor.GRAY + "ゲーム開始まで残り " + ChatColor.RED + Preparation + ChatColor.GRAY + " 秒");
+						}
 
 					} else {
 						gm.roleOpen(iMAGO,iDETECTIVE, iWEREWOLF, iJACKAL);
