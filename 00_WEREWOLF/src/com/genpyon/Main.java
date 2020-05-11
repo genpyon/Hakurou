@@ -19,8 +19,6 @@ import org.bukkit.scoreboard.Team;
 
 import com.genpyon.Event.EventListener;
 import com.genpyon.Event.ShopListener;
-import com.genpyon.Item.CommonItemType;
-import com.genpyon.Item.DetItemType;
 import com.genpyon.Library.lib;
 import com.genpyon.Manager.GameManager;
 import com.genpyon.Manager.PlayerManager;
@@ -343,15 +341,6 @@ public class Main extends JavaPlugin implements Listener {
 						return ret;
 					}
 
-					if(cmd.equalsIgnoreCase("test2")){
-
-						p.getInventory().addItem(CommonItemType.STONE_SWORD.toItemStack());
-						p.getInventory().addItem(CommonItemType.STONE_SWORD.toItemIcon());
-
-						p.getInventory().addItem(DetItemType.URANAI_BOOK.toItemStack());
-						p.getInventory().addItem(DetItemType.URANAI_BOOK.toItemIcon());
-						return ret;
-					}
 
 					if(cmd.equalsIgnoreCase("game")){
 						if(GameStatus == 1){
@@ -456,10 +445,10 @@ public class Main extends JavaPlugin implements Listener {
 					USER.setAllowFriendlyFire(true);
 
 					for(Player a : Bukkit.getOnlinePlayers()){
+
 						sm.haveSkullCheck(a);
+
 					}
-
-
 
 					if(GameTime != 0){
 

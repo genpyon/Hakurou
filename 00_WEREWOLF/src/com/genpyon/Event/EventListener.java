@@ -12,12 +12,14 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
+import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
@@ -47,6 +49,15 @@ public class EventListener implements Listener {
 
 		return;
 
+	}
+
+
+	@EventHandler
+	public void yagakieru(ProjectileHitEvent b){
+		Projectile projectile = (Projectile) b.getEntity();
+		Location hitted = projectile.getLocation();
+		hitted.getWorld().playSound(hitted, Sound.ENTITY_ARROW_HIT, 0.5F, 1F);
+		projectile.remove();
 	}
 
 	public boolean containsCaseInsensitive(String s, List<String> l){

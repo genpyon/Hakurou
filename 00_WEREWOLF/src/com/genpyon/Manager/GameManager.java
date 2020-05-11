@@ -66,6 +66,7 @@ public class GameManager implements Listener {
 
 		plugin.GameStatus = 1;
 
+
 		plugin.reloadConfig();
 
 		plugin.Preparation = plugin.getConfig().getInt("PREPARATION");
@@ -77,8 +78,9 @@ public class GameManager implements Listener {
 			if(!a.getGameMode().equals(GameMode.CREATIVE)){
 				plugin.pm.DefaultStuff(a);
 			}
-
 		}
+
+		Main.dropedItemsClear();
 	}
 
 	public void setTabName(){
@@ -469,8 +471,8 @@ public class GameManager implements Listener {
 		Bukkit.broadcastMessage("");
 		Bukkit.broadcastMessage("========================");
 		Bukkit.broadcastMessage("");
-		Bukkit.broadcastMessage(Title);
-		Bukkit.broadcastMessage(SubTitle);
+		Bukkit.broadcastMessage(" " + Title);
+		Bukkit.broadcastMessage("  " + SubTitle);
 		Bukkit.broadcastMessage("");
 		Bukkit.broadcastMessage("========================");
 		Bukkit.broadcastMessage("");

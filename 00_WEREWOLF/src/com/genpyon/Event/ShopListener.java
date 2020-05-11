@@ -3,6 +3,7 @@ package com.genpyon.Event;
 import java.util.Random;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -83,6 +84,11 @@ public class ShopListener implements Listener {
 
 		if(act == Action.LEFT_CLICK_AIR || act == Action.RIGHT_CLICK_AIR || act == Action.LEFT_CLICK_BLOCK || act == Action.RIGHT_CLICK_BLOCK){
 			if(ItemManager.hasMainHand(p, GameItemManager.URANAI_BOOK_ITEM())) {
+				if(p.hasCooldown(Material.BOOK)) {
+					lib.sendPlayer(p, " まだ使うトキではない。");
+					return;
+
+				}
 				p.openInventory(uranaiGetHeads());
 			}
 
@@ -114,7 +120,7 @@ public class ShopListener implements Listener {
 					lib.sendPlayer(p, "");
 
 					p.closeInventory();
-					p.getInventory().removeItem(GameItemManager.URANAI_BOOK_ITEM());
+					p.setCooldown(Material.BOOK, 20*90);
 
 
 				} else {

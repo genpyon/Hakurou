@@ -25,9 +25,30 @@ public class GameItemManager {
 		return is;
 	}
 
+	static public ItemStack WOODEN_BOW() {
+		ItemStack is = lib.createItem(Material.BOW, 1, ChatColor.BOLD + "傷だらけの古びた弓", "" ,ChatColor.RESET + "今にも折れそうなほど",ChatColor.RESET + "使い込まれている");
+		return is;
+	}
+
 	/**
 	 * ■ ショップアイテム - コモン  ■
+	 *
 	 */
+
+	public static final int ARROW_COST = 50;
+
+	static public ItemStack ARROW_ITEM() {
+		ItemStack is = lib.createItem(Material.ARROW, 16, "矢", "", "普通の矢");
+		return is;
+	}
+
+	static public ItemStack ARROW_ICON() {
+		ItemStack is = lib.createItem(Material.ARROW, 16, "矢", "", "普通の矢" , "" , Cost + STONE_SWORD_COST);
+		return is;
+	}
+
+
+
 
 	public static final int STONE_SWORD_COST = 200;
 
@@ -41,15 +62,16 @@ public class GameItemManager {
 		return is;
 	}
 
+
 	public static final int TSUYOI_BOW_COST = 200;
 
 	static public ItemStack TSUYOI_BOW_ITEM() {
-		ItemStack is = lib.createEnchantItem(Material.BOW, 1, Enchantment.ARROW_DAMAGE, 50, ChatColor.BOLD + "イカれた弓", "" ,ChatColor.RESET + "普通の剣。");
+		ItemStack is = lib.createEnchantItem(Material.BOW, 1, Enchantment.ARROW_DAMAGE, 1, ChatColor.BOLD + "イカれた弓", "" ,ChatColor.RESET + "強めの弓。");
 		return is;
 	}
 
 	static public ItemStack TSUYOI_BOW_ICON() {
-		ItemStack is = lib.createEnchantItem(Material.BOW, 1, Enchantment.ARROW_DAMAGE, 50, ChatColor.BOLD + "イカれた弓", "" ,ChatColor.RESET + "強めの弓。" , "" , Cost + TSUYOI_BOW_COST);
+		ItemStack is = lib.createEnchantItem(Material.BOW, 1, Enchantment.ARROW_DAMAGE, 1, ChatColor.BOLD + "イカれた弓", "" ,ChatColor.RESET + "強めの弓。" , "" , Cost + TSUYOI_BOW_COST);
 		return is;
 	}
 
@@ -82,6 +104,7 @@ public class GameItemManager {
 	/**
 	 * ■ ショップアイテム - 探偵向け  ■
 	 */
+
 	public static String URANAI_INV_NAME = ChatColor.BOLD + "探偵の手帳";
 	public static final int URANAI_BOOK_COST = 200;
 
@@ -97,4 +120,10 @@ public class GameItemManager {
 
 	public static String SENRIGAN_INV_NAME = ChatColor.BOLD + "千里眼";
 	public static final int SENRIGAN_COST = 200;
+
+
+
+	/**
+	 * ■ ショップアイテム - 探偵向け  ■
+	 */
 }

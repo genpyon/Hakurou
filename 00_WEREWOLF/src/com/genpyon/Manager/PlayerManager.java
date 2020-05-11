@@ -12,9 +12,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.Inventory;
 
 import com.genpyon.Main;
-import com.genpyon.Library.lib;
-
-import net.md_5.bungee.api.ChatColor;
+import com.genpyon.ItemStack.GameItemManager;
 
 
 
@@ -69,10 +67,14 @@ public class PlayerManager implements Listener {
 
 		p.setFoodLevel(15);
 
+		//初期アイテムの配布
+		inv.setItem(0, GameItemManager.WOODEN_SWORD());
+		inv.setItem(1, GameItemManager.WOODEN_BOW());
+		inv.setItem(2, GameItemManager.ARROW_ITEM());
 
-		inv.setItem(0, lib.createItem(Material.WOOD_SWORD, 1, ChatColor.BOLD + "傷だらけの古びた剣", "" ,ChatColor.RESET + "今にも折れそうなほど",ChatColor.RESET + "使い込まれている"));
-
-
+		if(Main.ROLE.get(p.getName()).equalsIgnoreCase("DETECTIVE")){
+			inv.setItem(4, GameItemManager.URANAI_BOOK_ITEM());
+		}
 	}
 
 	public void DeathPlayer(Player p, Location loc){
