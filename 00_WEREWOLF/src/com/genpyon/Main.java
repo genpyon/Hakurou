@@ -385,7 +385,7 @@ public class Main extends JavaPlugin implements Listener {
 
 				if(GameStatus == 1){
 					for(Player a : Bukkit.getOnlinePlayers()){
-						lib.sendActionBar(a,  ChatColor.GRAY + "ゲーム準備中");
+						lib.sendActionBar(a,  ChatColor.GRAY + "" + ChatColor.BOLD + "ゲーム待機中");
 					}
 				}
 
@@ -418,9 +418,14 @@ public class Main extends JavaPlugin implements Listener {
 
 					if(PlayTime >= MoneyTime){
 						for(Player a : Bukkit.getOnlinePlayers()){
-							COIN.put(a.getName(), COIN.get(a.getName())+MoneyMoneyMoney);
-							lib.sendPlayer(a, " " + ChatColor.YELLOW + MoneyMoneyMoney + " COIN" + ChatColor.RESET + " 付与されました。 ");
+
+							if(PLAYER.contains(a.getName()) && !DEATH.contains(a.getName())) {
+								COIN.put(a.getName(), COIN.get(a.getName())+MoneyMoneyMoney);
+								lib.sendTitleTarget(a, "", ChatColor.YELLOW + "" + MoneyMoneyMoney + " COIN" + ChatColor.RESET + " 付与されました。 ");
+								lib.SoundPlayer(a, Sound.ENTITY_PLAYER_LEVELUP, 1.4F);
+							}
 						}
+						
 						PlayTime = 0;
 					}
 

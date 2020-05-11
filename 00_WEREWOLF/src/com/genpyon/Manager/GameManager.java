@@ -567,9 +567,9 @@ public class GameManager implements Listener {
 		}
 
 		if(killer != null) {
-			lib.sendPlayer(death, killer.getName() + " に殺されたよーんｗ");
+			lib.sendPlayer(death, ChatColor.RED + killer.getName() + ChatColor.RESET + " に殺されました。");
 		} else {
-			lib.sendPlayer(death, " 自殺したよーんｗ");
+			lib.sendPlayer(death, ChatColor.RED + "自滅しました。");
 		}
 
 		//
