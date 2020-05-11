@@ -43,7 +43,7 @@ public class GameItemManager {
 	}
 
 	static public ItemStack ARROW_ICON() {
-		ItemStack is = lib.createItem(Material.ARROW, 16, "矢", "", "普通の矢" , "" , Cost + STONE_SWORD_COST);
+		ItemStack is = lib.createItem(Material.ARROW, 16, "矢", "", "普通の矢" , "" , Cost + ARROW_COST);
 		return is;
 	}
 

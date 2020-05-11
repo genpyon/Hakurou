@@ -5,9 +5,6 @@ import static com.genpyon.ItemStack.GameItemManager.*;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-import com.genpyon.Main;
-import com.genpyon.Item.Common.Arrow;
-
 public enum DetItemType {
 	ARROW(ARROW_COST), //矢
 	//SENRIGAN(SENRIGAN_COST);
@@ -22,9 +19,9 @@ public enum DetItemType {
 	public ItemStack toItemStack() {
 		ItemStack item = null;
 		switch (this) {
-		case ARROW:
+		/*case ARROW:
 			item = new Arrow(Main.getMain()).getItemStack();
-			break;
+			break;*/
 		default:
 			item = new ItemStack(Material.PAPER);
 			break;
@@ -35,9 +32,9 @@ public enum DetItemType {
 	public ItemStack toItemIcon() {
 		ItemStack item = null;
 		switch (this) {
-		case ARROW:
+		/*case ARROW:
 			item = new Arrow(Main.getMain()).getIcon();
-			break;
+			break;*/
 		default:
 			item = new ItemStack(Material.PAPER);
 			break;

@@ -91,6 +91,8 @@ public class PlayerManager implements Listener {
 				inv.removeItem(inv.getItem(i));
 			}
 		}
+
+		p.setGameMode(GameMode.SPECTATOR);
 	}
 
 

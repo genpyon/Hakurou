@@ -6,12 +6,10 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import com.genpyon.Main;
-import com.genpyon.Item.Common.Arrow;
 import com.genpyon.Item.Wolf.Teleport;
 
 public enum WolfItemType {
-	TELEPORT(TELEPORT_COST),
-	ARROW(ARROW_COST),/* テレポートアイテム */
+	TELEPORT(TELEPORT_COST),/* テレポートアイテム */
 	;
 
 	private final int cost;
@@ -26,9 +24,6 @@ public enum WolfItemType {
 		case TELEPORT:
 			item = new Teleport(Main.getMain()).getItemStack();
 			break;
-		case ARROW:
-			item = new Arrow(Main.getMain()).getItemStack();
-			break;
 		default:
 			item = new ItemStack(Material.PAPER);
 			break;
@@ -41,9 +36,6 @@ public enum WolfItemType {
 		switch (this) {
 		case TELEPORT:
 			item = new Teleport(Main.getMain()).getIcon();
-			break;
-		case ARROW:
-			item = new Arrow(Main.getMain()).getIcon();
 			break;
 		default:
 			item = new ItemStack(Material.PAPER);

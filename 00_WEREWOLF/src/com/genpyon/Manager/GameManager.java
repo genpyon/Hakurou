@@ -19,6 +19,7 @@ import org.bukkit.event.player.PlayerToggleSneakEvent;
 
 import com.genpyon.Main;
 import com.genpyon.Library.lib;
+import com.genpyon.Role.RoleManager;
 
 import net.md_5.bungee.api.ChatColor;
 
@@ -493,32 +494,7 @@ public class GameManager implements Listener {
 
 			String ROLE = Main.ROLE.get(Main.PLAYER.get(i));
 
-			if(ROLE.equalsIgnoreCase("INNOCENT")){
-				rolename = ChatColor.GREEN + "村人" + ChatColor.RESET;
-			}
-
-			if(ROLE.equalsIgnoreCase("TYOUROU")){
-				rolename = ChatColor.DARK_GREEN + "長老" + ChatColor.RESET;
-			}
-
-			if(ROLE.equalsIgnoreCase("DETECTIVE")){
-				rolename = ChatColor.BLUE + "探偵" + ChatColor.RESET;
-			}
-
-			if(ROLE.equalsIgnoreCase("MAGO")){
-				rolename = ChatColor.GREEN + "孫" + ChatColor.RESET;
-			}
-
-			if(ROLE.equalsIgnoreCase("WEREWOLF")){
-				rolename = ChatColor.RED + "人狼" + ChatColor.RESET;
-			}
-			if(ROLE.equalsIgnoreCase("HAKUROU")){
-				rolename = ChatColor.DARK_RED + "白狼" + ChatColor.RESET;
-			}
-
-			if(ROLE.equalsIgnoreCase("JACKAL")){
-				rolename = ChatColor.AQUA + "妖狐" + ChatColor.RESET;
-			}
+			rolename = RoleManager.roleNameChanger(ROLE);
 
 			Bukkit.broadcastMessage("  [ " + rolename + " ] : " +  Main.PLAYER.get(i));
 		}
@@ -556,28 +532,29 @@ public class GameManager implements Listener {
 		}
 	}
 
-
 	@EventHandler
 	public void playerKillEvent(PlayerDeathEvent b){
 
-		if(plugin.GameStatus != 3){
-			return;
-		}
+		b.setDeathMessage(null);
 
-		b.setDeathMessage("");
-
-		Player killer = b.getEntity().getPlayer();
 		Player death = b.getEntity().getPlayer();
+		Player killer = null;
 
 		Location loc = death.getLocation();
 		loc.setY(loc.getY() +1);
 
 
-		if(killer == null){
+		if(b.getEntity().getKiller() instanceof Player){
+			killer = b.getEntity().getKiller();
+		} else {
 
 		}
 
-
+		if(killer != null) {
+			lib.sendPlayer(death, killer.getName() + " に殺されたよーんｗ");
+		} else {
+			lib.sendPlayer(death, " 自殺したよーんｗ");
+		}
 
 		//
 		if(Main.ROLE.containsKey(death.getName())){
