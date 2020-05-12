@@ -62,6 +62,7 @@ public class Blink extends AbstractItem {
 	 * スケジューラで回す
 	 */
 	public static void chargeBlink() {
+		if (onCharge.size() == 0) return;
 		onCharge.forEach(p -> {
 			blinkPower.put(p, blinkPower.get(p) + 1);
 		});
@@ -81,7 +82,7 @@ public class Blink extends AbstractItem {
 
 		Vector vec = loc.getDirection().normalize();
 		Location to = p.getLocation().clone();
-		for (int i = 0; i<power; vec.multiply(i)) {
+		for (int i = 0; i<power; i++) {
 			loc.add(vec);
 			if (loc.getBlock().getType() != Material.AIR) break;
 			to = loc;
