@@ -384,12 +384,12 @@ public class GameManager implements Listener {
 			Main.COIN.put(p.getName(), coin);
 
 			if(Main.ROLE.get(name).equals("WEREWOLF") || Main.ROLE.get(name).equals("HAKUROU")){
-				lib.sendPlayer(p, ChatColor.RED + "仲間の人狼 : " + Main.WEREWOLF.toString());
-				lib.sendPlayer(p, ChatColor.DARK_RED + "白狼 : " + Main.HAKUROU.toString());
+				lib.sendPlayer(p, ChatColor.RED + " 仲間の人狼 : " + Main.WEREWOLF.toString());
+				lib.sendPlayer(p, ChatColor.DARK_RED + " 白狼 : " + Main.HAKUROU.toString());
 			}
 
 			if(Main.ROLE.get(name).equals("MAGO")){
-				lib.sendPlayer(p, ChatColor.DARK_GREEN + "長老 : " + Main.TYOUROU.toString());
+				lib.sendPlayer(p, ChatColor.DARK_GREEN + " 長老 : " + Main.TYOUROU.toString());
 			}
 
 			lib.SoundPlayer(p, Sound.ENTITY_WOLF_HOWL, 2F);
@@ -575,9 +575,9 @@ public class GameManager implements Listener {
 		}
 
 		if(killer != null) {
-			lib.sendPlayer(death, ChatColor.RED + killer.getName() + ChatColor.RESET + " に殺されました。");
+			lib.sendPlayer(death, " " + ChatColor.RED + killer.getName() + ChatColor.RESET + " に殺されました。");
 		} else {
-			lib.sendPlayer(death, ChatColor.RED + "自滅しました。");
+			lib.sendPlayer(death, ChatColor.RED + " 自滅しました。");
 		}
 
 		//

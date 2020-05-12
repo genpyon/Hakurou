@@ -7,10 +7,12 @@ import org.bukkit.inventory.ItemStack;
 
 import com.genpyon.Main;
 import com.genpyon.Item.Wolf.Blink;
+import com.genpyon.Item.Wolf.WolfChat;
 
 public enum WolfItemType {
 	TELEPORT(TELEPORT_COST), /* テレポートアイテム */
 	BLINK(BLINK_COST),
+	WEREWOLF_CHAT_ITEM(WEREWOLF_CHAT_COST),
 	;
 
 	private final int cost;
@@ -25,6 +27,9 @@ public enum WolfItemType {
 		case BLINK:
 			item = new Blink(Main.getMain()).getItemStack();
 			break;
+		case WEREWOLF_CHAT_ITEM:
+			item = new WolfChat(Main.getMain()).getItemStack();
+			break;
 		default:
 			item = new ItemStack(Material.AIR);
 			break;
@@ -37,6 +42,9 @@ public enum WolfItemType {
 		switch (this) {
 		case BLINK:
 			item = new Blink(Main.getMain()).getIcon();
+			break;
+		case WEREWOLF_CHAT_ITEM:
+			item = new WolfChat(Main.getMain()).getIcon();
 			break;
 		default:
 			item = new ItemStack(Material.AIR);

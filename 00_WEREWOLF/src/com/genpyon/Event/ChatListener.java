@@ -57,7 +57,10 @@ public class ChatListener implements Listener {
 			if(p.getInventory().getItemInMainHand().equals(GameItemManager.WEREWOLF_CHAT_ITEM())){
 				for(Player a : Bukkit.getOnlinePlayers()) {
 					if(Main.ROLE.get(a.getName()).equalsIgnoreCase("HAKUROU") || Main.ROLE.get(a.getName()).equalsIgnoreCase("WEREWOLF")) {
-						lib.sendPlayer(a, ChatColor.DARK_RED + "[狼ONLY]" + name + message);
+						lib.sendPlayer(a, ChatColor.DARK_RED + " [狼ONLY]" + name + message);
+					a.getInventory().removeItem(GameItemManager.WEREWOLF_CHAT_ITEM());
+					} else {
+
 					}
 				}
 				b.setCancelled(true);
