@@ -68,7 +68,7 @@ public class EventListener implements Listener {
 
 			if(p.getInventory().getItemInMainHand() != null && p.getInventory().getItemInMainHand().getType().equals(Material.DOUBLE_PLANT)){
 				if(Main.ROLE.containsKey(p.getName())) {
-					
+
 					if(Main.ROLE.get(p.getName()).equalsIgnoreCase("INNOCENT")) {
 						ShopManager.openShop(p, ShopType.COMMON_SHOP);
 						return;
@@ -331,6 +331,7 @@ public class EventListener implements Listener {
 	/**
 	 * Blinkのやつ
 	 */
+	@EventHandler
 	public void whenUseBlink(PlayerToggleSneakEvent e) {
 		Player p = e.getPlayer();
 		if (ItemManager.hasOffHand(p, new Blink(plugin).getItemStack())) {
