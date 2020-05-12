@@ -33,7 +33,9 @@ import com.genpyon.Main;
 import com.genpyon.Item.CommonItemType;
 import com.genpyon.Item.DetItemType;
 import com.genpyon.Item.WolfItemType;
+import com.genpyon.Item.Wolf.Blink;
 import com.genpyon.Library.lib;
+import com.genpyon.Manager.ItemManager;
 import com.genpyon.Manager.ShopManager;
 import com.genpyon.Manager.SkullManager;
 import com.genpyon.Shop.ShopType;
@@ -323,6 +325,16 @@ public class EventListener implements Listener {
 					Bukkit.getLogger().warning("[LMS] 看板やばいよException");
 				}
 			}
+		}
+	}
+
+	/**
+	 * Blinkのやつ
+	 */
+	public void whenUseBlink(PlayerToggleSneakEvent e) {
+		Player p = e.getPlayer();
+		if (ItemManager.hasOffHand(p, new Blink(plugin).getItemStack())) {
+			Blink.useBlink(p);
 		}
 	}
 

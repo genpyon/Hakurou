@@ -20,6 +20,9 @@ import org.bukkit.scoreboard.Team;
 import com.genpyon.Event.ChatListener;
 import com.genpyon.Event.EventListener;
 import com.genpyon.Event.ShopListener;
+import com.genpyon.Item.CommonItemType;
+import com.genpyon.Item.DetItemType;
+import com.genpyon.Item.Wolf.BlinkTimer;
 import com.genpyon.Library.lib;
 import com.genpyon.Manager.GameManager;
 import com.genpyon.Manager.PlayerManager;
@@ -153,6 +156,8 @@ public class Main extends JavaPlugin implements Listener {
 		tm.ScoreboardCreate();
 		saveConfig();
 		Timer();
+
+		new BlinkTimer().runTaskTimer(this, 1, 1);
 
 		StartLocation = configLocation("Lobby");
 		gm.Reset();
