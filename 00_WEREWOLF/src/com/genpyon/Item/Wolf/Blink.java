@@ -87,7 +87,7 @@ public class Blink extends AbstractItem {
 			to = loc;
 			loc.subtract(vec);
 		}
-
+		p.setFallDistance(0);
 		p.teleport(to);
 		blinkPower.remove(p);
 		onCharge.remove(p);

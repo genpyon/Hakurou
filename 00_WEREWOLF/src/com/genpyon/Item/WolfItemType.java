@@ -6,7 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import com.genpyon.Main;
-import com.genpyon.Item.Wolf.Teleport;
+import com.genpyon.Item.Wolf.Blink;
 
 public enum WolfItemType {
 	TELEPORT(TELEPORT_COST), /* テレポートアイテム */
@@ -22,8 +22,8 @@ public enum WolfItemType {
 	public ItemStack toItemStack() {
 		ItemStack item = null;
 		switch (this) {
-		case TELEPORT:
-			item = new Teleport(Main.getMain()).getItemStack();
+		case BLINK:
+			item = new Blink(Main.getMain()).getItemStack();
 			break;
 		default:
 			item = new ItemStack(Material.AIR);
@@ -35,8 +35,8 @@ public enum WolfItemType {
 	public ItemStack toItemIcon() {
 		ItemStack item = null;
 		switch (this) {
-		case TELEPORT:
-			item = new Teleport(Main.getMain()).getIcon();
+		case BLINK:
+			item = new Blink(Main.getMain()).getIcon();
 			break;
 		default:
 			item = new ItemStack(Material.AIR);
