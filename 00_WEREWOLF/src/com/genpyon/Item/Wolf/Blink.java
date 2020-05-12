@@ -1,6 +1,7 @@
 package com.genpyon.Item.Wolf;
 
 import java.util.HashMap;
+import java.util.HashSet;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -15,7 +16,8 @@ import com.genpyon.ItemStack.GameItemManager;
 
 public class Blink extends AbstractItem {
 
-	public static HashMap<Player, Integer> blinkPower = new HashMap<>();
+	private static HashMap<Player, Integer> blinkPower = new HashMap<>();
+	private static HashSet<Player> onCharge = new HashSet<>();
 
 	public Blink(Main plugin) {
 		super(plugin);
@@ -31,15 +33,38 @@ public class Blink extends AbstractItem {
 		return GameItemManager.BLINK_ICON();
 	}
 
-	public static void chargeBlink(Player p) {
+	/**
+	 * ToggleSneakEventで呼ぶ
+	 * @param p
+	 */
+	public static void useBlink(Player p) {
+		Integer power = blinkPower.get(p);
+		if (power == null) {
+			startBlink(p);
+			return;
+		} else {
+			releaseBlink(p);
+			return;
+		}
+	}
+
+	public static void startBlink(Player p) {
 		Integer power = blinkPower.get(p);
 		if (power == null) {
 			power = Integer.valueOf(0);
 			blinkPower.put(p, 0);
+			onCharge.add(p);
 			p.playSound(p.getLocation(), Sound.ENTITY_GHAST_WARN, 0.5F, 1F);
 		}
+	}
 
-		blinkPower.put(p, power + 1);
+	/**
+	 * スケジューラで回す
+	 */
+	public static void chargeBlink() {
+		onCharge.forEach(p -> {
+			blinkPower.put(p, blinkPower.get(p) + 1);
+		});
 	}
 
 	public static void releaseBlink(Player p) {
@@ -65,6 +90,7 @@ public class Blink extends AbstractItem {
 
 		p.teleport(to);
 		blinkPower.remove(p);
+		onCharge.remove(p);
 	}
 
 }

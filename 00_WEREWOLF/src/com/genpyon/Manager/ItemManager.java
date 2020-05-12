@@ -21,6 +21,16 @@ public class ItemManager {
 	}
 
 	/**
+	 * 指定のアイテムをおっはんどに持っているか判定
+	 */
+	public static boolean hasOffHand(Player p, ItemStack item) {
+		boolean hasOffHand = false;
+		ItemStack off = p.getInventory().getItemInOffHand();
+		hasOffHand = isSameItem(item, off);
+		return hasOffHand;
+	}
+
+	/**
 	 * ２つのアイテムが同じものかをゆるめに判定する
 	 * 基本的に名前だけで決めつけていこうな。
 	 * @return
