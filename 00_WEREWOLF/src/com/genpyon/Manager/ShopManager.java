@@ -115,13 +115,13 @@ public class ShopManager {
 
 		// お金が足りないときのやつ
 		if (coin < cost) {
-			p.sendMessage(ChatColor.RED + "コインが足りません");
+			p.sendMessage(" " + ChatColor.RED + "コインが足りません");
 			return;
 		}
 
 		// 購入してもいいよの処理
 		Main.COIN.put(name, coin - cost);
 		p.getInventory().addItem(item);
-		p.sendMessage(item.getItemMeta().getDisplayName() + "を購入しました");
+		p.sendMessage(" " + item.getItemMeta().getDisplayName() + "を購入しました");
 	}
 }

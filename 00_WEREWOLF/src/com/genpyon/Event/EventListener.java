@@ -331,6 +331,7 @@ public class EventListener implements Listener {
 	/**
 	 * Blinkのやつ
 	 */
+	@EventHandler
 	public void whenUseBlink(PlayerToggleSneakEvent e) {
 		Player p = e.getPlayer();
 		if (ItemManager.hasOffHand(p, new Blink(plugin).getItemStack())) {
