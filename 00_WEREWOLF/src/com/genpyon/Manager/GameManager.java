@@ -501,6 +501,8 @@ public class GameManager implements Listener {
 		Bukkit.broadcastMessage("");
 
 		plugin.GameStatus = 4;
+
+		Main.USER.setAllowFriendlyFire(false);
 	}
 
 

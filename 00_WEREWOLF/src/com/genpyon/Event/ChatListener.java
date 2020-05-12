@@ -42,9 +42,17 @@ public class ChatListener implements Listener {
 		String name = "<" + b.getPlayer().getName() + ">";
 
 		if(Main.DEATH.contains(p.getName())) {
+			for(Player a : Bukkit.getOnlinePlayers()) {
+				if(Main.DEATH.contains(a.getName())) {
+					lib.sendPlayer(a, ChatColor.GRAY + "[霊界]"+ name + message);
+					lib.SoundAllPlayer(Sound.ENTITY_CHICKEN_EGG, 1.6F);
+				}
+			}
 			b.setCancelled(true);
 			return;
 		}
+
+
 
 		String CO = null;
 

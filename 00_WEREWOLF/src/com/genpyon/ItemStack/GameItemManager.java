@@ -105,12 +105,16 @@ public class GameItemManager {
 	public static final int STONE_SWORD_COST = 200;
 
 	static public ItemStack STONE_SWORD_ITEM() {
-		ItemStack is = lib.createItem(Material.STONE_SWORD, 1, ChatColor.BOLD + "傷のついた石の剣", "" ,ChatColor.RESET + "普通の剣。");
+		ItemStack is = lib.createItem(Material.STONE_SWORD, 1, ChatColor.BOLD + "傷のついた石の剣", "" ,
+				ChatColor.RESET + "普通の剣。");
 		return is;
 	}
 
 	static public ItemStack STONE_SWORD_ICON() {
-		ItemStack is = lib.createItem(Material.STONE_SWORD, 1, ChatColor.BOLD + "傷のついた石の剣", "" ,ChatColor.RESET + "普通の剣。" , "" , Cost + STONE_SWORD_COST);
+		ItemStack is = lib.createItem(Material.STONE_SWORD, 1, ChatColor.BOLD + "傷のついた石の剣", "" ,
+				ChatColor.RESET + "普通の剣。" ,
+				"" ,
+				Cost + STONE_SWORD_COST);
 		return is;
 	}
 
@@ -118,12 +122,16 @@ public class GameItemManager {
 	public static final int TSUYOI_BOW_COST = 200;
 
 	static public ItemStack TSUYOI_BOW_ITEM() {
-		ItemStack is = lib.createEnchantItem(Material.BOW, 1, Enchantment.ARROW_DAMAGE, 1, ChatColor.BOLD + "イカれた弓", "" ,ChatColor.RESET + "強めの弓。");
+		ItemStack is = lib.createEnchantItem(Material.BOW, 1, Enchantment.ARROW_DAMAGE, 1, ChatColor.BOLD + "イカれた弓", "" ,
+				ChatColor.RESET + "強めの弓。");
 		return is;
 	}
 
 	static public ItemStack TSUYOI_BOW_ICON() {
-		ItemStack is = lib.createEnchantItem(Material.BOW, 1, Enchantment.ARROW_DAMAGE, 1, ChatColor.BOLD + "イカれた弓", "" ,ChatColor.RESET + "強めの弓。" , "" , Cost + TSUYOI_BOW_COST);
+		ItemStack is = lib.createEnchantItem(Material.BOW, 1, Enchantment.ARROW_DAMAGE, 1, ChatColor.BOLD + "イカれた弓", "" ,
+				ChatColor.RESET + "強めの弓。" ,
+				"" ,
+				Cost + TSUYOI_BOW_COST);
 		return is;
 	}
 
@@ -134,22 +142,42 @@ public class GameItemManager {
 	 * ■ ショップアイテム - 人狼向け  ■
 	 */
 
-	public static final String TELEPORT_INV_NAME = ChatColor.BOLD + "てれぽーたー";
+	public static final String TELEPORT_INV_NAME = ChatColor.RED + "てれぽーたー";
 	public static final int TELEPORT_COST = 300;
 
 	public static ItemStack TELEPORT_ITEM() {
-		return lib.createItem(Material.DIAMOND, 1, TELEPORT_INV_NAME, "",
+		return lib.createItem(Material.REDSTONE, 1, TELEPORT_INV_NAME, "",
 				ChatColor.RESET + "右クリックで座標を登録する",
 				ChatColor.RESET + "座標登録後殴ると相手をテレポート",
 				ChatColor.RESET + "座標登録後右クリックで自分をテレポート");
 	}
 
 	public static ItemStack TELEPORT_ICON() {
-		return lib.createItem(Material.DIAMOND, 1, TELEPORT_INV_NAME, "",
+		return lib.createItem(Material.REDSTONE, 1, TELEPORT_INV_NAME, "",
 				ChatColor.RESET + "右クリックで座標を登録する",
 				ChatColor.RESET + "座標登録後殴ると相手をテレポート",
 				ChatColor.RESET + "座標登録後右クリックで自分をテレポート",
-				"" , Cost + + TELEPORT_COST);
+				"" ,
+				Cost + + TELEPORT_COST);
+	}
+
+
+	public static final String WEREWOLF_CHAT_INV_NAME = ChatColor.RED + "狼の遠吠え";
+	public static final int WEREWOLF_CHAT_COST = 100;
+
+	public static ItemStack WEREWOLF_CHAT_ITEM() {
+		return lib.createItem(Material.BONE, 1, WEREWOLF_CHAT_INV_NAME, "",
+				ChatColor.RESET + "こいつを手に持った状態で",
+				ChatColor.RESET + "チャットをすると狼向けにチャットを",
+				ChatColor.RESET + "送信することができる");
+	}
+
+	public static ItemStack WEREWOLF_CHAT_ICON() {
+		return lib.createItem(Material.BONE, 1, WEREWOLF_CHAT_INV_NAME, "",
+				ChatColor.RESET + "こいつを手に持った状態で",
+				ChatColor.RESET + "チャットをすると狼向けにチャットを",
+				ChatColor.RESET + "送信することができる",
+				"" , Cost + + WEREWOLF_CHAT_COST);
 	}
 
 
@@ -161,12 +189,17 @@ public class GameItemManager {
 	public static final int URANAI_BOOK_COST = 200;
 
 	static public ItemStack URANAI_BOOK_ITEM() {
-		ItemStack is = lib.createItem(Material.BOOK, 1, ChatColor.BOLD + "探偵の手帳", "" ,ChatColor.RESET + "一定時間のうちに一人だけ", ChatColor.RESET + "役職を知ることができる。");
+		ItemStack is = lib.createItem(Material.BOOK, 1, ChatColor.BOLD + "探偵の手帳", "" ,
+				ChatColor.RESET + "一定時間のうちに一人だけ",
+				ChatColor.RESET + "役職を知ることができる。");
 		return is;
 	}
 
 	static public ItemStack URANAI_BOOK_ICON() {
-		ItemStack is = lib.createItem(Material.BOOK, 1, ChatColor.BOLD + "探偵の手帳", "" ,ChatColor.RESET + "一定時間のうちに一人だけ", ChatColor.RESET + "役職を知ることができる。" , "" , Cost + + STONE_SWORD_COST);
+		ItemStack is = lib.createItem(Material.BOOK, 1, ChatColor.BOLD + "探偵の手帳", "" ,
+				ChatColor.RESET + "一定時間のうちに一人だけ",
+				ChatColor.RESET + "役職を知ることができる。" , "" ,
+				Cost + + STONE_SWORD_COST);
 		return is;
 	}
 
