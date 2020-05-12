@@ -44,6 +44,7 @@ public class lib {
 	static public void sendPlayer(Player p, String msg){
 		if (p != null){
 			p.sendMessage(msg);
+			//Bukkit.getLogger().info(p.getName() + ":" + msg);
 		}else{
 			Bukkit.getLogger().info(msg);
 			return;

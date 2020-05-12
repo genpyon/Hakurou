@@ -87,7 +87,6 @@ public class ShopListener implements Listener {
 				if(p.hasCooldown(Material.BOOK)) {
 					lib.sendPlayer(p, " まだ使うトキではない。");
 					return;
-
 				}
 				p.openInventory(uranaiGetHeads());
 			}
@@ -120,7 +119,7 @@ public class ShopListener implements Listener {
 					lib.sendPlayer(p, "");
 
 					p.closeInventory();
-					p.setCooldown(Material.BOOK, 20*90);
+					p.setCooldown(Material.BOOK, 20*60);
 
 
 				} else {

@@ -10,6 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import com.genpyon.Main;
+import com.genpyon.ItemStack.GameItemManager;
 import com.genpyon.Library.lib;
 
 import net.md_5.bungee.api.ChatColor;
@@ -50,6 +51,18 @@ public class ChatListener implements Listener {
 			}
 			b.setCancelled(true);
 			return;
+		}
+
+		if(Main.WEREWOLF.contains(p.getName())) {
+			if(p.getInventory().getItemInMainHand().equals(GameItemManager.WEREWOLF_CHAT_ITEM())){
+				for(Player a : Bukkit.getOnlinePlayers()) {
+					if(Main.ROLE.get(a.getName()).equalsIgnoreCase("HAKUROU") || Main.ROLE.get(a.getName()).equalsIgnoreCase("WEREWOLF")) {
+						lib.sendPlayer(a, ChatColor.DARK_RED + "[狼ONLY]" + name + message);
+					}
+				}
+				b.setCancelled(true);
+				return;
+			}
 		}
 
 
