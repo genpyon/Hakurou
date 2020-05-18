@@ -3,6 +3,7 @@ package com.genpyon.Event;
 import java.util.Random;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -34,9 +35,14 @@ public class ChatListener implements Listener {
 
 	@EventHandler
 	public void PlayerChatEvent(AsyncPlayerChatEvent b) {
-		b.setCancelled(true);
+
 		Player p = b.getPlayer();
 
+		if(plugin.GameStatus != 3) {
+			return;
+		}
+
+		b.setCancelled(true);
 
 		String message = b.getMessage();
 
@@ -46,20 +52,19 @@ public class ChatListener implements Listener {
 			for(Player a : Bukkit.getOnlinePlayers()) {
 				if(Main.DEATH.contains(a.getName())) {
 					lib.sendPlayer(a, ChatColor.GRAY + "[霊界]"+ name + message);
-					lib.SoundAllPlayer(Sound.ENTITY_CHICKEN_EGG, 1.6F);
+					lib.SoundPlayer(a,Sound.ENTITY_CHICKEN_EGG, 1.6F);
 				}
 			}
 			b.setCancelled(true);
 			return;
 		}
 
-		if(Main.WEREWOLF.contains(p.getName())) {
-			if(p.getInventory().getItemInMainHand().equals(GameItemManager.WEREWOLF_CHAT_ITEM())){
+		if(Main.WEREWOLF.contains(p.getName()) || Main.HAKUROU.contains(p.getName())) {
+			if(p.getInventory().getItemInMainHand().getType().equals(Material.BONE)){
 				for(Player a : Bukkit.getOnlinePlayers()) {
-					if(Main.ROLE.get(name).equals("HAKUROU") || Main.ROLE.get(a.getName()).equals("WEREWOLF")) {
+					if(Main.ROLE.get(a.getName()).equalsIgnoreCase("HAKUROU") || Main.ROLE.get(a.getName()).equalsIgnoreCase("WEREWOLF")) {
 						lib.sendPlayer(a, ChatColor.DARK_RED + " [狼ONLY]" + name + message);
 						p.getInventory().removeItem(GameItemManager.WEREWOLF_CHAT_ITEM());
-
 					} else {
 
 					}

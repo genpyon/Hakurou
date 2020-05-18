@@ -55,6 +55,12 @@ public class GameManager implements Listener {
 
 
 	public void Reset(){
+		for(Player a : Bukkit.getOnlinePlayers()){
+			for(Player a2 : Bukkit.getOnlinePlayers()){
+				a.hidePlayer(a2);
+				a.showPlayer(a2);
+			}
+		}
 
 		Main.ROLE.clear();
 
@@ -160,6 +166,10 @@ public class GameManager implements Listener {
 
 		//全員イノセントにし、ゲームプレイヤーに設定する。
 		for(Player a : Bukkit.getOnlinePlayers()){
+			for(Player a2 : Bukkit.getOnlinePlayers()){
+				a.hidePlayer(a2);
+				a.showPlayer(a2);
+			}
 			if(a.getGameMode().equals(GameMode.ADVENTURE)){
 
 
@@ -176,7 +186,8 @@ public class GameManager implements Listener {
 
 				lib.SoundPlayer(a, Sound.ENTITY_ENDERMEN_TELEPORT, 0.2F);
 
-				p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40);
+				p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20);
+				p.setHealth(p.getHealthScale());
 
 			}
 
@@ -200,13 +211,15 @@ public class GameManager implements Listener {
 		//白狼,長老の振り分け
 
 		if(Main.NONROLE.size() > 1){
+			if(Main.TTTMode == false) {
 
-			Collections.shuffle(Main.NONROLE);
-			roleFor("HAKUROU", 1);
+				Collections.shuffle(Main.NONROLE);
+				roleFor("HAKUROU", 1);
 
-			Collections.shuffle(Main.NONROLE);
-			roleFor("TYOUROU", 1);
+				Collections.shuffle(Main.NONROLE);
+				roleFor("TYOUROU", 1);
 
+			}
 		}
 
 		if(Main.NONROLE.size() >= MAGO){
@@ -299,8 +312,8 @@ public class GameManager implements Listener {
 				coin = Main.cINNOCENT;
 
 
-				p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(60);
-				p.setHealth(60);
+				p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40);
+				p.setHealth(p.getHealthScale());
 			}
 
 
@@ -310,7 +323,7 @@ public class GameManager implements Listener {
 				zinei = ChatColor.GREEN + "村人陣営";
 
 				p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20);
-				p.setHealth(20);
+				p.setHealth(p.getHealthScale());
 
 
 				coin = Main.cINNOCENT;
@@ -386,10 +399,12 @@ public class GameManager implements Listener {
 			if(Main.ROLE.get(name).equals("WEREWOLF") || Main.ROLE.get(name).equals("HAKUROU")){
 				lib.sendPlayer(p, ChatColor.RED + " 仲間の人狼 : " + Main.WEREWOLF.toString());
 				lib.sendPlayer(p, ChatColor.DARK_RED + " 白狼 : " + Main.HAKUROU.toString());
+				lib.sendPlayer(p, "");
 			}
 
 			if(Main.ROLE.get(name).equals("MAGO")){
 				lib.sendPlayer(p, ChatColor.DARK_GREEN + " 長老 : " + Main.TYOUROU.toString());
+				lib.sendPlayer(p, "");
 			}
 
 			lib.SoundPlayer(p, Sound.ENTITY_WOLF_HOWL, 2F);
@@ -455,9 +470,7 @@ public class GameManager implements Listener {
 
 		//村人の勝ち
 		if(win == 1){
-
 			Title = ChatColor.GREEN + "村人陣営の勝利";
-
 			if(time == true){
 				SubTitle = "時間切れ";
 			} else {
@@ -468,22 +481,46 @@ public class GameManager implements Listener {
 		//人狼の勝ち
 
 		if(win == 2){
-
-
 			Title = ChatColor.RED + "人狼陣営の勝利";
 			SubTitle = ChatColor.DARK_GREEN + "長老" + ChatColor.RESET + " が倒された。";
-
-
 		}
+
+		//妖狐の勝ち
 
 		if(win == 3){
-
-
 			Title = ChatColor.AQUA + "妖狐陣営の勝利";
 			SubTitle = ChatColor.GREEN + "呪" + ChatColor.RESET + "";
-
 		}
 
+		//村人の勝ち TTTモード
+		if(win == 4){
+			Title = ChatColor.GREEN + "村人陣営の勝利";
+			if(time == true){
+				SubTitle = "時間切れ";
+			} else {
+				SubTitle = ChatColor.RED + "人狼" + ChatColor.RESET + " が全滅した。";
+			}
+		}
+
+		//人狼の勝ち TTTモード
+		if(win == 5){
+			Title = ChatColor.RED + "人狼陣営の勝利";
+			if(time == true){
+				SubTitle = "時間切れ";
+			} else {
+				SubTitle = ChatColor.RED + "村人" + ChatColor.RESET + " が全滅した。";
+			}
+		}
+
+		if(win == 6){
+			Title = ChatColor.AQUA + "妖狐陣営の勝利";
+			SubTitle = ChatColor.RED + "人狼" + ChatColor.RESET + "が全滅した。";
+		}
+
+		if(win == 7){
+			Title = ChatColor.AQUA + "妖狐陣営の勝利";
+			SubTitle = ChatColor.GREEN + "村人" + ChatColor.RESET + "が全滅した。";
+		}
 
 		lib.sendTitle(Title, SubTitle);
 		lib.SoundAllPlayer(Sound.ENTITY_ENDERDRAGON_FIREBALL_EXPLODE, 2F);
@@ -580,15 +617,41 @@ public class GameManager implements Listener {
 			lib.sendPlayer(death, ChatColor.RED + " 自滅しました。");
 		}
 
-		//
+		//人狼が死んだ時
 		if(Main.ROLE.containsKey(death.getName())){
 
 			if(Main.ROLE.get(death.getName()).equalsIgnoreCase("WEREWOLF")){
 				Main.WEREWOLF.remove(death.getName());
+				if(Main.TTTMode == true) {
+					if(Main.WEREWOLF.size() == 0) {
+						if(Main.JACKAL.size() != 0) {
+							//妖狐の勝ち
+							gameEnd(6, false);
+							return;
+						} else {
+							//村人の勝ち
+							gameEnd(4, false);
+							return;
+						}
+					}
+				}
 			}
 
+			//村人が死んだ時
 			if(Main.ROLE.get(death.getName()).equalsIgnoreCase("INNOCENT")){
 				Main.INNOCENT.remove(death.getName());
+
+				if(Main.INNOCENT.size() == 0) {
+					if(Main.JACKAL.size() != 0) {
+						//妖狐の勝ち
+						gameEnd(7, false);
+						return;
+					} else {
+						//人狼の勝ち
+						gameEnd(5, false);
+						return;
+					}
+				}
 			}
 
 			if(Main.ROLE.get(death.getName()).equalsIgnoreCase("HAKUROU")){
@@ -606,10 +669,14 @@ public class GameManager implements Listener {
 			}
 
 			if(Main.PLAYER.contains(death.getName()) && !Main.DEATH.contains(death.getName())){
-
 				plugin.pm.DeathPlayer(death ,loc);
-
 			}
+
+			if(Main.ROLE.get(death.getName()).equalsIgnoreCase("JACKAL")){
+				Main.JACKAL.remove(death.getName());
+				return;
+			}
+
 
 		}
 

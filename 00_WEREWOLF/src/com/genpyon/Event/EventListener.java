@@ -38,6 +38,7 @@ import com.genpyon.Library.lib;
 import com.genpyon.Manager.ItemManager;
 import com.genpyon.Manager.ShopManager;
 import com.genpyon.Manager.SkullManager;
+import com.genpyon.Role.RoleManager;
 import com.genpyon.Shop.ShopType;
 
 
@@ -133,12 +134,35 @@ public class EventListener implements Listener {
 
 					} else if(hakken.equalsIgnoreCase(ChatColor.YELLOW + "未発見")){
 
-						p.getInventory().remove(p.getInventory().getItemInMainHand());
-						p.getInventory().addItem(SkullManager.roleHeadChange(name));
+						if(Main.TTTMode == true) {
+
+							p.getInventory().remove(p.getInventory().getItemInMainHand());
+							p.getInventory().addItem(SkullManager.roleHeadChangeDetective(name));
+
+						} else {
+							p.getInventory().remove(p.getInventory().getItemInMainHand());
+							p.getInventory().addItem(SkullManager.roleHeadChange(name));
+						}
 					}
 
-					if(hakken.equalsIgnoreCase(ChatColor.YELLOW + "未発見")){
-						Bukkit.broadcastMessage(" " +ChatColor.RESET + p.getName() + " が " + ChatColor.RED + name + ChatColor.WHITE + "の生首を発見した。");
+					if(plugin.GameStatus == 3) {
+
+
+
+						if(hakken.equalsIgnoreCase(ChatColor.YELLOW + "未発見")){
+							if(Main.TTTMode == true) {
+								Bukkit.broadcastMessage(" " +ChatColor.RESET + p.getName() + " が " + ChatColor.RED + name + ChatColor.WHITE + "の生首を発見した。" + RoleManager.bookRoleNameChanger(Main.ROLE.get(name)) + "だった。");
+							} else {
+								Bukkit.broadcastMessage(" " +ChatColor.RESET + p.getName() + " が " + ChatColor.RED + name + ChatColor.WHITE + "の生首を発見した。");
+							}
+
+							if(Main.ROLE.get(name).equalsIgnoreCase("INNOCENT") || Main.ROLE.get(name).equalsIgnoreCase("DETECTIVE")) {
+								Bukkit.broadcastMessage("時間が20秒伸びたよ～笑");
+								plugin.GameTime = plugin.GameTime+20;
+							}
+
+							lib.SoundAllPlayer(Sound.ENTITY_PLAYER_LEVELUP, 1.4F);
+						}
 					}
 
 
@@ -347,45 +371,45 @@ public class EventListener implements Listener {
 	public void whenShopClicked(InventoryClickEvent e) {
 		// インベントリを取得してタイトルがあるかどうかを確認する
 		try {
-		Inventory inv = e.getInventory();
-		String invTitle = inv.getTitle();
-		if (invTitle == null) return;
+			Inventory inv = e.getInventory();
+			String invTitle = inv.getTitle();
+			if (invTitle == null) return;
 
-		// ShopInventoryのTitleにあってるかどうか
-		boolean isShop = false;
-		for (ShopType type :ShopType.values()) {
-			if (type.getTitle().equals(invTitle)) isShop = true;
-		}
-		if (!isShop) return;
-		e.setCancelled(true);
+			// ShopInventoryのTitleにあってるかどうか
+			boolean isShop = false;
+			for (ShopType type :ShopType.values()) {
+				if (type.getTitle().equals(invTitle)) isShop = true;
+			}
+			if (!isShop) return;
+			e.setCancelled(true);
 
-		// クリックしたプレイヤーとアイテムを取得
-		Player p = null;
-		ItemStack item = e.getCurrentItem();
-		if (e.getWhoClicked() instanceof Player)
-		p = (Player) e.getWhoClicked();
-		if (p == null || item == null) return;
+			// クリックしたプレイヤーとアイテムを取得
+			Player p = null;
+			ItemStack item = e.getCurrentItem();
+			if (e.getWhoClicked() instanceof Player)
+				p = (Player) e.getWhoClicked();
+			if (p == null || item == null) return;
 
-		// 各ショップタイプの購入処理
-		// FIXME: ちょっと原始的でムカつくので開いてるときに方法考える
-		for (CommonItemType type : CommonItemType.values()) {
-			if (type.toItemIcon().equals(item)) {
-				ShopManager.purchaseItem(p, type.toItemStack(), type.getCost());
-				return;
+			// 各ショップタイプの購入処理
+			// FIXME: ちょっと原始的でムカつくので開いてるときに方法考える
+			for (CommonItemType type : CommonItemType.values()) {
+				if (type.toItemIcon().equals(item)) {
+					ShopManager.purchaseItem(p, type.toItemStack(), type.getCost());
+					return;
+				}
 			}
-		}
-		for (DetItemType type : DetItemType.values()) {
-			if (type.toItemIcon().equals(item)) {
-				ShopManager.purchaseItem(p, type.toItemStack(), type.getCost());
-				return;
+			for (DetItemType type : DetItemType.values()) {
+				if (type.toItemIcon().equals(item)) {
+					ShopManager.purchaseItem(p, type.toItemStack(), type.getCost());
+					return;
+				}
 			}
-		}
-		for (WolfItemType type : WolfItemType.values()) {
-			if (type.toItemIcon().equals(item)) {
-				ShopManager.purchaseItem(p, type.toItemStack(), type.getCost());
-				return;
+			for (WolfItemType type : WolfItemType.values()) {
+				if (type.toItemIcon().equals(item)) {
+					ShopManager.purchaseItem(p, type.toItemStack(), type.getCost());
+					return;
+				}
 			}
-		}
 		} catch (Exception exception) {
 
 		}

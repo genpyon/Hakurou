@@ -114,11 +114,11 @@ public class PlayerManager implements Listener {
 		p.setGameMode(GameMode.ADVENTURE);
 		inv.clear();
 
-		p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40);
+		p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20);
 		p.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(100);
 		p.setFoodLevel(15);
 		if(Main.StartLocation == null) {
-		plugin.configLocationTeleport("Lobby", p, true);
+			plugin.configLocationTeleport("Lobby", p, true);
 		} else {
 			p.teleport(Main.StartLocation);
 		}
@@ -141,7 +141,7 @@ public class PlayerManager implements Listener {
 
 		p.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(100);
 
-		p.setHealth(40);
+		p.setHealth(p.getHealthScale());
 
 		p.setFoodLevel(15);
 
@@ -153,13 +153,16 @@ public class PlayerManager implements Listener {
 		inv.setItem(8, GameItemManager.SHOP_FLOWER());
 
 		inv.setItem(6+9, GameItemManager.CO_INNOCENT());
-		inv.setItem(7+9, GameItemManager.CO_MAGO());
-		inv.setItem(8+9, GameItemManager.CO_TYOUROU());
+		if(Main.TTTMode == false) {
+			inv.setItem(7+9, GameItemManager.CO_MAGO());
+			inv.setItem(8+9, GameItemManager.CO_TYOUROU());
+		}
 
 		inv.setItem(6+18, GameItemManager.CO_DETECTIVE());
 		inv.setItem(7+18, GameItemManager.CO_WEREWOLF());
-		inv.setItem(8+18, GameItemManager.CO_HAKUROU());
-
+		if(Main.TTTMode == false) {
+			inv.setItem(8+18, GameItemManager.CO_HAKUROU());
+		}
 		inv.setItem(6+27, GameItemManager.CO_JACKAL());
 		//inv.setItem(7+27, GameItemManager.CO_MAGO());
 		inv.setItem(8+27, GameItemManager.CO_GRAY());
@@ -170,6 +173,11 @@ public class PlayerManager implements Listener {
 
 		if(Main.ROLE.containsKey(p.getName()) && Main.ROLE.get(p.getName()).equalsIgnoreCase("WEREWOLF")){
 			inv.setItem(4, GameItemManager.WEREWOLF_BOOK());
+			inv.setItem(5, GameItemManager.WEREWOLF_CHAT_ITEM());
+		}
+
+		if(Main.ROLE.containsKey(p.getName()) && Main.ROLE.get(p.getName()).equalsIgnoreCase("HAKUROU")){
+			inv.setItem(5, GameItemManager.WEREWOLF_CHAT_ITEM());
 		}
 	}
 
@@ -182,8 +190,6 @@ public class PlayerManager implements Listener {
 		inv.clear();
 
 		p.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(100);
-		p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40);
-		p.setHealth(40);
 
 		p.setFoodLevel(15);
 

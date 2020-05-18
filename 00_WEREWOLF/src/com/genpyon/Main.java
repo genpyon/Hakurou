@@ -5,7 +5,9 @@ import java.util.HashMap;
 import java.util.Random;
 
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -69,6 +71,7 @@ public class Main extends JavaPlugin implements Listener {
 
 
 	public static boolean DetectiveMode = true;
+	public static boolean TTTMode = true;
 
 
 
@@ -281,6 +284,18 @@ public class Main extends JavaPlugin implements Listener {
 						}
 					}
 
+					if(cmd.equalsIgnoreCase("ttt")){
+						if(TTTMode == false) {
+							Bukkit.broadcastMessage(" TTTモードオンッッッッッッッッッッッッ！！！！！！");
+							TTTMode = true;
+							return ret;
+						} else {
+							Bukkit.broadcastMessage(" TTTモードオフッッッッッッッッッッッッ！！！！！！");
+							TTTMode = false;
+							return ret;
+						}
+					}
+
 					if(cmd.equalsIgnoreCase("open")){
 						gm.openRole();
 						return ret;
@@ -419,6 +434,7 @@ public class Main extends JavaPlugin implements Listener {
 						sm.haveSkullCheck(a);
 					}
 
+
 					if(PlayTime >= MoneyTime){
 						for(Player a : Bukkit.getOnlinePlayers()){
 
@@ -443,7 +459,7 @@ public class Main extends JavaPlugin implements Listener {
 
 					for(Player a : Bukkit.getOnlinePlayers()){
 						if(ROLE.containsKey(a.getName())) {
-							lib.sendActionBar(a,  RoleManager.roleNameChanger(ROLE.get(a.getName())) + ChatColor.RESET + " | " + "COIN : " + COIN.get(a.getName()));
+							lib.sendActionBar(a,  "残り時間 " + GameTime + " | " + RoleManager.roleNameChanger(ROLE.get(a.getName())) + ChatColor.RESET + " | " + "COIN : " + COIN.get(a.getName()));
 						}
 					}
 				}
@@ -453,6 +469,34 @@ public class Main extends JavaPlugin implements Listener {
 			}
 		}, 0L, 20L * 1);
 
+		this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable(){
+			@Override
+			public void run() {
+				for(Player a : Bukkit.getOnlinePlayers()){
+
+					//味方の人狼
+					if(ROLE.containsKey(a.getName())) {
+						if(ROLE.get(a.getName()).equalsIgnoreCase("HAKUROU") || ROLE.get(a.getName()).equalsIgnoreCase("WEREWOLF")) {
+							for(Player w : Bukkit.getOnlinePlayers()){
+								if(ROLE.containsKey(w.getName())) {
+									if(ROLE.get(w.getName()).equalsIgnoreCase("HAKUROU") || ROLE.get(w.getName()).equalsIgnoreCase("WEREWOLF")) {
+										if(a.equals(w)) {
+										} else {
+											if(w.getGameMode().equals(GameMode.ADVENTURE)) {
+												Location loc = w.getLocation();
+												loc.setY(loc.getY()+2);
+												a.spawnParticle(Particle.NOTE, loc, 1, 0, 0, 0);
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+
+			}
+		}, 0L, 5L * 1);
 	}
 
 
