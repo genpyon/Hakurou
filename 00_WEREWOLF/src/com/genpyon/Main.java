@@ -20,6 +20,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Team;
 
 import com.genpyon.Event.ChatListener;
+import com.genpyon.Event.DamageListener;
 import com.genpyon.Event.EventListener;
 import com.genpyon.Event.ShopListener;
 import com.genpyon.Item.Wolf.BlinkTimer;
@@ -138,6 +139,7 @@ public class Main extends JavaPlugin implements Listener {
 	public RoleManager rm = null;
 	public ShopListener sl= null;
 	public ChatListener cl = null;
+	public DamageListener dl = null;
 
 
 	Random rnd = new Random();
@@ -153,6 +155,7 @@ public class Main extends JavaPlugin implements Listener {
 		rm = new RoleManager(this);
 		sl = new ShopListener(this);
 		cl = new ChatListener(this);
+		dl = new DamageListener(this);
 
 		tm.ScoreboardCreate();
 		saveConfig();

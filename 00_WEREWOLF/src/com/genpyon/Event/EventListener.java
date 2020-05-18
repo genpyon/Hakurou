@@ -11,6 +11,7 @@ import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
@@ -19,6 +20,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
+import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -55,6 +57,21 @@ public class EventListener implements Listener {
 
 		return;
 
+	}
+
+	@EventHandler
+	public void PlayerHeadPickup3tumade(EntityPickupItemEvent b) {
+		Entity ent = b.getEntity();
+		if(ent instanceof Player) {
+			Player p = (Player) ent;
+			Inventory inv = p.getInventory();
+			if(inv.contains(Material.SKULL_ITEM)) {
+				//Bukkit.broadcastMessage("1こもってるよ！");
+				b.setCancelled(true);
+				return;
+			}
+
+		}
 	}
 
 
@@ -151,16 +168,18 @@ public class EventListener implements Listener {
 
 						if(hakken.equalsIgnoreCase(ChatColor.YELLOW + "未発見")){
 							if(Main.TTTMode == true) {
+								Bukkit.broadcastMessage("");
 								Bukkit.broadcastMessage(" " +ChatColor.RESET + p.getName() + " が " + ChatColor.RED + name + ChatColor.WHITE + "の生首を発見した。" + RoleManager.bookRoleNameChanger(Main.ROLE.get(name)) + "だった。");
 							} else {
+								Bukkit.broadcastMessage("");
 								Bukkit.broadcastMessage(" " +ChatColor.RESET + p.getName() + " が " + ChatColor.RED + name + ChatColor.WHITE + "の生首を発見した。");
 							}
 
 							if(Main.ROLE.get(name).equalsIgnoreCase("INNOCENT") || Main.ROLE.get(name).equalsIgnoreCase("DETECTIVE")) {
-								Bukkit.broadcastMessage("時間が20秒伸びたよ～笑");
+								Bukkit.broadcastMessage(ChatColor.GREEN + "  村人陣営 " + ChatColor.RESET + "が発見され、制限時間が" + "秒延長されました。");
 								plugin.GameTime = plugin.GameTime+20;
 							}
-
+							Bukkit.broadcastMessage("");
 							lib.SoundAllPlayer(Sound.ENTITY_PLAYER_LEVELUP, 1.4F);
 						}
 					}

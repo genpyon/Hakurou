@@ -32,6 +32,8 @@ public class ChatListener implements Listener {
 
 	}
 
+	ChatColor cc = ChatColor.RESET;
+
 
 	@EventHandler
 	public void PlayerChatEvent(AsyncPlayerChatEvent b) {
@@ -83,45 +85,51 @@ public class ChatListener implements Listener {
 		}
 
 		if(CO == null) {
-			CO = ChatColor.RESET + "[?]" + ChatColor.RESET;
+			CO = ChatColor.RESET + "[?]" + cc;
 		}
 
 		if(CO.equalsIgnoreCase("INNOCENT")) {
-			CO = ChatColor.GREEN + "[村人]" + ChatColor.RESET;
+			CO = ChatColor.GREEN + "[村人]" + cc;
 		}
 
 		if(CO.equalsIgnoreCase("MAGO")) {
-			CO = ChatColor.GREEN + "[孫]" + ChatColor.RESET;
+			CO = ChatColor.GREEN + "[孫]" + cc;
 		}
 
 		if(CO.equalsIgnoreCase("TYOUROU")) {
-			CO = ChatColor.DARK_GREEN + "[長老]" + ChatColor.RESET;
+			CO = ChatColor.DARK_GREEN + "[長老]" + cc;
 		}
 
 		if(CO.equalsIgnoreCase("DETECTIVE")) {
-			CO = ChatColor.BLUE + "[探偵]" + ChatColor.RESET;
+			CO = ChatColor.BLUE + "[探偵]" + cc;
 		}
 
 		if(CO.equalsIgnoreCase("WEREWOLF")) {
-			CO = ChatColor.RED + "[人狼]" + ChatColor.RESET;
+			CO = ChatColor.RED + "[人狼]" + cc;
 		}
 
 		if(CO.equalsIgnoreCase("HAKUROU")) {
-			CO = ChatColor.DARK_RED + "[白狼]" + ChatColor.RESET;
+			CO = ChatColor.DARK_RED + "[白狼]" + cc;
 		}
 
 		if(CO.equalsIgnoreCase("JACKAL")) {
-			CO = ChatColor.AQUA + "[妖狐]" + ChatColor.RESET;
+			CO = ChatColor.AQUA + "[妖狐]" + cc;
 		}
 
 		if(CO.equalsIgnoreCase("GRAY")) {
-			CO = ChatColor.GRAY + "[グレー]" + ChatColor.RESET;
+			CO = ChatColor.GRAY + "[グレー]" + cc;
 		}
 
 		String sendMessage = CO + name + message;
 
 		Bukkit.broadcastMessage(sendMessage);
 		lib.SoundAllPlayer(Sound.ENTITY_CHICKEN_EGG, 1.6F);
+
+		if(cc.equals(ChatColor.RESET)) {
+			cc = ChatColor.GRAY;
+		} else {
+			cc = ChatColor.RESET;
+		}
 	}
 
 
