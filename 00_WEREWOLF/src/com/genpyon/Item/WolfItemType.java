@@ -30,6 +30,7 @@ public enum WolfItemType {
 		case WEREWOLF_CHAT_ITEM:
 			item = new WolfChat(Main.getMain()).getItemStack();
 			break;
+
 		default:
 			item = new ItemStack(Material.AIR);
 			break;

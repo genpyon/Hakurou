@@ -48,7 +48,7 @@ public class SkullManager implements Listener {
 
 	public ItemStack roleHead(String name){
 
-		ItemStack head = roleHeads(name ,
+		ItemStack head = roleHeads(ChatColor.YELLOW + "[未発見]"+ ChatColor.RESET ,name ,
 				ChatColor.RESET + "" + ChatColor.GRAY + "===========",
 				ChatColor.YELLOW + "未発見",
 				name,
@@ -63,7 +63,7 @@ public class SkullManager implements Listener {
 
 	public static ItemStack roleHeadChange(String name){
 
-		ItemStack head = roleHeads(name ,
+		ItemStack head = roleHeads(ChatColor.GREEN + "[発見済み]"+ ChatColor.RESET ,name ,
 				ChatColor.RESET + "" + ChatColor.GRAY + "===========",
 				ChatColor.GREEN + "発見済み",
 				name,
@@ -82,7 +82,7 @@ public class SkullManager implements Listener {
 			role = Main.ROLE.get(name);
 		}
 
-		ItemStack head = roleHeads(name ,
+		ItemStack head = roleHeads(ChatColor.GREEN + "[発見済み]"+ ChatColor.RESET ,name ,
 				ChatColor.RESET + "" + ChatColor.GRAY + "===========",
 				ChatColor.GREEN + "発見済み",
 				name,
@@ -95,14 +95,14 @@ public class SkullManager implements Listener {
 	}
 
 
-	public static ItemStack roleHeads(String name, String... list){
+	public static ItemStack roleHeads(String found, String name, String... list){
 
 		List<String> lore = Arrays.asList(list);
 		ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.PLAYER.ordinal());
 
 		SkullMeta meta = (SkullMeta) skull.getItemMeta();
 		meta.setOwner(name);
-		meta.setDisplayName(name + "の頭");
+		meta.setDisplayName(found + name + "の頭");
 
 		meta.setLore(lore);
 		skull.setItemMeta(meta);

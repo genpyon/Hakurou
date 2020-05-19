@@ -6,7 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 public enum DetItemType {
-	ARROW(ARROW_COST), //矢
+	ARROW(ARROW_COST),
 	//SENRIGAN(SENRIGAN_COST);
 	;
 
@@ -22,6 +22,7 @@ public enum DetItemType {
 		/*case ARROW:
 			item = new Arrow(Main.getMain()).getItemStack();
 			break;*/
+
 		default:
 			item = new ItemStack(Material.AIR);
 			break;
@@ -35,6 +36,7 @@ public enum DetItemType {
 		/*case ARROW:
 			item = new Arrow(Main.getMain()).getIcon();
 			break;*/
+
 		default:
 			item = new ItemStack(Material.AIR);
 			break;

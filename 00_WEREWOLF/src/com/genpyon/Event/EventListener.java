@@ -164,22 +164,26 @@ public class EventListener implements Listener {
 
 					if(plugin.GameStatus == 3) {
 
-
-
 						if(hakken.equalsIgnoreCase(ChatColor.YELLOW + "未発見")){
 							if(Main.TTTMode == true) {
-								Bukkit.broadcastMessage("");
+								//Bukkit.broadcastMessage("");
 								Bukkit.broadcastMessage(" " +ChatColor.RESET + p.getName() + " が " + ChatColor.RED + name + ChatColor.WHITE + "の生首を発見した。" + RoleManager.bookRoleNameChanger(Main.ROLE.get(name)) + "だった。");
 							} else {
-								Bukkit.broadcastMessage("");
+								//Bukkit.broadcastMessage("");
 								Bukkit.broadcastMessage(" " +ChatColor.RESET + p.getName() + " が " + ChatColor.RED + name + ChatColor.WHITE + "の生首を発見した。");
 							}
 
 							if(Main.ROLE.get(name).equalsIgnoreCase("INNOCENT") || Main.ROLE.get(name).equalsIgnoreCase("DETECTIVE")) {
-								Bukkit.broadcastMessage(ChatColor.GREEN + "  村人陣営 " + ChatColor.RESET + "が発見され、制限時間が" + "秒延長されました。");
+								Bukkit.broadcastMessage(ChatColor.GRAY + "  村人陣営の死体が発見され、制限時間が" + 20 + "秒延長されました。");
 								plugin.GameTime = plugin.GameTime+20;
 							}
-							Bukkit.broadcastMessage("");
+
+							if(Main.ROLE.get(name).equalsIgnoreCase("WEREWOLF")) {
+								Bukkit.broadcastMessage(ChatColor.RED + "  人狼陣営の死体が発見され、制限時間が" + 10 + "秒短縮されました。");
+								plugin.GameTime = plugin.GameTime-10;
+							}
+
+							//Bukkit.broadcastMessage("");
 							lib.SoundAllPlayer(Sound.ENTITY_PLAYER_LEVELUP, 1.4F);
 						}
 					}

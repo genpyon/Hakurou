@@ -121,6 +121,7 @@ public class PlayerManager implements Listener {
 			plugin.configLocationTeleport("Lobby", p, true);
 		} else {
 			p.teleport(Main.StartLocation);
+			p.setBedSpawnLocation(Main.StartLocation, true);
 		}
 
 		if(Main.USER.hasEntry(p.getName())){

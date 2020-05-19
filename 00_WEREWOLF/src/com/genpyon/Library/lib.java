@@ -65,7 +65,7 @@ public class lib {
 		return item;
 	}
 
-	public static ItemStack createItemMeta(Material material,int am,byte b, String name, String... list){
+	public static ItemStack createItemMeta(Material material, int am,byte b, String name, String... list){
 		List<String> lore = Arrays.asList(list);
 		ItemStack item = new ItemStack(material,am,b);
 		ItemMeta meta = item.getItemMeta();
@@ -76,6 +76,24 @@ public class lib {
 		}
 		meta.setLore(lore);
 		item.setItemMeta(meta);
+		return item;
+	}
+
+	public static ItemStack createItemMetaDulaEnchant(Material material, int am, byte b, short s, Enchantment enc, int Lv, String name, String... list){
+		List<String> lore = Arrays.asList(list);
+		ItemStack item = new ItemStack(material,am,b);
+
+		ItemMeta meta = item.getItemMeta();
+		if(name.equals(null)){
+
+		} else {
+			meta.setDisplayName(name);
+		}
+
+		item.setDurability(s);
+		meta.setLore(lore);
+		item.setItemMeta(meta);
+		item.addUnsafeEnchantment(enc, Lv);
 		return item;
 	}
 

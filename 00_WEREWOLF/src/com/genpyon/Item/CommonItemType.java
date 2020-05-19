@@ -9,12 +9,14 @@ import com.genpyon.Main;
 import com.genpyon.Item.Common.Arrow;
 import com.genpyon.Item.Common.StoneSword;
 import com.genpyon.Item.Common.TsuyoiBow;
+import com.genpyon.Item.Common.homerun_bat;
 
 public enum CommonItemType {
 	STONE_SWORD(STONE_SWORD_COST),
 	TSUYOI_BOW(TSUYOI_BOW_COST),
 	SPEED_POT(SPEED_POT_COST),
-	ARROW(ARROW_COST)
+	ARROW(ARROW_COST),
+	HOMERUN_BAT(HOMERUN_BAT_COST),
 	;
 
 	private final int cost;
@@ -35,6 +37,9 @@ public enum CommonItemType {
 		case ARROW:
 			item = new Arrow(Main.getMain()).getItemStack();
 			break;
+		case HOMERUN_BAT:
+			item = new homerun_bat(Main.getMain()).getItemStack();
+			break;
 		default:
 			item = new ItemStack(Material.AIR);
 			break;
@@ -53,6 +58,9 @@ public enum CommonItemType {
 			break;
 		case ARROW:
 			item = new Arrow(Main.getMain()).getIcon();
+			break;
+		case HOMERUN_BAT:
+			item = new homerun_bat(Main.getMain()).getIcon();
 			break;
 		default:
 			item = new ItemStack(Material.AIR);

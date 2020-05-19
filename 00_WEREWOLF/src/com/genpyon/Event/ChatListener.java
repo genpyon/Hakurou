@@ -126,7 +126,7 @@ public class ChatListener implements Listener {
 		lib.SoundAllPlayer(Sound.ENTITY_CHICKEN_EGG, 1.6F);
 
 		if(cc.equals(ChatColor.RESET)) {
-			cc = ChatColor.GRAY;
+			cc = ChatColor.RESET;
 		} else {
 			cc = ChatColor.RESET;
 		}

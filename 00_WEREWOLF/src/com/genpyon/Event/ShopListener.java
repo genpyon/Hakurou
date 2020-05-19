@@ -83,7 +83,7 @@ public class ShopListener implements Listener {
 		Action act = b.getAction();
 
 		if(act == Action.LEFT_CLICK_AIR || act == Action.RIGHT_CLICK_AIR || act == Action.LEFT_CLICK_BLOCK || act == Action.RIGHT_CLICK_BLOCK){
-			if(ItemManager.hasMainHand(p, GameItemManager.URANAI_BOOK_ITEM())) {
+			if(p.getInventory().getItemInMainHand() != null  && ItemManager.hasMainHand(p, GameItemManager.URANAI_BOOK_ITEM())) {
 				if(p.hasCooldown(Material.BOOK)) {
 					lib.sendPlayer(p, " まだ使うトキではない。");
 					return;
@@ -123,8 +123,7 @@ public class ShopListener implements Listener {
 
 
 				} else {
-
-					Bukkit.broadcastMessage("そんなことはありませんエラー");
+					//Bukkit.broadcastMessage("そんなことはありませんエラー");
 				}
 			}
 			b.setCancelled(true);

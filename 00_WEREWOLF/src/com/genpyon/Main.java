@@ -178,6 +178,14 @@ public class Main extends JavaPlugin implements Listener {
 
 		//float pitch = rnd.nextInt(4) * 0.2F;
 
+		if (c.getName().equalsIgnoreCase("c") || c.getName().equalsIgnoreCase("check")) {
+			if(GameStatus == 3) {
+
+			} else {
+				lib.sendPlayer(p, "いま、このコマンドは使用できません。");
+			}
+		}
+
 		if (c.getName().equalsIgnoreCase("s") || c.getName().equalsIgnoreCase("shop")) {
 
 			if(ROLE.containsKey(p.getName())) {
@@ -263,12 +271,28 @@ public class Main extends JavaPlugin implements Listener {
 							}
 
 						} else {
-							lib.sendPlayer(p, "引数が足りません。");
-							lib.sendPlayer(p, "/ww start [孫の数][探偵の数][人狼の数][妖狐の数]");
+							int in = iMAGO + iDETECTIVE + iWEREWOLF + iJACKAL;
+							if(in <= 1) {
+								lib.sendPlayer(p, "設定がありません。");
+								lib.sendPlayer(p, "/ww start [孫の数][探偵の数][人狼の数][妖狐の数]");
+							} else {
+								if(GameStatus != 1) {
+									lib.sendPlayer(p, "リセットしてください。");
+								} else {
+									gm.start(p);
+								}
+							}
 							return ret;
 						}
 						return ret;
 					}
+
+					if(cmd.equalsIgnoreCase("test")){
+
+						Bukkit.broadcastMessage(RoleManager.Haiyaku());
+						return ret;
+					}
+
 
 					if(cmd.equalsIgnoreCase("reset")){
 						gm.Reset();

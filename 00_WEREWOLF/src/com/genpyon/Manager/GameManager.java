@@ -202,8 +202,19 @@ public class GameManager implements Listener {
 			Reset();
 			return;
 		}
+		if(Main.TTTMode == false) {
+			lib.sendTitle(ChatColor.BOLD + "白狼", plugin.Preparation +" 秒後に役職が割り当てられます。");
+		} else {
+			lib.sendTitle(ChatColor.RED + "TTT", plugin.Preparation +" 秒後に役職が割り当てられます。");
+		}
 
-		lib.sendTitle(ChatColor.BOLD + "白狼", plugin.Preparation +" 秒後に役職が割り当てられます。");
+		lib.sendPlayer(p, "");
+		lib.sendPlayer(p, "========================");
+		lib.sendPlayer(p, "");
+		lib.sendPlayer(p, ChatColor.RED + " ゲームが開始されました。");
+		lib.sendPlayer(p, "  " + plugin.Preparation + " 秒後に役職が割り振られます。");
+		lib.sendPlayer(p, "");
+		lib.sendPlayer(p, "========================");
 	}
 
 
@@ -295,7 +306,11 @@ public class GameManager implements Listener {
 		if(Main.ROLE.get(name) != null){
 			if(Main.ROLE.get(name).equalsIgnoreCase("INNOCENT")){
 				role = ChatColor.GREEN + "村人";
-				desc = ChatColor.RESET + "長老を守り、白狼を狩れ。";
+				if(Main.TTTMode == false) {
+					desc = ChatColor.RESET + "長老を守り、白狼を狩れ。";
+				} else {
+					desc = ChatColor.RESET + "人狼と妖狐を狩りきれ。";
+				}
 				zinei = ChatColor.GREEN + "村人陣営";
 
 				coin = Main.cINNOCENT;
@@ -332,7 +347,11 @@ public class GameManager implements Listener {
 
 			if(Main.ROLE.get(name) == "DETECTIVE"){
 				role = ChatColor.BLUE + "探偵";
-				desc = ChatColor.RESET + "長老を守り、白狼を見つけろ。";
+				if(Main.TTTMode == false) {
+					desc = ChatColor.RESET + "長老を守り、白狼を見つけろ。";
+				} else {
+					desc = ChatColor.RESET + "人狼と妖狐を見つけ、狩れ。";
+				}
 				zinei = ChatColor.GREEN + "村人陣営";
 
 				coin = Main.cDETECTIVE;
@@ -342,7 +361,11 @@ public class GameManager implements Listener {
 
 			if(Main.ROLE.get(name) == "WEREWOLF"){
 				role = ChatColor.RED + "人狼";
-				desc = ChatColor.RESET + "白狼を守り、長老を狩れ。";
+				if(Main.TTTMode == false) {
+					desc = ChatColor.RESET + "白狼を守り、長老を狩れ。";
+				} else {
+					desc = ChatColor.RESET + "村人と妖狐をすべて狩れ。";
+				}
 				zinei = ChatColor.RED + "人狼陣営";
 
 
@@ -364,7 +387,11 @@ public class GameManager implements Listener {
 
 			if(Main.ROLE.get(name) == "JACKAL"){
 				role = ChatColor.AQUA + "妖狐";
-				desc = ChatColor.RESET + "見つからずに、長老と白狼を呪え。";
+				if(Main.TTTMode == false) {
+					desc = ChatColor.RESET + "見つからずに、長老と白狼を呪え。";
+				} else {
+					desc = ChatColor.RESET + "生き残れ。";
+				}
 				zinei = ChatColor.AQUA + "妖狐陣営";
 
 
@@ -373,13 +400,6 @@ public class GameManager implements Listener {
 			}
 
 			lib.sendTitleTarget(p, role, desc);
-			lib.sendPlayer(p, "");
-			lib.sendPlayer(p, "========================");
-			lib.sendPlayer(p, "");
-			lib.sendPlayer(p, ChatColor.RED + " ゲームが開始されました。");
-			lib.sendPlayer(p, "  " + plugin.Preparation + " 秒後に役職が割り振られます。");
-			lib.sendPlayer(p, "");
-			lib.sendPlayer(p, "========================");
 			lib.sendPlayer(p, "");
 			lib.sendPlayer(p, " あなたの役職 : " + role);
 			lib.sendPlayer(p, " " + desc);
@@ -406,6 +426,8 @@ public class GameManager implements Listener {
 				lib.sendPlayer(p, ChatColor.DARK_GREEN + " 長老 : " + Main.TYOUROU.toString());
 				lib.sendPlayer(p, "");
 			}
+			lib.sendPlayer(p, " 今回の配役");
+			lib.sendPlayer(p, "  " + RoleManager.Haiyaku());
 
 			lib.SoundPlayer(p, Sound.ENTITY_WOLF_HOWL, 2F);
 		}
@@ -580,15 +602,16 @@ public class GameManager implements Listener {
 	@EventHandler
 	public void PlayerQuitEvent(PlayerQuitEvent b){
 		Player p = b.getPlayer();
+		Location loc = p.getLocation();
+		loc.setY(loc.getY() +1);
 
 		if(plugin.GameStatus != 3){
 
 			plugin.pm.DefaultStuff(p);
 
 		} else {
-			if(Main.PLAYER.contains(p.getName())&& !Main.DEATH.contains(p.getName())){
-				plugin.pm.DeathPlayer(p, p.getLocation());
-			}
+
+			deathifevent(p,loc);
 
 		}
 	}
@@ -598,10 +621,10 @@ public class GameManager implements Listener {
 
 		b.setDeathMessage(null);
 
-		Player death = b.getEntity().getPlayer();
+		Player p = b.getEntity().getPlayer();
 		Player killer = null;
 
-		Location loc = death.getLocation();
+		Location loc = p.getLocation();
 		loc.setY(loc.getY() +1);
 
 
@@ -612,16 +635,23 @@ public class GameManager implements Listener {
 		}
 
 		if(killer != null) {
-			lib.sendPlayer(death, " " + ChatColor.RED + killer.getName() + ChatColor.RESET + " に殺されました。");
+			lib.sendPlayer(p, " " + ChatColor.RED + killer.getName() + ChatColor.RESET + " に殺されました。");
 		} else {
-			lib.sendPlayer(death, ChatColor.RED + " 自滅しました。");
+			lib.sendPlayer(p, ChatColor.RED + " 自滅しました。");
 		}
 
-		//人狼が死んだ時
-		if(Main.ROLE.containsKey(death.getName())){
+		deathifevent(p,loc);
 
-			if(Main.ROLE.get(death.getName()).equalsIgnoreCase("WEREWOLF")){
-				Main.WEREWOLF.remove(death.getName());
+	}
+
+	public void deathifevent(Player p, Location loc) {
+
+		//人狼が死んだ時
+		if(Main.ROLE.containsKey(p.getName())){
+
+			if(Main.ROLE.get(p.getName()).equalsIgnoreCase("WEREWOLF")){
+				Main.WEREWOLF.remove(p.getName());
+
 				if(Main.TTTMode == true) {
 					if(Main.WEREWOLF.size() == 0) {
 						if(Main.JACKAL.size() != 0) {
@@ -638,8 +668,8 @@ public class GameManager implements Listener {
 			}
 
 			//村人が死んだ時
-			if(Main.ROLE.get(death.getName()).equalsIgnoreCase("INNOCENT")){
-				Main.INNOCENT.remove(death.getName());
+			if(Main.ROLE.get(p.getName()).equalsIgnoreCase("INNOCENT")){
+				Main.INNOCENT.remove(p.getName());
 
 				if(Main.INNOCENT.size() == 0) {
 					if(Main.JACKAL.size() != 0) {
@@ -654,12 +684,12 @@ public class GameManager implements Listener {
 				}
 			}
 
-			if(Main.ROLE.get(death.getName()).equalsIgnoreCase("HAKUROU")){
+			if(Main.ROLE.get(p.getName()).equalsIgnoreCase("HAKUROU")){
 				gameEnd(1, false);
 				return;
 			}
 
-			if(Main.ROLE.get(death.getName()).equalsIgnoreCase("TYOUROU")){
+			if(Main.ROLE.get(p.getName()).equalsIgnoreCase("TYOUROU")){
 				gameEnd(2, false);
 				return;
 			}
@@ -668,18 +698,15 @@ public class GameManager implements Listener {
 				gameEnd(3, false);
 			}
 
-			if(Main.PLAYER.contains(death.getName()) && !Main.DEATH.contains(death.getName())){
-				plugin.pm.DeathPlayer(death ,loc);
+			if(Main.PLAYER.contains(p.getName()) && !Main.DEATH.contains(p.getName())){
+				plugin.pm.DeathPlayer(p ,loc);
 			}
 
-			if(Main.ROLE.get(death.getName()).equalsIgnoreCase("JACKAL")){
-				Main.JACKAL.remove(death.getName());
-				return;
+			if(Main.ROLE.get(p.getName()).equalsIgnoreCase("JACKAL")){
+				Main.JACKAL.remove(p.getName());
 			}
-
 
 		}
-
 	}
 
 	@EventHandler
