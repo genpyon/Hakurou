@@ -168,7 +168,6 @@ public class GameManager implements Listener {
 		for(Player a : Bukkit.getOnlinePlayers()){
 			for(Player a2 : Bukkit.getOnlinePlayers()){
 				a.hidePlayer(a2);
-				a.showPlayer(a2);
 			}
 			if(a.getGameMode().equals(GameMode.ADVENTURE)){
 
@@ -193,6 +192,10 @@ public class GameManager implements Listener {
 
 			Main.StartLocation = loc;
 			Main.dropedItemsClear();
+
+			for(Player a2 : Bukkit.getOnlinePlayers()){
+				a.showPlayer(a2);
+			}
 		}
 
 		if(Main.NONROLE.size()-1 <= plus){
@@ -426,6 +429,7 @@ public class GameManager implements Listener {
 				lib.sendPlayer(p, ChatColor.DARK_GREEN + " 長老 : " + Main.TYOUROU.toString());
 				lib.sendPlayer(p, "");
 			}
+
 			lib.sendPlayer(p, " 今回の配役");
 			lib.sendPlayer(p, "  " + RoleManager.Haiyaku());
 
@@ -635,9 +639,9 @@ public class GameManager implements Listener {
 		}
 
 		if(killer != null) {
-			lib.sendPlayer(p, " " + ChatColor.RED + killer.getName() + ChatColor.RESET + " に殺されました。");
+			lib.sendPlayer(p, Main.system + ChatColor.RED + killer.getName() + ChatColor.RESET + " に殺されました。");
 		} else {
-			lib.sendPlayer(p, ChatColor.RED + " 自滅しました。");
+			lib.sendPlayer(p, Main.system + ChatColor.RED + " 自滅しました。");
 		}
 
 		deathifevent(p,loc);

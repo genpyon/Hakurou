@@ -39,6 +39,8 @@ import net.md_5.bungee.api.ChatColor;
 
 public class Main extends JavaPlugin implements Listener {
 
+	public static String system = ChatColor.RED + " [!] " + ChatColor.RESET;
+
 	public static Main main;
 
 	public static Team USER;
@@ -180,6 +182,29 @@ public class Main extends JavaPlugin implements Listener {
 
 		if (c.getName().equalsIgnoreCase("c") || c.getName().equalsIgnoreCase("check")) {
 			if(GameStatus == 3) {
+				if(ROLE.containsKey(p.getName())) {
+
+					lib.sendPlayer(p, " 今回の配役");
+					lib.sendPlayer(p, "  " + RoleManager.Haiyaku());
+
+					if(ROLE.get(p.getName()).equalsIgnoreCase("WEREWOLF") || ROLE.get(p.getName()).equalsIgnoreCase("HAKUROU")) {
+						lib.sendPlayer(p, ChatColor.RED + " 仲間の人狼 : " + Main.WEREWOLF.toString());
+						lib.sendPlayer(p, ChatColor.DARK_RED + " 白狼 : " + Main.HAKUROU.toString());
+						return ret;
+					}
+
+					if(ROLE.get(p.getName()).equalsIgnoreCase("INNOCENT")) {
+						return ret;
+					}
+
+					if(ROLE.get(p.getName()).equalsIgnoreCase("MAGO")) {
+						lib.sendPlayer(p, ChatColor.DARK_GREEN + " 長老 : " + Main.TYOUROU.toString());
+						return ret;
+					}
+
+				} else {
+					lib.sendPlayer(p, "あなたはゲームに参加していません。");
+				}
 
 			} else {
 				lib.sendPlayer(p, "いま、このコマンドは使用できません。");

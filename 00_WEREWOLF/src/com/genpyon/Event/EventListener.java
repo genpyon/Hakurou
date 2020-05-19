@@ -59,6 +59,7 @@ public class EventListener implements Listener {
 
 	}
 
+
 	@EventHandler
 	public void PlayerHeadPickup3tumade(EntityPickupItemEvent b) {
 		Entity ent = b.getEntity();
@@ -167,19 +168,19 @@ public class EventListener implements Listener {
 						if(hakken.equalsIgnoreCase(ChatColor.YELLOW + "未発見")){
 							if(Main.TTTMode == true) {
 								//Bukkit.broadcastMessage("");
-								Bukkit.broadcastMessage(" " +ChatColor.RESET + p.getName() + " が " + ChatColor.RED + name + ChatColor.WHITE + "の生首を発見した。" + RoleManager.bookRoleNameChanger(Main.ROLE.get(name)) + "だった。");
+								Bukkit.broadcastMessage(Main.system + ChatColor.RESET + p.getName() + " が " + ChatColor.RED + name + ChatColor.WHITE + "の生首を発見した。" + RoleManager.bookRoleNameChanger(Main.ROLE.get(name)) + "だった。");
 							} else {
 								//Bukkit.broadcastMessage("");
-								Bukkit.broadcastMessage(" " +ChatColor.RESET + p.getName() + " が " + ChatColor.RED + name + ChatColor.WHITE + "の生首を発見した。");
+								Bukkit.broadcastMessage(Main.system + ChatColor.RESET + p.getName() + " が " + ChatColor.RED + name + ChatColor.WHITE + "の生首を発見した。");
 							}
 
 							if(Main.ROLE.get(name).equalsIgnoreCase("INNOCENT") || Main.ROLE.get(name).equalsIgnoreCase("DETECTIVE")) {
-								Bukkit.broadcastMessage(ChatColor.GRAY + "  村人陣営の死体が発見され、制限時間が" + 20 + "秒延長されました。");
+								Bukkit.broadcastMessage(Main.system + ChatColor.GRAY + "村人陣営の死体が発見され、制限時間が" + 20 + "秒延長されました。");
 								plugin.GameTime = plugin.GameTime+20;
 							}
 
 							if(Main.ROLE.get(name).equalsIgnoreCase("WEREWOLF")) {
-								Bukkit.broadcastMessage(ChatColor.RED + "  人狼陣営の死体が発見され、制限時間が" + 10 + "秒短縮されました。");
+								Bukkit.broadcastMessage(Main.system + ChatColor.RED + "人狼陣営の死体が発見され、制限時間が" + 10 + "秒短縮されました。");
 								plugin.GameTime = plugin.GameTime-10;
 							}
 
@@ -191,7 +192,7 @@ public class EventListener implements Listener {
 
 					return;
 				} else {
-					Bukkit.broadcastMessage("それですけど、それじゃないです。");
+					Bukkit.broadcastMessage(Main.system + "それですけど、それじゃないです。");
 					Bukkit.broadcastMessage(Main.ROLE.toString());
 				}
 

@@ -139,13 +139,13 @@ public class GameItemManager {
 	public static final int HOMERUN_BAT_COST = 150;
 
 	static public ItemStack HOMERUN_BAT_ITEM() {
-		ItemStack is = lib.createItemMetaDulaEnchant(Material.WOOD_SWORD, 1,(byte)1 ,(short)1 ,Enchantment.KNOCKBACK, 10, HOMERUN_BAT_COST_INV_NAME, "" ,
+		ItemStack is = lib.createItemMetaDulaEnchant(Material.WOOD_SWORD, 1,(byte)1 ,(short)59 ,Enchantment.KNOCKBACK, 10, HOMERUN_BAT_COST_INV_NAME, "" ,
 				ChatColor.RESET + "ワンパンふっ飛ばし棒");
 		return is;
 	}
 
 	static public ItemStack HOMERUN_BAT_ICON() {
-		ItemStack is = lib.createItemMetaDulaEnchant(Material.WOOD_SWORD, 1,(byte)1 ,(short)1 ,Enchantment.KNOCKBACK, 10, HOMERUN_BAT_COST_INV_NAME, "" ,
+		ItemStack is = lib.createItemMetaDulaEnchant(Material.WOOD_SWORD, 1,(byte)1 ,(short)59 ,Enchantment.KNOCKBACK, 10, HOMERUN_BAT_COST_INV_NAME, "" ,
 				ChatColor.RESET + "ワンパンふっ飛ばし棒" ,
 				"" ,
 				Cost + HOMERUN_BAT_COST);

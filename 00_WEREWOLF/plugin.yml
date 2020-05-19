@@ -7,6 +7,10 @@ commands:
        permission: werewolf.ww
     s:
        permission: werewolf.s
+    c:
+       permission: werewolf.c
+    check:
+       permission: werewolf.check
     shop:
        permission: werewolf.shop
 permissions:
@@ -17,4 +21,8 @@ permissions:
     werewolf.s:
        default: true
     werewolf.shop:
+       default: true
+    werewolf.c:
+       default: true
+    werewolf.check:
        default: true
