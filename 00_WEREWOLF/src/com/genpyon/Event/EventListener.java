@@ -438,6 +438,7 @@ public class EventListener implements Listener {
 			// ShopInventoryのTitleにあってるかどうか
 			boolean isShop = false;
 			for (ShopType type :ShopType.values()) {
+				if (type == null) continue;
 				if (type.getTitle().equals(invTitle)) isShop = true;
 			}
 			if (!isShop) return;
