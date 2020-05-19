@@ -49,49 +49,90 @@ public class PlayerManager implements Listener {
 
 		if (click.equals(GameItemManager.CO_INNOCENT())){
 			role = ChatColor.GREEN + "村人" + ChatColor.RESET;
-			Main.CO.put(p.getName(),"INNOCENT");
+			if(Main.CO.containsKey(p.getName()) && Main.CO.get(p.getName()).equalsIgnoreCase("INNOCENT")) {
+				lib.sendPlayer(p, Main.system + "すでに同じ宣言をしています。");
+				return;
+			} else {
+				Main.CO.put(p.getName(),"INNOCENT");
+			}
 			b.setCancelled(true);
 		}
 
 		if (click.equals(GameItemManager.CO_MAGO())){
 			role = ChatColor.GREEN + "孫" + ChatColor.RESET;
-			Main.CO.put(p.getName(),"MAGO");
+
+			if(Main.CO.containsKey(p.getName()) && Main.CO.get(p.getName()).equalsIgnoreCase("MAGO")) {
+				lib.sendPlayer(p, Main.system + "すでに同じ宣言をしています。");
+				return;
+			} else {
+				Main.CO.put(p.getName(),"MAGO");
+			}
 			b.setCancelled(true);
 		}
 
 		if (click.equals(GameItemManager.CO_TYOUROU())){
 			role = ChatColor.DARK_GREEN + "長老" + ChatColor.RESET;
-			Main.CO.put(p.getName(),"TYOUROU");
+			if(Main.CO.containsKey(p.getName()) && Main.CO.get(p.getName()).equalsIgnoreCase("TYOUROU")) {
+				lib.sendPlayer(p, Main.system + "すでに同じ宣言をしています。");
+				return;
+			} else {
+				Main.CO.put(p.getName(),"TYOUROU");
+			}
 			b.setCancelled(true);
 		}
 
 		if (click.equals(GameItemManager.CO_DETECTIVE())){
 			role = ChatColor.BLUE + "探偵" + ChatColor.RESET;
-			Main.CO.put(p.getName(),"DETECTIVE");
+			if(Main.CO.containsKey(p.getName()) && Main.CO.get(p.getName()).equalsIgnoreCase("DETECTIVE")) {
+				lib.sendPlayer(p, Main.system + "すでに同じ宣言をしています。");
+				return;
+			} else {
+				Main.CO.put(p.getName(),"DETECTIVE");
+			}
 			b.setCancelled(true);
 		}
 
 		if (click.equals(GameItemManager.CO_WEREWOLF())){
 			role = ChatColor.RED + "人狼" + ChatColor.RESET;
-			Main.CO.put(p.getName(),"WEREWOLF");
+			if(Main.CO.containsKey(p.getName()) && Main.CO.get(p.getName()).equalsIgnoreCase("WEREWOLF")) {
+				lib.sendPlayer(p, Main.system + "すでに同じ宣言をしています。");
+				return;
+			} else {
+				Main.CO.put(p.getName(),"WEREWOLF");
+			}
 			b.setCancelled(true);
 		}
 
 		if (click.equals(GameItemManager.CO_HAKUROU())){
 			role = ChatColor.DARK_RED + "白狼" + ChatColor.RESET;
-			Main.CO.put(p.getName(),"HAKUROU");
+			if(Main.CO.containsKey(p.getName()) && Main.CO.get(p.getName()).equalsIgnoreCase("HAKUROU")) {
+				lib.sendPlayer(p, Main.system + "すでに同じ宣言をしています。");
+				return;
+			} else {
+				Main.CO.put(p.getName(),"HAKUROU");
+			}
 			b.setCancelled(true);
 		}
 
 		if (click.equals(GameItemManager.CO_JACKAL())){
 			role = ChatColor.AQUA + "妖狐" + ChatColor.RESET;
-			Main.CO.put(p.getName(),"JACKAL");
+			if(Main.CO.containsKey(p.getName()) && Main.CO.get(p.getName()).equalsIgnoreCase("JACKAL")) {
+				lib.sendPlayer(p, Main.system + "すでに同じ宣言をしています。");
+				return;
+			} else {
+				Main.CO.put(p.getName(),"JACKAL");
+			}
 			b.setCancelled(true);
 		}
 
 		if (click.equals(GameItemManager.CO_GRAY())){
 			role = ChatColor.GRAY + "グレー" + ChatColor.RESET;
-			Main.CO.put(p.getName(),"GRAY");
+			if(Main.CO.containsKey(p.getName()) && Main.CO.get(p.getName()).equalsIgnoreCase("GRAY")) {
+				lib.sendPlayer(p, Main.system + "すでに同じ宣言をしています。");
+				return;
+			} else {
+				Main.CO.put(p.getName(),"GRAY");
+			}
 			b.setCancelled(true);
 		}
 
@@ -151,7 +192,25 @@ public class PlayerManager implements Listener {
 		inv.setItem(1, GameItemManager.WOODEN_BOW());
 		inv.setItem(2, GameItemManager.ARROW_ITEM());
 
+		if(Main.ROLE.containsKey(p.getName()) && Main.ROLE.get(p.getName()).equalsIgnoreCase("DETECTIVE")){
+			inv.setItem(4, GameItemManager.URANAI_BOOK_ITEM());
+		}
+
+		if(Main.ROLE.containsKey(p.getName()) && Main.ROLE.get(p.getName()).equalsIgnoreCase("WEREWOLF")){
+			inv.setItem(4, GameItemManager.WEREWOLF_BOOK());
+			inv.setItem(5, GameItemManager.WEREWOLF_CHAT_ITEM());
+		}
+
+		if(Main.ROLE.containsKey(p.getName()) && Main.ROLE.get(p.getName()).equalsIgnoreCase("HAKUROU")){
+			inv.setItem(5, GameItemManager.WEREWOLF_CHAT_ITEM());
+		}
+
+
+		inv.setItem(6, GameItemManager.PLAYERS_HEAD());
+		inv.setItem(7, GameItemManager.FOUND_HEADS());
 		inv.setItem(8, GameItemManager.SHOP_FLOWER());
+
+
 
 		inv.setItem(6+9, GameItemManager.CO_INNOCENT());
 		if(Main.TTTMode == false) {
@@ -180,6 +239,8 @@ public class PlayerManager implements Listener {
 		if(Main.ROLE.containsKey(p.getName()) && Main.ROLE.get(p.getName()).equalsIgnoreCase("HAKUROU")){
 			inv.setItem(5, GameItemManager.WEREWOLF_CHAT_ITEM());
 		}
+
+		Main.CO.put(p.getName(),"GRAY");
 	}
 
 	public void RespawnStuff(Player p){

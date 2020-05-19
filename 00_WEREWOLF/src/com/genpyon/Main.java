@@ -25,6 +25,7 @@ import com.genpyon.Event.EventListener;
 import com.genpyon.Event.ShopListener;
 import com.genpyon.Item.Wolf.BlinkTimer;
 import com.genpyon.Library.lib;
+import com.genpyon.Manager.DetectiveBookManager;
 import com.genpyon.Manager.GameManager;
 import com.genpyon.Manager.PlayerManager;
 import com.genpyon.Manager.ShopManager;
@@ -38,6 +39,36 @@ import net.md_5.bungee.api.ChatColor;
 
 
 public class Main extends JavaPlugin implements Listener {
+
+	/**
+	 * ■ ロール一覧 ■
+	 *
+	 * 村人 = INNOCENT;
+	 * 	- 普通の村人。
+	 *
+	 * 長老 = TYOUROU;
+	 * 	- 	村人の長。死んだら村人陣営の負け。
+	 *
+	 * 孫 = MAGO;
+	 *  -	唯一、長老を知る男。
+	 *
+	 * 探偵 = DETECTIVE;
+	 * 	- 	村人陣営。一定時間に一人、陣営を見ることができる。
+	 * 		アイテムを購入できる。
+	 *
+	 *
+	 * 人狼 = WEREWOLF;
+	 * 	- 	普通の人狼。
+	 *
+	 * 白狼 = HAKUROU;
+	 *  - 	人狼のボス。死んだら人狼陣営の負け。
+	 *
+	 *
+	 * 妖狐 = JACKAL;
+	 *  - 	第三陣営。
+	 */
+
+
 
 	public static String system = ChatColor.RED + " [!] " + ChatColor.RESET;
 
@@ -76,7 +107,7 @@ public class Main extends JavaPlugin implements Listener {
 	public static boolean DetectiveMode = true;
 	public static boolean TTTMode = true;
 
-
+	public static HashMap <String, String> FOUND = new HashMap<String, String>();
 
 
 
@@ -97,39 +128,7 @@ public class Main extends JavaPlugin implements Listener {
 	public static HashMap <String, String> CO = new HashMap<String, String>();
 
 	//ショップの金
-	public static  HashMap <String, Integer> COIN = new HashMap<String, Integer>();
-
-	//最後にロール公開するやつ
-
-
-
-	/**
-	 * ■ ロール一覧 ■
-	 *
-	 * 村人 = INNOCENT;
-	 * 	- 普通の村人。
-	 *
-	 * 長老 = TYOUROU;
-	 * 	- 	村人の長。死んだら村人陣営の負け。
-	 *
-	 * 孫 = MAGO;
-	 *  -	唯一、長老を知る男。
-	 *
-	 * 探偵 = DETECTIVE;
-	 * 	- 	村人陣営。一定時間に一人、陣営を見ることができる。
-	 * 		アイテムを購入できる。
-	 *
-	 *
-	 * 人狼 = WEREWOLF;
-	 * 	- 	普通の人狼。
-	 *
-	 * 白狼 = HAKUROU;
-	 *  - 	人狼のボス。死んだら人狼陣営の負け。
-	 *
-	 *
-	 * 妖狐 = JACKAL;
-	 *  - 	第三陣営。
-	 */
+	public static HashMap <String, Integer> COIN = new HashMap<String, Integer>();
 
 
 
@@ -142,6 +141,7 @@ public class Main extends JavaPlugin implements Listener {
 	public ShopListener sl= null;
 	public ChatListener cl = null;
 	public DamageListener dl = null;
+	public DetectiveBookManager dbm = null;
 
 
 	Random rnd = new Random();
@@ -158,6 +158,7 @@ public class Main extends JavaPlugin implements Listener {
 		sl = new ShopListener(this);
 		cl = new ChatListener(this);
 		dl = new DamageListener(this);
+		dbm = new DetectiveBookManager(this);
 
 		tm.ScoreboardCreate();
 		saveConfig();
@@ -313,8 +314,7 @@ public class Main extends JavaPlugin implements Listener {
 					}
 
 					if(cmd.equalsIgnoreCase("test")){
-
-						Bukkit.broadcastMessage(RoleManager.Haiyaku());
+						p.openInventory(DetectiveBookManager.playerGetHeads());
 						return ret;
 					}
 

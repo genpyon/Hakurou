@@ -40,6 +40,20 @@ public class GameItemManager {
 		return is;
 	}
 
+	public static final String FOUND_HEADS_INV_NAME = ChatColor.RED + "" + ChatColor.BOLD + "発見済み死体情報";
+
+	static public ItemStack FOUND_HEADS() {
+		ItemStack is = lib.createItem(Material.ENCHANTMENT_TABLE, 1, FOUND_HEADS_INV_NAME, "" ,ChatColor.RESET + "発見された死体を確認することが",ChatColor.RESET + "できる。");
+		return is;
+	}
+
+	public static final String PLAYERS_HEAD_INV_NAME = ChatColor.GOLD + "" + ChatColor.BOLD + "プレイヤーリスト";
+
+	static public ItemStack PLAYERS_HEAD() {
+		ItemStack is = lib.createItem(Material.OBSERVER, 1, PLAYERS_HEAD_INV_NAME, "" ,ChatColor.RESET + "プレイヤーの顔、ID、宣言情報を",ChatColor.RESET + "見ることができる。");
+		return is;
+	}
+
 
 
 	static public ItemStack CO_INNOCENT() {

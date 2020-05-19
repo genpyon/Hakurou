@@ -110,6 +110,22 @@ public class SkullManager implements Listener {
 		return skull;
 	}
 
+	public static ItemStack baseHeads(String name, String... list){
+
+		List<String> lore = Arrays.asList(list);
+		ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.PLAYER.ordinal());
+
+		SkullMeta meta = (SkullMeta) skull.getItemMeta();
+		meta.setOwner(name);
+		meta.setDisplayName(name);
+
+		meta.setLore(lore);
+		skull.setItemMeta(meta);
+
+		return skull;
+	}
+
+
 
 	public static ItemStack uranaiHeads(String name, String... list){
 

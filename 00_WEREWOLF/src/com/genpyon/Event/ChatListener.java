@@ -32,7 +32,7 @@ public class ChatListener implements Listener {
 
 	}
 
-	ChatColor cc = ChatColor.RESET;
+	static ChatColor cc = ChatColor.RESET;
 
 
 	@EventHandler
@@ -78,10 +78,24 @@ public class ChatListener implements Listener {
 
 
 
+
+		String sendMessage = coNameChanger(p.getName()) + name + message;
+
+		Bukkit.broadcastMessage(sendMessage);
+		lib.SoundAllPlayer(Sound.ENTITY_CHICKEN_EGG, 1.6F);
+
+		if(cc.equals(ChatColor.RESET)) {
+			cc = ChatColor.RESET;
+		} else {
+			cc = ChatColor.RESET;
+		}
+	}
+
+	public static String coNameChanger(String name) {
 		String CO = null;
 
-		if(Main.CO.containsKey(p.getName())) {
-			CO = Main.CO.get(p.getName());
+		if(Main.CO.containsKey(name)) {
+			CO = Main.CO.get(name);
 		}
 
 		if(CO == null) {
@@ -119,18 +133,62 @@ public class ChatListener implements Listener {
 		if(CO.equalsIgnoreCase("GRAY")) {
 			CO = ChatColor.GRAY + "[グレー]" + cc;
 		}
-
-		String sendMessage = CO + name + message;
-
-		Bukkit.broadcastMessage(sendMessage);
-		lib.SoundAllPlayer(Sound.ENTITY_CHICKEN_EGG, 1.6F);
-
-		if(cc.equals(ChatColor.RESET)) {
-			cc = ChatColor.RESET;
-		} else {
-			cc = ChatColor.RESET;
-		}
+		return CO;
 	}
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -76,6 +76,8 @@ public class GameManager implements Listener {
 		Main.HAKUROU.clear();
 		Main.JACKAL.clear();
 
+		Main.FOUND.clear();
+
 		Main.CO.clear();
 
 		Main.cINNOCENT = plugin.getConfig().getInt("COIN.INNOCENT");
@@ -140,13 +142,9 @@ public class GameManager implements Listener {
 	public void start(Player p){
 		int plus = plugin.iMAGO + plugin.iWEREWOLF + plugin.iDETECTIVE + plugin.iJACKAL;
 
-
-
 		Location loc = p.getLocation();
 
-
 		//ロールのリセット
-
 		Main.ROLE.clear();
 
 		Main.PLAYER.clear();
@@ -674,16 +672,17 @@ public class GameManager implements Listener {
 			//村人が死んだ時
 			if(Main.ROLE.get(p.getName()).equalsIgnoreCase("INNOCENT")){
 				Main.INNOCENT.remove(p.getName());
-
-				if(Main.INNOCENT.size() == 0) {
-					if(Main.JACKAL.size() != 0) {
-						//妖狐の勝ち
-						gameEnd(7, false);
-						return;
-					} else {
-						//人狼の勝ち
-						gameEnd(5, false);
-						return;
+				if(Main.TTTMode == true) {
+					if(Main.INNOCENT.size() == 0) {
+						if(Main.JACKAL.size() != 0) {
+							//妖狐の勝ち
+							gameEnd(7, false);
+							return;
+						} else {
+							//人狼の勝ち
+							gameEnd(5, false);
+							return;
+						}
 					}
 				}
 			}

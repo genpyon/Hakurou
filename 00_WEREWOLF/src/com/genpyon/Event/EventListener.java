@@ -36,7 +36,9 @@ import com.genpyon.Item.CommonItemType;
 import com.genpyon.Item.DetItemType;
 import com.genpyon.Item.WolfItemType;
 import com.genpyon.Item.Wolf.Blink;
+import com.genpyon.ItemStack.GameItemManager;
 import com.genpyon.Library.lib;
+import com.genpyon.Manager.DetectiveBookManager;
 import com.genpyon.Manager.ItemManager;
 import com.genpyon.Manager.ShopManager;
 import com.genpyon.Manager.SkullManager;
@@ -85,7 +87,34 @@ public class EventListener implements Listener {
 		if(act == Action.LEFT_CLICK_AIR || act == Action.RIGHT_CLICK_AIR || act == Action.LEFT_CLICK_BLOCK || act == Action.RIGHT_CLICK_BLOCK){
 
 
-			if(p.getInventory().getItemInMainHand() != null && p.getInventory().getItemInMainHand().getType().equals(Material.DOUBLE_PLANT)){
+			if(p.getInventory().getItemInMainHand() != null && p.getInventory().getItemInMainHand().equals(GameItemManager.FOUND_HEADS())){
+				if(Main.FOUND.size() != 0) {
+					p.openInventory(DetectiveBookManager.foundGetHeads());
+				} else {
+					lib.sendPlayer(p, Main.system + "現在、死体発見情報がありません。");
+				}
+				return;
+			}
+
+			if(p.getInventory().getItemInMainHand() != null && p.getInventory().getItemInMainHand().equals(GameItemManager.PLAYERS_HEAD())){
+				if(Main.PLAYER.size() != 0) {
+					p.openInventory(DetectiveBookManager.playerGetHeads());
+				} else {
+					lib.sendPlayer(p, Main.system + "参加プレイヤーが存在しません。");
+				}
+				return;
+			}
+
+			if(p.getInventory().getItemInMainHand() != null  && ItemManager.hasMainHand(p, GameItemManager.URANAI_BOOK_ITEM())) {
+				if(p.hasCooldown(Material.BOOK)) {
+					lib.sendPlayer(p, Main.system +"まだ使うトキではない。");
+					return;
+				}
+				p.openInventory(DetectiveBookManager.uranaiGetHeads());
+			}
+
+
+			if(p.getInventory().getItemInMainHand() != null && p.getInventory().getItemInMainHand().equals(GameItemManager.SHOP_FLOWER())){
 				if(Main.ROLE.containsKey(p.getName())) {
 
 					if(Main.ROLE.get(p.getName()).equalsIgnoreCase("INNOCENT")) {
@@ -137,33 +166,40 @@ public class EventListener implements Listener {
 
 				if(Main.ROLE.containsKey(name) && Main.PLAYER.contains(p.getName())){
 
-					if(Main.ROLE.get(p.getName()).equalsIgnoreCase("DETECTIVE")){
-
-						if(Main.DetectiveMode == true) {
-							//頭から役職をわかるようにする。
-							p.getInventory().remove(p.getInventory().getItemInMainHand());
-							p.getInventory().addItem(SkullManager.roleHeadChangeDetective(name));
-
-						} else {
-							//頭から役職をわかるようにしない。
-							p.getInventory().remove(p.getInventory().getItemInMainHand());
-							p.getInventory().addItem(SkullManager.roleHeadChange(name));
-						}
-
-					} else if(hakken.equalsIgnoreCase(ChatColor.YELLOW + "未発見")){
-
-						if(Main.TTTMode == true) {
-
-							p.getInventory().remove(p.getInventory().getItemInMainHand());
-							p.getInventory().addItem(SkullManager.roleHeadChangeDetective(name));
-
-						} else {
-							p.getInventory().remove(p.getInventory().getItemInMainHand());
-							p.getInventory().addItem(SkullManager.roleHeadChange(name));
-						}
-					}
-
 					if(plugin.GameStatus == 3) {
+
+						if(Main.FOUND.containsKey(name)) {
+
+						} else {
+							Main.FOUND.put(name, Main.ROLE.get(name));
+						}
+
+						if(Main.ROLE.get(p.getName()).equalsIgnoreCase("DETECTIVE")){
+
+							if(Main.DetectiveMode == true) {
+								//頭から役職をわかるようにする。
+								p.getInventory().remove(p.getInventory().getItemInMainHand());
+								p.getInventory().addItem(SkullManager.roleHeadChangeDetective(name));
+
+							} else {
+								//頭から役職をわかるようにしない。
+								p.getInventory().remove(p.getInventory().getItemInMainHand());
+								p.getInventory().addItem(SkullManager.roleHeadChange(name));
+							}
+
+						} else if(hakken.equalsIgnoreCase(ChatColor.YELLOW + "未発見")){
+
+							if(Main.TTTMode == true) {
+
+								p.getInventory().remove(p.getInventory().getItemInMainHand());
+								p.getInventory().addItem(SkullManager.roleHeadChangeDetective(name));
+
+							} else {
+								p.getInventory().remove(p.getInventory().getItemInMainHand());
+								p.getInventory().addItem(SkullManager.roleHeadChange(name));
+							}
+						}
+
 
 						if(hakken.equalsIgnoreCase(ChatColor.YELLOW + "未発見")){
 							if(Main.TTTMode == true) {
