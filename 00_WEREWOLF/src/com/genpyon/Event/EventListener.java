@@ -98,7 +98,7 @@ public class EventListener implements Listener {
 
 			if(p.getInventory().getItemInMainHand() != null && p.getInventory().getItemInMainHand().equals(GameItemManager.PLAYERS_HEAD())){
 				if(Main.PLAYER.size() != 0) {
-					p.openInventory(DetectiveBookManager.playerGetHeads());
+					p.openInventory(DetectiveBookManager.playerGetHeads(p));
 				} else {
 					lib.sendPlayer(p, Main.system + "参加プレイヤーが存在しません。");
 				}
@@ -212,11 +212,40 @@ public class EventListener implements Listener {
 
 							if(Main.ROLE.get(name).equalsIgnoreCase("INNOCENT") || Main.ROLE.get(name).equalsIgnoreCase("DETECTIVE")) {
 								Bukkit.broadcastMessage(Main.system + ChatColor.GRAY + "村人陣営の死体が発見され、制限時間が" + 20 + "秒延長されました。");
+								for(Player a : Bukkit.getOnlinePlayers()) {
+									if(Main.ROLE.containsKey(a.getName())){
+										if(Main.ROLE.get(a.getName()).equalsIgnoreCase("WEREWOLF")) {
+
+											Main.COIN.put(a.getName(), Main.COIN.get(a.getName())+Main.caWEREWOLF);
+											lib.sendPlayer(a, Main.system + ChatColor.GOLD + Main.caWEREWOLF +"COIN が追加されました");
+
+										}
+
+										if(Main.ROLE.get(a.getName()).equalsIgnoreCase("JACKAL")) {
+											Main.COIN.put(a.getName(), Main.COIN.get(a.getName())+Main.caJACKAL);
+											lib.sendPlayer(a, Main.system + ChatColor.GOLD + Main.caJACKAL +"COIN が追加されました");
+										}
+									}
+								}
 								plugin.GameTime = plugin.GameTime+20;
 							}
 
 							if(Main.ROLE.get(name).equalsIgnoreCase("WEREWOLF")) {
 								Bukkit.broadcastMessage(Main.system + ChatColor.RED + "人狼陣営の死体が発見され、制限時間が" + 10 + "秒短縮されました。");
+								for(Player a : Bukkit.getOnlinePlayers()) {
+									if(Main.ROLE.containsKey(a.getName())){
+										if(Main.ROLE.get(a.getName()).equalsIgnoreCase("INNOCENT")) {
+											Main.COIN.put(a.getName(), Main.COIN.get(a.getName())+Main.caINNOCENT);
+											lib.sendPlayer(a, Main.system + ChatColor.GOLD + Main.caINNOCENT +"COIN が追加されました");
+										}
+
+										if(Main.ROLE.get(a.getName()).equalsIgnoreCase("JACKAL")) {
+											Main.COIN.put(a.getName(), Main.COIN.get(a.getName())+Main.caJACKAL);
+											lib.sendPlayer(a, Main.system + ChatColor.GOLD + Main.caJACKAL +"COIN が追加されました");
+										}
+									}
+								}
+
 								plugin.GameTime = plugin.GameTime-10;
 							}
 

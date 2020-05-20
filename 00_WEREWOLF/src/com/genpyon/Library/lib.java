@@ -19,9 +19,12 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.scoreboard.Team;
 
@@ -97,8 +100,6 @@ public class lib {
 		return item;
 	}
 
-
-
 	public static ItemStack createEnchantItem(Material material, int am ,Enchantment enc,int Lv, String name, String... list){
 		List<String> lore = Arrays.asList(list);
 		ItemStack item = new ItemStack(material,am);
@@ -109,6 +110,20 @@ public class lib {
 		item.addUnsafeEnchantment(enc, Lv);
 		return item;
 	}
+
+	public static void setLeatherHead(Player p, Color c, String name, String... list){
+		List<String> lore = Arrays.asList(list);
+		ItemStack hel = new ItemStack(Material.LEATHER_HELMET);
+		LeatherArmorMeta helm = (LeatherArmorMeta)hel.getItemMeta();
+		helm.setColor(c);
+		helm.setLore(lore);
+		helm.setDisplayName(name);
+		hel.setItemMeta(helm);
+		Inventory inv = p.getInventory();
+		((PlayerInventory) inv).setHelmet(hel);
+	}
+
+
 
 	static public void Soundworld(Location loc, Player p, Sound s ,Float f ,Float volume){
 		float pitch = rnd.nextInt(4)*f;

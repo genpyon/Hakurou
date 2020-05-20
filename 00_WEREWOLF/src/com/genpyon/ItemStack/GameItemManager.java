@@ -56,41 +56,48 @@ public class GameItemManager {
 
 
 
+	static public String CO_INNOCENT_HEAD = ChatColor.GREEN + "村人";
 	static public ItemStack CO_INNOCENT() {
 		ItemStack is = lib.createItemMeta(Material.WOOL, 1 ,(byte) 5, ChatColor.RESET + "全体に " +  ChatColor.GREEN + "" + ChatColor.BOLD + "村人" + ChatColor.RESET + " を宣言する。");
 		return is;
 	}
 
+	static public String CO_MAGO_HEAD = ChatColor.GREEN + "孫";
 	static public ItemStack CO_MAGO() {
 		ItemStack is = lib.createItemMeta(Material.WOOL, 1 ,(byte) 9, ChatColor.RESET + "全体に " +  ChatColor.GREEN + "" + ChatColor.BOLD + "孫" + ChatColor.RESET + " を宣言する。");
 		return is;
 	}
 
+	static public String CO_TYOUROU_HEAD = ChatColor.DARK_GREEN + "長老";
 	static public ItemStack CO_TYOUROU() {
 		ItemStack is = lib.createItemMeta(Material.WOOL, 1 ,(byte) 13, ChatColor.RESET + "全体に " +  ChatColor.DARK_GREEN + "" + ChatColor.BOLD + "長老" + ChatColor.RESET + " を宣言する。");
 		return is;
 	}
 
+	static public String CO_DETECTIVE_HEAD = ChatColor.BLUE + "探偵";
 	static public ItemStack CO_DETECTIVE() {
 		ItemStack is = lib.createItemMeta(Material.WOOL, 1 ,(byte) 11, ChatColor.RESET + "全体に " +  ChatColor.BLUE + "" + ChatColor.BOLD + "探偵" + ChatColor.RESET + " を宣言する。");
 		return is;
 	}
 
+	static public String CO_WEREWOLF_HEAD = ChatColor.RED + "人狼";
 	static public ItemStack CO_WEREWOLF() {
 		ItemStack is = lib.createItemMeta(Material.WOOL, 1 ,(byte) 14, ChatColor.RESET + "全体に " +  ChatColor.RED + "" + ChatColor.BOLD + "人狼" + ChatColor.RESET + " を宣言する。");
 		return is;
 	}
 
+	static public String CO_HAKUROU_HEAD = ChatColor.DARK_RED + "白狼";
 	static public ItemStack CO_HAKUROU() {
 		ItemStack is = lib.createItem(Material.NETHER_WART_BLOCK, 1  ,ChatColor.RESET + "全体に " +  ChatColor.DARK_RED + "" + ChatColor.BOLD + "白狼" + ChatColor.RESET + " を宣言する。");
 		return is;
 	}
 
+	static public String CO_JACKAL_HEAD = ChatColor.AQUA + "妖狐";
 	static public ItemStack CO_JACKAL() {
 		ItemStack is = lib.createItemMeta(Material.WOOL, 1 ,(byte) 3, ChatColor.RESET + "全体に " +  ChatColor.AQUA + "" + ChatColor.BOLD + "妖狐" + ChatColor.RESET + " を宣言する。");
 		return is;
 	}
-
+	static public String CO_GRAY_HEAD = ChatColor.GRAY + "グレー";
 	static public ItemStack CO_GRAY() {
 		ItemStack is = lib.createItemMeta(Material.WOOL, 1 ,(byte) 7, ChatColor.RESET + "全体に " +  ChatColor.GRAY + "" + ChatColor.BOLD + "グレー" + ChatColor.RESET + " を宣言する。");
 		return is;

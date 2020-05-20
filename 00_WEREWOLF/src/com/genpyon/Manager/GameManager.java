@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
@@ -55,12 +56,6 @@ public class GameManager implements Listener {
 
 
 	public void Reset(){
-		for(Player a : Bukkit.getOnlinePlayers()){
-			for(Player a2 : Bukkit.getOnlinePlayers()){
-				a.hidePlayer(a2);
-				a.showPlayer(a2);
-			}
-		}
 
 		Main.ROLE.clear();
 
@@ -164,36 +159,15 @@ public class GameManager implements Listener {
 
 		//全員イノセントにし、ゲームプレイヤーに設定する。
 		for(Player a : Bukkit.getOnlinePlayers()){
-			for(Player a2 : Bukkit.getOnlinePlayers()){
-				a.hidePlayer(a2);
-			}
 			if(a.getGameMode().equals(GameMode.ADVENTURE)){
 
-
-				Main.ROLE.put(a.getName(), "INNOCENT");
-
-				Main.INNOCENT.add(a.getName());
-				Main.PLAYER.add(a.getName());
-				Main.NONROLE.add(a.getName());
-
-				loc.setYaw(a.getLocation().getYaw());
-				loc.setPitch(a.getLocation().getPitch());
-				a.teleport(loc);
-				a.setBedSpawnLocation(loc, true);
-
-				lib.SoundPlayer(a, Sound.ENTITY_ENDERMEN_TELEPORT, 0.2F);
-
-				p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20);
-				p.setHealth(p.getHealthScale());
+				plugin.pm.GameReadyPlayerStuff(a, loc);
 
 			}
 
 			Main.StartLocation = loc;
 			Main.dropedItemsClear();
 
-			for(Player a2 : Bukkit.getOnlinePlayers()){
-				a.showPlayer(a2);
-			}
 		}
 
 		if(Main.NONROLE.size()-1 <= plus){
@@ -591,8 +565,11 @@ public class GameManager implements Listener {
 		Player p = b.getPlayer();
 
 		if(plugin.GameStatus != 3){
-
-			plugin.pm.DefaultStuff(p);
+			if(plugin.GameStatus == 2) {
+				plugin.pm.GameReadyPlayerStuff(p, Main.StartLocation);
+			} else {
+				plugin.pm.DefaultStuff(p);
+			}
 
 		} else {
 
@@ -651,40 +628,15 @@ public class GameManager implements Listener {
 		//人狼が死んだ時
 		if(Main.ROLE.containsKey(p.getName())){
 
-			if(Main.ROLE.get(p.getName()).equalsIgnoreCase("WEREWOLF")){
-				Main.WEREWOLF.remove(p.getName());
-
-				if(Main.TTTMode == true) {
-					if(Main.WEREWOLF.size() == 0) {
-						if(Main.JACKAL.size() != 0) {
-							//妖狐の勝ち
-							gameEnd(6, false);
-							return;
-						} else {
-							//村人の勝ち
-							gameEnd(4, false);
-							return;
-						}
-					}
+			if(Main.PLAYER.contains(p.getName()) && !Main.DEATH.contains(p.getName())){
+				plugin.pm.DeathPlayer(p ,loc);
+				for(Player a : Bukkit.getOnlinePlayers()) {
+					a.spawnParticle(Particle.SMOKE_NORMAL, p.getLocation(), 1, 0, 0, 0);
 				}
 			}
 
-			//村人が死んだ時
-			if(Main.ROLE.get(p.getName()).equalsIgnoreCase("INNOCENT")){
-				Main.INNOCENT.remove(p.getName());
-				if(Main.TTTMode == true) {
-					if(Main.INNOCENT.size() == 0) {
-						if(Main.JACKAL.size() != 0) {
-							//妖狐の勝ち
-							gameEnd(7, false);
-							return;
-						} else {
-							//人狼の勝ち
-							gameEnd(5, false);
-							return;
-						}
-					}
-				}
+			if(Main.ROLE.get(p.getName()).equalsIgnoreCase("WEREWOLF")){
+				Main.WEREWOLF.remove(p.getName());
 			}
 
 			if(Main.ROLE.get(p.getName()).equalsIgnoreCase("HAKUROU")){
@@ -697,18 +649,48 @@ public class GameManager implements Listener {
 				return;
 			}
 
-			if(Main.WEREWOLF.size() == 0 && Main.INNOCENT.size() == 0 && Main.JACKAL.size() >= 1){
-				gameEnd(3, false);
-			}
-
-			if(Main.PLAYER.contains(p.getName()) && !Main.DEATH.contains(p.getName())){
-				plugin.pm.DeathPlayer(p ,loc);
+			//村人が死んだ時
+			if(Main.ROLE.get(p.getName()).equalsIgnoreCase("INNOCENT")){
+				Main.INNOCENT.remove(p.getName());
 			}
 
 			if(Main.ROLE.get(p.getName()).equalsIgnoreCase("JACKAL")){
 				Main.JACKAL.remove(p.getName());
 			}
+			endGame();
+		}
+	}
 
+	public void endGame() {
+
+		if(Main.TTTMode == true) {
+			if(Main.INNOCENT.size() == 0) {
+				if(Main.JACKAL.size() != 0) {
+					//妖狐の勝ち
+					gameEnd(7, false);
+					return;
+				} else {
+					//人狼の勝ち
+					gameEnd(5, false);
+					return;
+				}
+			}
+
+			if(Main.WEREWOLF.size() == 0) {
+				if(Main.JACKAL.size() != 0) {
+					//妖狐の勝ち
+					gameEnd(6, false);
+					return;
+				} else {
+					//村人の勝ち
+					gameEnd(4, false);
+					return;
+				}
+			}
+		}
+
+		if(Main.WEREWOLF.size() == 0 && Main.INNOCENT.size() == 0 && Main.JACKAL.size() >= 1){
+			gameEnd(3, false);
 		}
 	}
 

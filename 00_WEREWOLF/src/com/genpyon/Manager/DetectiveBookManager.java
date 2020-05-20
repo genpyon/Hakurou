@@ -4,6 +4,7 @@ import java.util.Random;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -35,7 +36,7 @@ public class DetectiveBookManager implements Listener {
 	}
 
 
-	public static Inventory playerGetHeads() {
+	public static Inventory playerGetHeads(Player p) {
 
 		int invSize = Main.PLAYER.size();
 
@@ -53,11 +54,27 @@ public class DetectiveBookManager implements Listener {
 		Inventory inv = Bukkit.createInventory(null, invSize, GameItemManager.PLAYERS_HEAD_INV_NAME);
 
 		for(String s : Main.PLAYER) {
+
 			if(Main.TTTMode == true) {
-				inv.addItem(SkullManager.baseHeads(s ,
+
+				if(Main.ROLE.containsKey(p.getName())&& Main.ROLE.get(p.getName()).equalsIgnoreCase("WEREWOLF")) {
+					if(Main.ROLE.containsKey(s) && Main.ROLE.get(s).equalsIgnoreCase("WEREWOLF")) {
+
+						inv.addItem(SkullManager.baseHeads(s , Enchantment.DURABILITY , 1,
+								ChatColor.RESET + "宣言: " + ChatListener.coNameChanger(s),
+								ChatColor.RESET + "役職: " + RoleManager.roleNameChanger(Main.ROLE.get(s))));
+					} else {
+						inv.addItem(SkullManager.baseHeads(s , null , 0,
+								ChatColor.RESET + "宣言: " + ChatListener.coNameChanger(s)));
+					}
+
+
+				} else {
+				inv.addItem(SkullManager.baseHeads(s , null , 0,
 						ChatColor.RESET + "宣言: " + ChatListener.coNameChanger(s)));
+				}
 			} else {
-				inv.addItem(SkullManager.baseHeads(s ,ChatColor.RESET + "情報無し"));
+				inv.addItem(SkullManager.baseHeads(s , null , 0,ChatColor.RESET + "情報無し"));
 			}
 		}
 
@@ -84,9 +101,9 @@ public class DetectiveBookManager implements Listener {
 
 		for(String s : Main.FOUND.keySet()) {
 			if(Main.TTTMode == true) {
-				inv.addItem(SkullManager.baseHeads(s,ChatColor.RESET + "役職: " + RoleManager.bookRoleNameChanger(Main.ROLE.get(s))));
+				inv.addItem(SkullManager.baseHeads(s, null , 0 ,ChatColor.RESET + "役職: " + RoleManager.bookRoleNameChanger(Main.ROLE.get(s))));
 			} else {
-				inv.addItem(SkullManager.baseHeads(s,ChatColor.RESET + "情報無し"));
+				inv.addItem(SkullManager.baseHeads(s, null , 0, ChatColor.RESET + "情報無し"));
 			}
 		}
 
@@ -185,6 +202,10 @@ public class DetectiveBookManager implements Listener {
 					//Bukkit.broadcastMessage("そんなことはありませんエラー");
 				}
 			}
+			b.setCancelled(true);
+		}
+
+		if (openInv.getName().equalsIgnoreCase(GameItemManager.PLAYERS_HEAD_INV_NAME)){
 			b.setCancelled(true);
 		}
 

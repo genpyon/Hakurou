@@ -71,6 +71,7 @@ public class Main extends JavaPlugin implements Listener {
 
 
 	public static String system = ChatColor.RED + " [!] " + ChatColor.RESET;
+	public static String unbreakitem = ChatColor.GRAY + "unbreakitem";
 
 	public static Main main;
 
@@ -103,6 +104,9 @@ public class Main extends JavaPlugin implements Listener {
 	public static int cTYOUROU = 0;
 	public static int cJACKAL = 0;
 
+	public static int caINNOCENT = 50;
+	public static int caWEREWOLF = 50;
+	public static int caJACKAL = 50;
 
 	public static boolean DetectiveMode = true;
 	public static boolean TTTMode = true;
@@ -314,7 +318,7 @@ public class Main extends JavaPlugin implements Listener {
 					}
 
 					if(cmd.equalsIgnoreCase("test")){
-						p.openInventory(DetectiveBookManager.playerGetHeads());
+						p.openInventory(DetectiveBookManager.playerGetHeads(p));
 						return ret;
 					}
 
@@ -504,7 +508,9 @@ public class Main extends JavaPlugin implements Listener {
 
 						GameTime--;
 
-					} else {
+					}
+
+					if(GameTime <= 0){
 						//イノセントの勝ち
 						gm.gameEnd(1, true);
 					}

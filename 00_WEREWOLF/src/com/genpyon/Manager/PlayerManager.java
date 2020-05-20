@@ -2,24 +2,19 @@ package com.genpyon.Manager;
 
 import java.util.Random;
 
-import org.bukkit.Bukkit;
+import org.bukkit.Color;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 
 import com.genpyon.Main;
 import com.genpyon.ItemStack.GameItemManager;
 import com.genpyon.Library.lib;
-
-import net.md_5.bungee.api.ChatColor;
 
 
 
@@ -35,116 +30,6 @@ public class PlayerManager implements Listener {
 
 		return;
 
-	}
-
-	@EventHandler
-	public void comingOutEvent(InventoryClickEvent b) {
-		Player p = (Player) b.getWhoClicked();
-		ItemStack click = b.getCurrentItem();
-		String role = null;
-
-		if(click == null){
-			return;
-		}
-
-		if (click.equals(GameItemManager.CO_INNOCENT())){
-			role = ChatColor.GREEN + "村人" + ChatColor.RESET;
-			if(Main.CO.containsKey(p.getName()) && Main.CO.get(p.getName()).equalsIgnoreCase("INNOCENT")) {
-				lib.sendPlayer(p, Main.system + "すでに同じ宣言をしています。");
-				return;
-			} else {
-				Main.CO.put(p.getName(),"INNOCENT");
-			}
-			b.setCancelled(true);
-		}
-
-		if (click.equals(GameItemManager.CO_MAGO())){
-			role = ChatColor.GREEN + "孫" + ChatColor.RESET;
-
-			if(Main.CO.containsKey(p.getName()) && Main.CO.get(p.getName()).equalsIgnoreCase("MAGO")) {
-				lib.sendPlayer(p, Main.system + "すでに同じ宣言をしています。");
-				return;
-			} else {
-				Main.CO.put(p.getName(),"MAGO");
-			}
-			b.setCancelled(true);
-		}
-
-		if (click.equals(GameItemManager.CO_TYOUROU())){
-			role = ChatColor.DARK_GREEN + "長老" + ChatColor.RESET;
-			if(Main.CO.containsKey(p.getName()) && Main.CO.get(p.getName()).equalsIgnoreCase("TYOUROU")) {
-				lib.sendPlayer(p, Main.system + "すでに同じ宣言をしています。");
-				return;
-			} else {
-				Main.CO.put(p.getName(),"TYOUROU");
-			}
-			b.setCancelled(true);
-		}
-
-		if (click.equals(GameItemManager.CO_DETECTIVE())){
-			role = ChatColor.BLUE + "探偵" + ChatColor.RESET;
-			if(Main.CO.containsKey(p.getName()) && Main.CO.get(p.getName()).equalsIgnoreCase("DETECTIVE")) {
-				lib.sendPlayer(p, Main.system + "すでに同じ宣言をしています。");
-				return;
-			} else {
-				Main.CO.put(p.getName(),"DETECTIVE");
-			}
-			b.setCancelled(true);
-		}
-
-		if (click.equals(GameItemManager.CO_WEREWOLF())){
-			role = ChatColor.RED + "人狼" + ChatColor.RESET;
-			if(Main.CO.containsKey(p.getName()) && Main.CO.get(p.getName()).equalsIgnoreCase("WEREWOLF")) {
-				lib.sendPlayer(p, Main.system + "すでに同じ宣言をしています。");
-				return;
-			} else {
-				Main.CO.put(p.getName(),"WEREWOLF");
-			}
-			b.setCancelled(true);
-		}
-
-		if (click.equals(GameItemManager.CO_HAKUROU())){
-			role = ChatColor.DARK_RED + "白狼" + ChatColor.RESET;
-			if(Main.CO.containsKey(p.getName()) && Main.CO.get(p.getName()).equalsIgnoreCase("HAKUROU")) {
-				lib.sendPlayer(p, Main.system + "すでに同じ宣言をしています。");
-				return;
-			} else {
-				Main.CO.put(p.getName(),"HAKUROU");
-			}
-			b.setCancelled(true);
-		}
-
-		if (click.equals(GameItemManager.CO_JACKAL())){
-			role = ChatColor.AQUA + "妖狐" + ChatColor.RESET;
-			if(Main.CO.containsKey(p.getName()) && Main.CO.get(p.getName()).equalsIgnoreCase("JACKAL")) {
-				lib.sendPlayer(p, Main.system + "すでに同じ宣言をしています。");
-				return;
-			} else {
-				Main.CO.put(p.getName(),"JACKAL");
-			}
-			b.setCancelled(true);
-		}
-
-		if (click.equals(GameItemManager.CO_GRAY())){
-			role = ChatColor.GRAY + "グレー" + ChatColor.RESET;
-			if(Main.CO.containsKey(p.getName()) && Main.CO.get(p.getName()).equalsIgnoreCase("GRAY")) {
-				lib.sendPlayer(p, Main.system + "すでに同じ宣言をしています。");
-				return;
-			} else {
-				Main.CO.put(p.getName(),"GRAY");
-			}
-			b.setCancelled(true);
-		}
-
-		if(role != null) {
-			String sengen = ChatColor.RED + " [!] " + ChatColor.YELLOW + p.getName() + ChatColor.RESET +  " は " + role + " を宣言しました。";
-			Bukkit.broadcastMessage(sengen);
-			lib.SoundAllPlayer(Sound.ENTITY_CHICKEN_EGG, 1.6F);
-		} else {
-			return;
-		}
-
-		return;
 	}
 
 	public void DefaultStuff(Player p){
@@ -171,6 +56,25 @@ public class PlayerManager implements Listener {
 			Main.USER.addEntry(p.getName());
 		}
 
+	}
+
+	public void GameReadyPlayerStuff(Player a, Location loc) {
+		a.setGameMode(GameMode.ADVENTURE);
+		Main.ROLE.put(a.getName(), "INNOCENT");
+
+		Main.INNOCENT.add(a.getName());
+		Main.PLAYER.add(a.getName());
+		Main.NONROLE.add(a.getName());
+
+		loc.setYaw(a.getLocation().getYaw());
+		loc.setPitch(a.getLocation().getPitch());
+		a.teleport(loc);
+		a.setBedSpawnLocation(loc, true);
+
+		lib.SoundPlayer(a, Sound.ENTITY_ENDERMEN_TELEPORT, 0.2F);
+
+		a.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20);
+		a.setHealth(a.getHealthScale());
 	}
 
 	public void GamePlayerStuff(Player p){
@@ -240,6 +144,7 @@ public class PlayerManager implements Listener {
 			inv.setItem(5, GameItemManager.WEREWOLF_CHAT_ITEM());
 		}
 
+		lib.setLeatherHead(p, Color.GRAY, GameItemManager.CO_GRAY_HEAD, Main.unbreakitem);
 		Main.CO.put(p.getName(),"GRAY");
 	}
 
@@ -252,10 +157,10 @@ public class PlayerManager implements Listener {
 		inv.clear();
 
 		p.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(100);
-
 		p.setFoodLevel(15);
 
-		p.getInventory().clear();
+		p.teleport(Main.StartLocation);
+		p.setBedSpawnLocation(Main.StartLocation, true);
 
 	}
 
