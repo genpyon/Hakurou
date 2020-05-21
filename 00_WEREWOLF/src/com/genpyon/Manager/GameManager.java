@@ -58,22 +58,24 @@ public class GameManager implements Listener {
 	public void Reset(){
 
 		Main.ROLE.clear();
-
 		Main.PLAYER.clear();
 		Main.DEATH.clear();
-
 		Main.NONROLE.clear();
 		Main.INNOCENT.clear();
-
 		Main.TYOUROU.clear();
 		Main.WEREWOLF.clear();
-
 		Main.HAKUROU.clear();
 		Main.JACKAL.clear();
-
 		Main.FOUND.clear();
 
 		Main.CO.clear();
+
+
+		Main.iMAGO = plugin.getConfig().getInt("STARTINT.MAGO");
+		Main.iDETECTIVE = plugin.getConfig().getInt("STARTINT.DETECTIVE");
+		Main.iWEREWOLF = plugin.getConfig().getInt("STARTINT.WEREWOLF");
+		Main.iJACKAL = plugin.getConfig().getInt("STARTINT.JACKAL");
+
 
 		Main.cINNOCENT = plugin.getConfig().getInt("COIN.INNOCENT");
 		Main.cWEREWOLF = plugin.getConfig().getInt("COIN.WEREWOLF");
@@ -82,17 +84,14 @@ public class GameManager implements Listener {
 		Main.cTYOUROU = plugin.getConfig().getInt("COIN.TYOUROU");
 		Main.cJACKAL = plugin.getConfig().getInt("COIN.JACKAL");
 
-		Main.USER.setAllowFriendlyFire(false);
-
-
-		plugin.GameStatus = 1;
+		Main.GameStatus = 1;
 
 		plugin.PlayTime = 0;
 
 		plugin.reloadConfig();
 
-		plugin.Preparation = plugin.getConfig().getInt("PREPARATION");
-		plugin.GameTime = plugin.getConfig().getInt("GAMETIME");
+		Main.Preparation = plugin.getConfig().getInt("PREPARATION");
+		Main.GameTime = plugin.getConfig().getInt("GAMETIME");
 
 
 		for(Player a : Bukkit.getOnlinePlayers()){
@@ -110,7 +109,7 @@ public class GameManager implements Listener {
 
 	public void setTabName(){
 		for(Player a : Bukkit.getOnlinePlayers()){
-			if(plugin.GameStatus == 3){
+			if(Main.GameStatus == 3){
 				a.setPlayerListName("");
 			} else {
 				a.setPlayerListName(a.getName());
@@ -121,7 +120,7 @@ public class GameManager implements Listener {
 	@EventHandler
 	public void sneakCanceled(PlayerToggleSneakEvent b){
 
-		if(plugin.GameStatus == 3 && !b.getPlayer().getGameMode().equals(GameMode.SPECTATOR)){
+		if(Main.GameStatus == 3 && !b.getPlayer().getGameMode().equals(GameMode.SPECTATOR)){
 			b.setCancelled(true);
 		}
 	}
@@ -135,7 +134,7 @@ public class GameManager implements Listener {
 
 
 	public void start(Player p){
-		int plus = plugin.iMAGO + plugin.iWEREWOLF + plugin.iDETECTIVE + plugin.iJACKAL;
+		int plus = Main.iMAGO + Main.iWEREWOLF + Main.iDETECTIVE + Main.iJACKAL;
 
 		Location loc = p.getLocation();
 
@@ -155,7 +154,7 @@ public class GameManager implements Listener {
 		Main.JACKAL.clear();
 
 
-		plugin.GameStatus = 2;
+		Main.GameStatus = 2;
 
 		//全員イノセントにし、ゲームプレイヤーに設定する。
 		for(Player a : Bukkit.getOnlinePlayers()){
@@ -178,16 +177,16 @@ public class GameManager implements Listener {
 			return;
 		}
 		if(Main.TTTMode == false) {
-			lib.sendTitle(ChatColor.BOLD + "白狼", plugin.Preparation +" 秒後に役職が割り当てられます。");
+			lib.sendTitle(ChatColor.BOLD + "白狼", Main.Preparation +" 秒後に役職が割り当てられます。");
 		} else {
-			lib.sendTitle(ChatColor.RED + "TTT", plugin.Preparation +" 秒後に役職が割り当てられます。");
+			lib.sendTitle(ChatColor.RED + "TTT", Main.Preparation +" 秒後に役職が割り当てられます。");
 		}
 
 		lib.sendPlayer(p, "");
 		lib.sendPlayer(p, "========================");
 		lib.sendPlayer(p, "");
 		lib.sendPlayer(p, ChatColor.RED + " ゲームが開始されました。");
-		lib.sendPlayer(p, "  " + plugin.Preparation + " 秒後に役職が割り振られます。");
+		lib.sendPlayer(p, "  " + Main.Preparation + " 秒後に役職が割り振られます。");
 		lib.sendPlayer(p, "");
 		lib.sendPlayer(p, "========================");
 	}
@@ -408,7 +407,7 @@ public class GameManager implements Listener {
 			lib.SoundPlayer(p, Sound.ENTITY_WOLF_HOWL, 2F);
 		}
 
-		plugin.GameStatus = 3;
+		Main.GameStatus = 3;
 
 	}
 
@@ -535,9 +534,7 @@ public class GameManager implements Listener {
 		Bukkit.broadcastMessage("========================");
 		Bukkit.broadcastMessage("");
 
-		plugin.GameStatus = 4;
-
-		Main.USER.setAllowFriendlyFire(false);
+		Main.GameStatus = 4;
 	}
 
 
@@ -564,8 +561,8 @@ public class GameManager implements Listener {
 	public void PlayerJoinEvent(PlayerJoinEvent b){
 		Player p = b.getPlayer();
 
-		if(plugin.GameStatus != 3){
-			if(plugin.GameStatus == 2) {
+		if(Main.GameStatus != 3){
+			if(Main.GameStatus == 2) {
 				plugin.pm.GameReadyPlayerStuff(p, Main.StartLocation);
 			} else {
 				plugin.pm.DefaultStuff(p);
@@ -584,7 +581,7 @@ public class GameManager implements Listener {
 		Location loc = p.getLocation();
 		loc.setY(loc.getY() +1);
 
-		if(plugin.GameStatus != 3){
+		if(Main.GameStatus != 3){
 
 			plugin.pm.DefaultStuff(p);
 
@@ -697,7 +694,7 @@ public class GameManager implements Listener {
 	@EventHandler
 	public void respawnEvent(PlayerRespawnEvent b){
 
-		if(plugin.GameStatus != 3){
+		if(Main.GameStatus != 3){
 			return;
 		} else {
 

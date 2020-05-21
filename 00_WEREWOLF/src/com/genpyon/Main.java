@@ -17,7 +17,6 @@ import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scoreboard.Team;
 
 import com.genpyon.Event.ChatListener;
 import com.genpyon.Event.DamageListener;
@@ -75,13 +74,11 @@ public class Main extends JavaPlugin implements Listener {
 
 	public static Main main;
 
-	public static Team USER;
-
 	//1待機 2準備 3ゲーム 4終了
-	public int GameStatus = 1;
+	public static int GameStatus = 1;
 
-	public int GameTime = getConfig().getInt("GAMETIME");
-	public int Preparation = getConfig().getInt("PREPARATION");
+	public static int GameTime = 0;
+	public static int Preparation = 0;
 
 	public int PlayTime = 0;
 	public int MoneyTime = 45;
@@ -90,13 +87,13 @@ public class Main extends JavaPlugin implements Listener {
 
 	public static Location StartLocation = null;
 
-	public int iMAGO = 0;
-	public int iWEREWOLF = 0;
-	public int iDETECTIVE = 0;
-	public int iJACKAL = 0;
+	public static int iMAGO = 0;
+	public static int iWEREWOLF = 0;
+	public static int iDETECTIVE = 0;
+	public static int iJACKAL = 0;
 
-	//コインをあげる量
-
+	//コインを最初にあげる
+	//GameManager の Reset でConfigからロードしてます。
 	public static int cINNOCENT = 0;
 	public static int cWEREWOLF = 0;
 	public static int cHAKUROU = 0;
@@ -104,6 +101,7 @@ public class Main extends JavaPlugin implements Listener {
 	public static int cTYOUROU = 0;
 	public static int cJACKAL = 0;
 
+	//コインを発見時にもらうやつ
 	public static int caINNOCENT = 50;
 	public static int caWEREWOLF = 50;
 	public static int caJACKAL = 50;
@@ -112,8 +110,7 @@ public class Main extends JavaPlugin implements Listener {
 	public static boolean TTTMode = true;
 
 	public static HashMap <String, String> FOUND = new HashMap<String, String>();
-
-
+	public static HashMap <String, String> CO = new HashMap<String, String>();
 
 	//全員の役職まとめ
 	public static HashMap <String, String> ROLE = new HashMap<String, String>();
@@ -128,8 +125,6 @@ public class Main extends JavaPlugin implements Listener {
 	public static ArrayList<String> WEREWOLF = new ArrayList<String>();
 	public static ArrayList<String> HAKUROU = new ArrayList<String>();
 	public static ArrayList<String> JACKAL = new ArrayList<String>();
-
-	public static HashMap <String, String> CO = new HashMap<String, String>();
 
 	//ショップの金
 	public static HashMap <String, Integer> COIN = new HashMap<String, Integer>();
@@ -164,7 +159,6 @@ public class Main extends JavaPlugin implements Listener {
 		dl = new DamageListener(this);
 		dbm = new DetectiveBookManager(this);
 
-		tm.ScoreboardCreate();
 		saveConfig();
 		Timer();
 
@@ -294,6 +288,14 @@ public class Main extends JavaPlugin implements Listener {
 							iDETECTIVE = Integer.parseInt(args[2]);
 							iWEREWOLF = Integer.parseInt(args[3]);
 							iJACKAL = Integer.parseInt(args[4]);
+
+							getConfig().set("STARTINT.MAGO", iMAGO);
+							getConfig().set("STARTINT.DETECTIVE", iDETECTIVE);
+							getConfig().set("STARTINT.WEREWOLF", iWEREWOLF);
+							getConfig().set("STARTINT.JACKAL", iJACKAL);
+							saveConfig();
+							reloadConfig();
+
 							if(GameStatus != 1) {
 								lib.sendPlayer(p, "リセットしてください。");
 							} else {
@@ -484,8 +486,6 @@ public class Main extends JavaPlugin implements Listener {
 
 					PlayTime++;
 
-					USER.setAllowFriendlyFire(true);
-
 					for(Player a : Bukkit.getOnlinePlayers()){
 						sm.haveSkullCheck(a);
 					}
@@ -521,6 +521,9 @@ public class Main extends JavaPlugin implements Listener {
 						}
 					}
 				}
+				for(Player a : Bukkit.getOnlinePlayers()){
+					TeamManager.ScoreboardUpdate(a);
+				}
 
 				gm.setTabName();
 
@@ -555,6 +558,29 @@ public class Main extends JavaPlugin implements Listener {
 
 			}
 		}, 0L, 5L * 1);
+
+
+		//スタミナ関係
+		this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable(){
+			@Override
+			public void run() {
+				for(Player a : Bukkit.getOnlinePlayers()){
+
+					if(ROLE.containsKey(a.getName())) {
+						if(a.getFoodLevel() >= 5) {
+							if(a.isSprinting()) {
+							a.setFoodLevel(a.getFoodLevel()-2);
+							}
+						}
+
+						if(!a.isSprinting() && a.getFoodLevel() <= 14) {
+							a.setFoodLevel(a.getFoodLevel()+1);
+						}
+					}
+				}
+
+			}
+		}, 0L, 10L * 1);
 	}
 
 

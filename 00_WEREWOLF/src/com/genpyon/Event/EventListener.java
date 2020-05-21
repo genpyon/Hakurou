@@ -5,6 +5,7 @@ import java.util.Random;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -23,6 +24,7 @@ import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -166,7 +168,7 @@ public class EventListener implements Listener {
 
 				if(Main.ROLE.containsKey(name) && Main.PLAYER.contains(p.getName())){
 
-					if(plugin.GameStatus == 3) {
+					if(Main.GameStatus == 3) {
 
 						if(Main.FOUND.containsKey(name)) {
 
@@ -227,7 +229,7 @@ public class EventListener implements Listener {
 										}
 									}
 								}
-								plugin.GameTime = plugin.GameTime+20;
+								Main.GameTime = Main.GameTime+20;
 							}
 
 							if(Main.ROLE.get(name).equalsIgnoreCase("WEREWOLF")) {
@@ -246,7 +248,7 @@ public class EventListener implements Listener {
 									}
 								}
 
-								plugin.GameTime = plugin.GameTime-10;
+								Main.GameTime = Main.GameTime-10;
 							}
 
 							//Bukkit.broadcastMessage("");
@@ -298,13 +300,24 @@ public class EventListener implements Listener {
 	}
 
 
+	@EventHandler
+	public void HangingBreakByEntityEvent(HangingBreakByEntityEvent b){
+		if(b.getRemover() instanceof Player) {
+			Player p = (Player) b.getRemover();
+			if(p.getGameMode().equals(GameMode.ADVENTURE)) {
+				b.setCancelled(true);
+			}
+		}
+	}
+
+
 
 	@EventHandler
 	public void onDamage(EntityDamageEvent b){
 		if(b.getEntity() instanceof Player){
 			if (b.getCause() == DamageCause.FALL){
 
-				if(plugin.GameStatus != 3){
+				if(Main.GameStatus != 3){
 					b.setCancelled(true);
 					return;
 				}

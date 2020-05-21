@@ -171,7 +171,7 @@ public class ChatListener implements Listener {
 
 		Player p = b.getPlayer();
 
-		if(plugin.GameStatus != 3) {
+		if(Main.GameStatus != 3) {
 			return;
 		}
 

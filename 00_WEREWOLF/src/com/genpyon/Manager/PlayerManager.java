@@ -50,12 +50,6 @@ public class PlayerManager implements Listener {
 			p.setBedSpawnLocation(Main.StartLocation, true);
 		}
 
-		if(Main.USER.hasEntry(p.getName())){
-
-		} else {
-			Main.USER.addEntry(p.getName());
-		}
-
 	}
 
 	public void GameReadyPlayerStuff(Player a, Location loc) {
