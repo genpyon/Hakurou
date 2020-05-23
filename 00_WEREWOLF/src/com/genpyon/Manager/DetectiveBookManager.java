@@ -59,10 +59,11 @@ public class DetectiveBookManager implements Listener {
 
 				if(Main.ROLE.containsKey(p.getName())&& Main.ROLE.get(p.getName()).equalsIgnoreCase("WEREWOLF")) {
 					if(Main.ROLE.containsKey(s) && Main.ROLE.get(s).equalsIgnoreCase("WEREWOLF")) {
-
-						inv.addItem(SkullManager.baseHeads(s , Enchantment.DURABILITY , 1,
-								ChatColor.RESET + "宣言: " + ChatListener.coNameChanger(s),
-								ChatColor.RESET + "役職: " + RoleManager.roleNameChanger(Main.ROLE.get(s))));
+						if(!Main.FOUND.containsKey(s)) {
+							inv.addItem(SkullManager.baseHeads(s , Enchantment.DURABILITY , 1,
+									ChatColor.RESET + "宣言: " + ChatListener.coNameChanger(s),
+									ChatColor.RESET + "役職: " + RoleManager.roleNameChanger(Main.ROLE.get(s))));
+						}
 					} else {
 						inv.addItem(SkullManager.baseHeads(s , null , 0,
 								ChatColor.RESET + "宣言: " + ChatListener.coNameChanger(s)));
@@ -70,8 +71,10 @@ public class DetectiveBookManager implements Listener {
 
 
 				} else {
-				inv.addItem(SkullManager.baseHeads(s , null , 0,
-						ChatColor.RESET + "宣言: " + ChatListener.coNameChanger(s)));
+					if(!Main.FOUND.containsKey(s)) {
+						inv.addItem(SkullManager.baseHeads(s , null , 0,
+								ChatColor.RESET + "宣言: " + ChatListener.coNameChanger(s)));
+					}
 				}
 			} else {
 				inv.addItem(SkullManager.baseHeads(s , null , 0,ChatColor.RESET + "情報無し"));

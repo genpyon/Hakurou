@@ -140,6 +140,8 @@ public class PlayerManager implements Listener {
 
 		lib.setLeatherHead(p, Color.GRAY, GameItemManager.CO_GRAY_HEAD, Main.unbreakitem);
 		Main.CO.put(p.getName(),"GRAY");
+
+		p.getInventory().setHeldItemSlot(0);
 	}
 
 	public void RespawnStuff(Player p){

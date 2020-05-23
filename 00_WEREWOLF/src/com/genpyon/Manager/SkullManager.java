@@ -87,7 +87,7 @@ public class SkullManager implements Listener {
 				ChatColor.RESET + "" + ChatColor.GRAY + "===========",
 				ChatColor.GREEN + "発見済み",
 				name,
-				ChatColor.RESET + "" + ChatColor.GRAY + "役職 : " + ChatColor.RED + RoleManager.roleNameChanger(role),
+				ChatColor.RESET + "" + ChatColor.GRAY + "役職 : " + ChatColor.RED + RoleManager.bookRoleNameChanger(role),
 				ChatColor.RESET + "" + ChatColor.GRAY + "死因 : " + ChatColor.RED + "???",
 				ChatColor.RESET + "" + ChatColor.GRAY + "死亡時間 : " + ChatColor.RED + "???",
 				ChatColor.RESET + "" + ChatColor.GRAY + "===========");

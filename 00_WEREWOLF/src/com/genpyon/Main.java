@@ -299,7 +299,8 @@ public class Main extends JavaPlugin implements Listener {
 							if(GameStatus != 1) {
 								lib.sendPlayer(p, "リセットしてください。");
 							} else {
-								gm.start(p);
+								Location loc = p.getLocation();
+								gm.start(p, loc);
 							}
 
 						} else {
@@ -311,7 +312,8 @@ public class Main extends JavaPlugin implements Listener {
 								if(GameStatus != 1) {
 									lib.sendPlayer(p, "リセットしてください。");
 								} else {
-									gm.start(p);
+									Location loc = p.getLocation();
+									gm.start(p, loc);
 								}
 							}
 							return ret;
@@ -569,7 +571,7 @@ public class Main extends JavaPlugin implements Listener {
 					if(ROLE.containsKey(a.getName())) {
 						if(a.getFoodLevel() >= 5) {
 							if(a.isSprinting()) {
-							a.setFoodLevel(a.getFoodLevel()-2);
+							a.setFoodLevel(a.getFoodLevel()-1);
 							}
 						}
 
@@ -580,7 +582,7 @@ public class Main extends JavaPlugin implements Listener {
 				}
 
 			}
-		}, 0L, 10L * 1);
+		}, 0L, 13L * 1);
 	}
 
 

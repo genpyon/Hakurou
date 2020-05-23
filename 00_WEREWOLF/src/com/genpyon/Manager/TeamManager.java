@@ -16,6 +16,7 @@ import org.bukkit.scoreboard.Team.Option;
 import org.bukkit.scoreboard.Team.OptionStatus;
 
 import com.genpyon.Main;
+import com.genpyon.Role.RoleManager;
 
 
 
@@ -99,7 +100,9 @@ public class TeamManager implements Listener {
 		} else {
 			Mode = ChatColor.WHITE + "" +  ChatColor.BOLD + "白狼";
 		}
-		if(Main.GameStatus == 1) {
+
+		//待機中
+		if(Main.GameStatus == 1 || Main.GameStatus == 2) {
 			bar = bar-1;
 			Score score0 = Sidebar.getScore(" ");
 			score0.setScore(bar);
@@ -139,6 +142,47 @@ public class TeamManager implements Listener {
 			bar = bar-1;
 			Score score9 = Sidebar.getScore(ChatColor.GRAY + "- 準備時間 : " + ChatColor.RED + Main.Preparation);
 			score9.setScore(bar);
+
+			bar = -99;
+			Score score99 = Sidebar.getScore(ChatColor.GRAY + "--------------");
+			score99.setScore(bar);
+		}
+
+		if(Main.GameStatus == 3 || Main.GameStatus == 4) {
+
+			if(!Main.ROLE.containsKey(name) && !Main.COIN.containsKey(name) && !Main.CO.containsKey(name)) {
+				return;
+			}
+
+			bar = bar-1;
+			Score score0 = Sidebar.getScore(" ");
+			score0.setScore(bar);
+
+			bar = bar-1;
+			Score score1 = Sidebar.getScore(ChatColor.GRAY + "役職 : " + RoleManager.roleNameChanger(Main.ROLE.get(name)));
+			score1.setScore(bar);
+
+			bar = bar-1;
+			Score score2 = Sidebar.getScore(ChatColor.GRAY + "陣営 : " + RoleManager.bookRoleNameChanger(Main.ROLE.get(name)));
+			score2.setScore(bar);
+
+			bar = bar-1;
+			Score score2_2 = Sidebar.getScore(ChatColor.GRAY + "宣言 : " + RoleManager.roleNameChanger(Main.CO.get(name)));
+			score2_2.setScore(bar);
+
+			bar = bar-1;
+			Score score3 = Sidebar.getScore("  ");
+			score3.setScore(bar);
+
+			bar = bar-1;
+			Score score4 = Sidebar.getScore(ChatColor.YELLOW + "COIN : " + ChatColor.RED + Main.COIN.get(name));
+			score4.setScore(bar);
+
+			bar = bar-1;
+			Score score5 = Sidebar.getScore(ChatColor.GRAY + "残り時間 : " + ChatColor.RED + Main.GameTime);
+			score5.setScore(bar);
+
+
 
 			bar = -99;
 			Score score99 = Sidebar.getScore(ChatColor.GRAY + "--------------");

@@ -352,6 +352,48 @@ public class EventListener implements Listener {
 			if (line1.equals("gent")) {
 				e.setLine(0, ChatColor.RED + "[GenT]");
 			}
+
+			if (line1.equals("map")) {
+				e.setLine(0, ChatColor.RED + "[HAKUROU MAP]");
+
+				e.setLine(3, "=============");
+			}
+		}
+	}
+
+	@EventHandler
+	public void onClick(PlayerInteractEvent e) {
+		Player p = e.getPlayer();
+		Action act = e.getAction();
+		Block clickedBlock = e.getClickedBlock();
+
+		if(!p.isOp()) {
+			return;
+		}
+
+
+		if (act == Action.RIGHT_CLICK_BLOCK) {
+
+			if(!(clickedBlock.getType()==Material.SIGN || clickedBlock.getType()==Material.SIGN_POST || clickedBlock.getType()==Material.WALL_SIGN))
+				return;
+			Sign sign = (Sign) clickedBlock.getState();
+			String lineer = sign.getLine(0);
+
+			if (lineer.contains(ChatColor.RED + "[HAKUROU MAP]")) {
+				String lineer2 = sign.getLine(1);
+
+				try {
+					if(plugin.configLocation(lineer2) != null) {
+						if(p.isOp()) {
+							plugin.gm.start(p, plugin.configLocation(lineer2));
+						}
+
+					}
+				} catch (Exception eb) {
+					lib.sendPlayer(p, Main.system + "対象のMAPが設定されていません。");
+				}
+			}
+
 		}
 	}
 

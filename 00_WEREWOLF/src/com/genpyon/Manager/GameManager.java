@@ -47,6 +47,11 @@ public class GameManager implements Listener {
 	@EventHandler
 	public void onDropedItems(PlayerDropItemEvent b){
 		ItemStack is = b.getItemDrop().getItemStack();
+
+		if(b.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {
+			return;
+		}
+
 		if(is.getType().equals(Material.SKULL_ITEM)) {
 
 		} else {
@@ -133,10 +138,8 @@ public class GameManager implements Listener {
 	 */
 
 
-	public void start(Player p){
+	public void start(Player p, Location loc){
 		int plus = Main.iMAGO + Main.iWEREWOLF + Main.iDETECTIVE + Main.iJACKAL;
-
-		Location loc = p.getLocation();
 
 		//ロールのリセット
 		Main.ROLE.clear();

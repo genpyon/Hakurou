@@ -113,6 +113,9 @@ public class RoleManager implements Listener {
 		if(st.equalsIgnoreCase("JACKAL")) {
 			role = ChatColor.AQUA + "妖狐" + ChatColor.RESET;
 		}
+		if(st.equalsIgnoreCase("GRAY")) {
+			role = ChatColor.GRAY + "グレー" + ChatColor.RESET;
+		}
 		return role;
 	}
 
