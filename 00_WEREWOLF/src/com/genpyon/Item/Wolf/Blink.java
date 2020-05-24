@@ -80,13 +80,12 @@ public class Blink extends AbstractItem {
 		loc.add(0, p.getEyeHeight(), 0);
 		if (power > 20) power = 20;
 
-		Vector vec = loc.getDirection().normalize();
+		Vector vec = loc.getDirection();
 		Location to = p.getLocation().clone();
 		for (int i = 0; i<power; i++) {
 			loc.add(vec);
 			if (loc.getBlock().getType() != Material.AIR) break;
 			to = loc;
-			loc.subtract(vec);
 		}
 		p.setFallDistance(0);
 		p.teleport(to);
