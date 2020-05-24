@@ -64,7 +64,7 @@ public class ChatListener implements Listener {
 				lib.sendPlayer(p, Main.system + "すでに"+ role + "を宣言をしています。");
 				return;
 			} else {
-				lib.setLeatherHead(p, Color.GREEN, GameItemManager.CO_INNOCENT_HEAD, Main.unbreakitem);
+				//lib.setLeatherHead(p, Color.GREEN, GameItemManager.CO_INNOCENT_HEAD, Main.unbreakitem);
 				Main.CO.put(p.getName(),"INNOCENT");
 			}
 		}

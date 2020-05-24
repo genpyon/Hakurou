@@ -9,6 +9,10 @@ commands:
        permission: werewolf.s
     c:
        permission: werewolf.c
+    k:
+       permission: werewolf.k
+    kekka:
+       permission: werewolf.kekka
     check:
        permission: werewolf.check
     shop:
@@ -25,4 +29,8 @@ permissions:
     werewolf.c:
        default: true
     werewolf.check:
+       default: true
+    werewolf.k:
+       default: true
+    werewolf.kekka:
        default: true

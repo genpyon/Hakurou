@@ -3,6 +3,7 @@ package com.genpyon.Manager;
 import java.util.Random;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -102,7 +103,8 @@ public class DetectiveBookManager implements Listener {
 
 			if(!Main.FOUND.containsKey(s)) {
 				inv.addItem(SkullManager.baseHeads(s ,"",
-						ChatColor.RESET + "このプレイヤーの役職を全体に知らせる。"));
+						ChatColor.RESET + "宣言: " + ChatListener.coNameChanger(s),
+						ChatColor.RESET + "このプレイヤーの占い結果を",ChatColor.RESET + "全体に知らせる。"));
 			}
 		}
 
@@ -272,26 +274,53 @@ public class DetectiveBookManager implements Listener {
 			String name = click.getItemMeta().getDisplayName();
 			String sengen = null;
 			String pname = p.getName();
+			Color cl = Color.GREEN;
+
 			if(name.equalsIgnoreCase(ChatColor.GREEN + "村人陣営")) {
 				sengen = name;
 				b.setCancelled(true);
 				p.closeInventory();
+				cl = Color.GREEN;
 			}
 			if(name.equalsIgnoreCase(ChatColor.RED + "人狼陣営")) {
 				sengen = name;
 				b.setCancelled(true);
 				p.closeInventory();
+				cl = Color.RED;
 			}
 			if(name.equalsIgnoreCase(ChatColor.AQUA + "妖狐")) {
 				sengen = name;
 				b.setCancelled(true);
 				p.closeInventory();
+				cl = Color.AQUA;
 			}
 
 			if(Main.CO.containsKey(p.getName())){
 				if(sengen != null) {
-					Bukkit.broadcastMessage(Main.system + ChatListener.coNameChanger(pname) + " " +ChatColor.RESET + pname + ChatColor.GRAY + " の占い結果 --> " + ChatColor.YELLOW + openInv.getName() + ChatColor.GRAY +" は " + "[" + sengen + ChatColor.GRAY + "] でした。");
+					String STR = Main.system + ChatListener.coNameChanger(pname) + " " +ChatColor.RESET + pname + ChatColor.GRAY + " の占い結果 --> " + ChatColor.YELLOW + openInv.getName() + ChatColor.GRAY +" は " + "[" + sengen + ChatColor.GRAY + "] でした。";
+					Bukkit.broadcastMessage(STR);
+					Main.KEKKA.add(STR);
 					lib.SoundAllPlayer(Sound.ENTITY_PLAYER_LEVELUP, 1.4F);
+
+					Player t = Bukkit.getServer().getPlayer(openInv.getName());
+					if (t == null) {
+						return;
+					} else {
+						if(cl.equals(Color.GREEN)) {
+							lib.setLeatherHead(t, cl, GameItemManager.CO_INNOCENT_HEAD, Main.unbreakitem);
+							Main.CO.put(t.getName(), "INNOCENT");
+						}
+
+						if(cl.equals(Color.RED)) {
+							lib.setLeatherHead(t, cl, GameItemManager.CO_WEREWOLF_HEAD, Main.unbreakitem);
+							Main.CO.put(t.getName(), "WEREWOLF");
+						}
+
+						if(cl.equals(Color.AQUA)) {
+							lib.setLeatherHead(t, cl, GameItemManager.CO_JACKAL_HEAD, Main.unbreakitem);
+							Main.CO.put(t.getName(), "JACKAL");
+						}
+					}
 				}
 			}
 		}

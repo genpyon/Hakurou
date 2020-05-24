@@ -129,6 +129,9 @@ public class Main extends JavaPlugin implements Listener {
 	//ショップの金
 	public static HashMap <String, Integer> COIN = new HashMap<String, Integer>();
 
+	//占い結果
+	public static ArrayList<String> KEKKA = new ArrayList<String>();
+
 
 
 	public EventListener el = null;
@@ -178,6 +181,17 @@ public class Main extends JavaPlugin implements Listener {
 		if (s instanceof Player) p = (Player)s;
 
 		//float pitch = rnd.nextInt(4) * 0.2F;
+
+		if (c.getName().equalsIgnoreCase("k") || c.getName().equalsIgnoreCase("kekka")) {
+			if(KEKKA.size() != 0) {
+				for(String st : KEKKA) {
+					lib.sendPlayer(p, st);
+				}
+			} else {
+				lib.sendPlayer(p, system+"占い結果情報がありません。");
+			}
+			return ret;
+		}
 
 		if (c.getName().equalsIgnoreCase("c") || c.getName().equalsIgnoreCase("check")) {
 			if(GameStatus == 3) {
