@@ -39,6 +39,7 @@ public class Blink extends AbstractItem {
 	 */
 	public static void useBlink(Player p) {
 		Integer power = blinkPower.get(p);
+		if (p.hasCooldown(Material.BLAZE_POWDER)) return;
 		if (power == null) {
 			startBlink(p);
 			return;
@@ -87,6 +88,7 @@ public class Blink extends AbstractItem {
 			if (loc.getBlock().getType() != Material.AIR) break;
 			to = loc;
 		}
+		p.setCooldown(Material.BLAZE_POWDER, 10);
 		p.setFallDistance(0);
 		p.teleport(to);
 		blinkPower.remove(p);
