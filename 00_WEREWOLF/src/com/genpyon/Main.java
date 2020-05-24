@@ -322,7 +322,14 @@ public class Main extends JavaPlugin implements Listener {
 					}
 
 					if(cmd.equalsIgnoreCase("test")){
-						p.openInventory(DetectiveBookManager.playerGetHeads(p));
+						if(!PLAYER.contains(p.getName())) {
+							PLAYER.add(p.getName());
+						}
+						if(!CO.containsKey(p.getName())) {
+							CO.put(p.getName(),"DETECTIVE");
+						}
+
+						p.openInventory(DetectiveBookManager.detectivePlayerGetHeads(p));
 						return ret;
 					}
 

@@ -4,7 +4,7 @@ import java.util.Random;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -52,40 +52,35 @@ public class DetectiveBookManager implements Listener {
 
 
 		Inventory inv = Bukkit.createInventory(null, invSize, GameItemManager.PLAYERS_HEAD_INV_NAME);
+		inv.clear();
 
 		for(String s : Main.PLAYER) {
 
-			if(Main.TTTMode == true) {
-
-				if(Main.ROLE.containsKey(p.getName())&& Main.ROLE.get(p.getName()).equalsIgnoreCase("WEREWOLF")) {
-					if(Main.ROLE.containsKey(s) && Main.ROLE.get(s).equalsIgnoreCase("WEREWOLF")) {
-						if(!Main.FOUND.containsKey(s)) {
-							inv.addItem(SkullManager.baseHeads(s , Enchantment.DURABILITY , 1,
-									ChatColor.RESET + "宣言: " + ChatListener.coNameChanger(s),
-									ChatColor.RESET + "役職: " + RoleManager.roleNameChanger(Main.ROLE.get(s))));
-						}
-					} else {
-						inv.addItem(SkullManager.baseHeads(s , null , 0,
-								ChatColor.RESET + "宣言: " + ChatListener.coNameChanger(s)));
-					}
-
-
-				} else {
+			if(Main.ROLE.containsKey(p.getName())&& Main.ROLE.get(p.getName()).equalsIgnoreCase("WEREWOLF")) {
+				if(Main.ROLE.containsKey(s) && Main.ROLE.get(s).equalsIgnoreCase("WEREWOLF")) {
 					if(!Main.FOUND.containsKey(s)) {
-						inv.addItem(SkullManager.baseHeads(s , null , 0,
-								ChatColor.RESET + "宣言: " + ChatListener.coNameChanger(s)));
+						inv.addItem(SkullManager.baseHeads(s ,
+								ChatColor.RESET + "宣言: " + ChatListener.coNameChanger(s),
+								ChatColor.RESET + "役職: " + RoleManager.roleNameChanger(Main.ROLE.get(s))));
 					}
+				} else {
+					inv.addItem(SkullManager.baseHeads(s ,
+							ChatColor.RESET + "宣言: " + ChatListener.coNameChanger(s)));
 				}
+
+
 			} else {
-				inv.addItem(SkullManager.baseHeads(s , null , 0,ChatColor.RESET + "情報無し"));
+				if(!Main.FOUND.containsKey(s)) {
+					inv.addItem(SkullManager.baseHeads(s ,
+							ChatColor.RESET + "宣言: " + ChatListener.coNameChanger(s)));
+				}
 			}
 		}
 
 		return inv;
 	}
 
-
-	public static Inventory foundGetHeads() {
+	public static Inventory detectivePlayerGetHeads(Player p) {
 
 		int invSize = Main.PLAYER.size();
 
@@ -100,13 +95,44 @@ public class DetectiveBookManager implements Listener {
 		}
 
 
+		Inventory inv = Bukkit.createInventory(null, invSize, GameItemManager.DETECTI_URANAI_INV_NAME);
+		inv.clear();
+
+		for(String s : Main.PLAYER) {
+
+			if(!Main.FOUND.containsKey(s)) {
+				inv.addItem(SkullManager.baseHeads(s ,"",
+						ChatColor.RESET + "このプレイヤーの役職を全体に知らせる。"));
+			}
+		}
+
+		return inv;
+	}
+
+
+	public static Inventory foundGetHeads() {
+
+		int invSize = Main.FOUND.size();
+
+		if(invSize <= 9) {
+			invSize = 9;
+		} else if(invSize <= 18) {
+			invSize = 18;
+		} else if(invSize <= 27) {
+			invSize = 27;
+		} else if(invSize <= 36) {
+			invSize = 36;
+		}
+
+
 		Inventory inv = Bukkit.createInventory(null, invSize, GameItemManager.FOUND_HEADS_INV_NAME);
+		inv.clear();
 
 		for(String s : Main.FOUND.keySet()) {
 			if(Main.TTTMode == true) {
-				inv.addItem(SkullManager.baseHeads(s, null , 0 ,ChatColor.RESET + "役職: " + RoleManager.bookRoleNameChanger(Main.ROLE.get(s))));
+				inv.addItem(SkullManager.baseHeads(s, ChatColor.RESET + "役職: " + RoleManager.bookRoleNameChanger(Main.ROLE.get(s))));
 			} else {
-				inv.addItem(SkullManager.baseHeads(s, null , 0, ChatColor.RESET + "情報無し"));
+				inv.addItem(SkullManager.baseHeads(s, ChatColor.RESET + "情報無し"));
 			}
 		}
 
@@ -136,6 +162,7 @@ public class DetectiveBookManager implements Listener {
 		//Bukkit.broadcastMessage(RoleSize + " : 2");
 
 		Inventory inv = Bukkit.createInventory(null, RoleSize, GameItemManager.URANAI_INV_NAME);
+		inv.clear();
 
 		for (int i = 0; i < Size; i++){
 			//Bukkit.broadcastMessage(Size + " : 3");
@@ -214,6 +241,59 @@ public class DetectiveBookManager implements Listener {
 
 		if (openInv.getName().equalsIgnoreCase(GameItemManager.FOUND_HEADS_INV_NAME)){
 			b.setCancelled(true);
+		}
+
+
+		//DETECTIVEがプレイヤーに役職を知らせるやつ
+		if (openInv.getName().equalsIgnoreCase(GameItemManager.DETECTI_URANAI_INV_NAME)){
+			b.setCancelled(true);
+
+			if(click.getItemMeta() != null) {
+				String name = click.getItemMeta().getDisplayName();
+
+				if(Main.PLAYER.contains(name)) {
+					Inventory inv = Bukkit.createInventory(null, 9, name);
+					inv.clear();
+
+					inv.setItem(3, lib.createItemMeta(Material.WOOL, 1, (byte)5, ChatColor.GREEN + "村人陣営", "", ChatColor.RESET + name + " を", ChatColor.GREEN + "[村人陣営]" + ChatColor.RESET + " と知らせる。"));
+					inv.setItem(4, lib.createItemMeta(Material.WOOL, 1, (byte)14, ChatColor.RED + "人狼陣営", "", ChatColor.RESET + name + " を", ChatColor.RED + "[人狼陣営]" + ChatColor.RESET + " と知らせる。"));
+					inv.setItem(5, lib.createItemMeta(Material.WOOL, 1, (byte)3, ChatColor.AQUA + "妖狐", "", ChatColor.RESET + name + " を", ChatColor.AQUA + "[妖狐]" + ChatColor.RESET + " と知らせる。"));
+
+					p.openInventory(inv);
+					return;
+
+				} else {
+					return;
+				}
+			}
+		}
+
+		if(click.getItemMeta() != null && click.getItemMeta().getDisplayName() !=null && openInv.getName() != null) {
+			String name = click.getItemMeta().getDisplayName();
+			String sengen = null;
+			String pname = p.getName();
+			if(name.equalsIgnoreCase(ChatColor.GREEN + "村人陣営")) {
+				sengen = name;
+				b.setCancelled(true);
+				p.closeInventory();
+			}
+			if(name.equalsIgnoreCase(ChatColor.RED + "人狼陣営")) {
+				sengen = name;
+				b.setCancelled(true);
+				p.closeInventory();
+			}
+			if(name.equalsIgnoreCase(ChatColor.AQUA + "妖狐")) {
+				sengen = name;
+				b.setCancelled(true);
+				p.closeInventory();
+			}
+
+			if(Main.CO.containsKey(p.getName())){
+				if(sengen != null) {
+					Bukkit.broadcastMessage(Main.system + ChatListener.coNameChanger(pname) + " " +ChatColor.RESET + pname + ChatColor.GRAY + " の占い結果 --> " + ChatColor.YELLOW + openInv.getName() + ChatColor.GRAY +" は " + "[" + sengen + ChatColor.GRAY + "] でした。");
+					lib.SoundAllPlayer(Sound.ENTITY_PLAYER_LEVELUP, 1.4F);
+				}
+			}
 		}
 
 		return;

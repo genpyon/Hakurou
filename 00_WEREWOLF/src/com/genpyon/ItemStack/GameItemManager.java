@@ -47,12 +47,14 @@ public class GameItemManager {
 		return is;
 	}
 
-	public static final String PLAYERS_HEAD_INV_NAME = ChatColor.GOLD + "" + ChatColor.BOLD + "プレイヤーリスト";
+	public static final String PLAYERS_HEAD_INV_NAME = ChatColor.BOLD + "" + ChatColor.BOLD + "プレイヤーリスト";
 
 	static public ItemStack PLAYERS_HEAD() {
 		ItemStack is = lib.createItem(Material.OBSERVER, 1, PLAYERS_HEAD_INV_NAME, "" ,ChatColor.RESET + "プレイヤーの顔、ID、宣言情報を",ChatColor.RESET + "見ることができる。");
 		return is;
 	}
+
+	public static final String DETECTI_URANAI_INV_NAME = ChatColor.BOLD + "" + ChatColor.BOLD + "占いの結果";
 
 
 

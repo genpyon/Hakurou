@@ -8,7 +8,6 @@ import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.SkullType;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.Inventory;
@@ -111,7 +110,7 @@ public class SkullManager implements Listener {
 		return skull;
 	}
 
-	public static ItemStack baseHeads(String name, Enchantment enc, int Lv , String... list){
+	public static ItemStack baseHeads(String name, String... list){
 
 		List<String> lore = Arrays.asList(list);
 		ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.PLAYER.ordinal());
@@ -122,9 +121,6 @@ public class SkullManager implements Listener {
 
 		meta.setLore(lore);
 		skull.setItemMeta(meta);
-		if(enc != null) {
-			skull.addUnsafeEnchantment(enc, Lv);
-		}
 
 		return skull;
 	}
