@@ -235,6 +235,8 @@ public class EventListener implements Listener {
 									}
 								}
 								Main.GameTime = Main.GameTime+20;
+								Bukkit.broadcastMessage(Main.system + ChatColor.GREEN + "村人の残り人数は、" + ChatColor.YELLOW + RoleManager.nokoriInteger("INNOCENT") + ChatColor.GREEN + " 人です。");
+
 							}
 
 							if(Main.ROLE.get(name).equalsIgnoreCase("WEREWOLF")) {
@@ -255,6 +257,8 @@ public class EventListener implements Listener {
 								}
 
 								Main.GameTime = Main.GameTime-10;
+								Bukkit.broadcastMessage(Main.system + ChatColor.RED + "村人の残り人数は、" + ChatColor.YELLOW + RoleManager.nokoriInteger("WEREWOLF") + ChatColor.RED + " 人です。");
+
 							}
 
 							//Bukkit.broadcastMessage("");

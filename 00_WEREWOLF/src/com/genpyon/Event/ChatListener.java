@@ -59,6 +59,12 @@ public class ChatListener implements Listener {
 
 		if (click.equals(GameItemManager.CO_INNOCENT())){
 			b.setCancelled(true);
+
+			if(Main.URANAI.contains(p.getName())) {
+				lib.sendPlayer(p, Main.system + "あなたは探偵に役職を宣言をされています。");
+				return;
+			}
+
 			role = ChatColor.GREEN + "村人" + ChatColor.RESET;
 			if(Main.CO.containsKey(p.getName()) && Main.CO.get(p.getName()).equalsIgnoreCase("INNOCENT")) {
 				lib.sendPlayer(p, Main.system + "すでに"+ role + "を宣言をしています。");
@@ -71,6 +77,7 @@ public class ChatListener implements Listener {
 
 		if (click.equals(GameItemManager.CO_MAGO())){
 			b.setCancelled(true);
+
 			role = ChatColor.GREEN + "孫" + ChatColor.RESET;
 
 			if(Main.CO.containsKey(p.getName()) && Main.CO.get(p.getName()).equalsIgnoreCase("MAGO")) {
@@ -84,6 +91,12 @@ public class ChatListener implements Listener {
 
 		if (click.equals(GameItemManager.CO_TYOUROU())){
 			b.setCancelled(true);
+
+			if(Main.URANAI.contains(p.getName())) {
+				lib.sendPlayer(p, Main.system + "あなたは探偵に役職を宣言をされています。");
+				return;
+			}
+
 			role = ChatColor.DARK_GREEN + "長老" + ChatColor.RESET;
 			if(Main.CO.containsKey(p.getName()) && Main.CO.get(p.getName()).equalsIgnoreCase("TYOUROU")) {
 				lib.sendPlayer(p, Main.system + "すでに"+ role + "を宣言をしています。");
@@ -96,6 +109,7 @@ public class ChatListener implements Listener {
 
 		if (click.equals(GameItemManager.CO_DETECTIVE())){
 			b.setCancelled(true);
+
 			role = ChatColor.BLUE + "探偵" + ChatColor.RESET;
 			if(Main.CO.containsKey(p.getName()) && Main.CO.get(p.getName()).equalsIgnoreCase("DETECTIVE")) {
 				lib.sendPlayer(p, Main.system + "すでに"+ role + "を宣言をしています。");
@@ -108,6 +122,7 @@ public class ChatListener implements Listener {
 
 		if (click.equals(GameItemManager.CO_WEREWOLF())){
 			b.setCancelled(true);
+
 			role = ChatColor.RED + "人狼" + ChatColor.RESET;
 			if(Main.CO.containsKey(p.getName()) && Main.CO.get(p.getName()).equalsIgnoreCase("WEREWOLF")) {
 				lib.sendPlayer(p, Main.system + "すでに"+ role + "を宣言をしています。");
@@ -120,6 +135,12 @@ public class ChatListener implements Listener {
 
 		if (click.equals(GameItemManager.CO_HAKUROU())){
 			b.setCancelled(true);
+
+			if(Main.URANAI.contains(p.getName())) {
+				lib.sendPlayer(p, Main.system + "あなたは探偵に役職を宣言をされています。");
+				return;
+			}
+
 			role = ChatColor.DARK_RED + "白狼" + ChatColor.RESET;
 			if(Main.CO.containsKey(p.getName()) && Main.CO.get(p.getName()).equalsIgnoreCase("HAKUROU")) {
 				lib.sendPlayer(p, Main.system + "すでに"+ role + "を宣言をしています。");
@@ -132,6 +153,12 @@ public class ChatListener implements Listener {
 
 		if (click.equals(GameItemManager.CO_JACKAL())){
 			b.setCancelled(true);
+
+			if(Main.URANAI.contains(p.getName())) {
+				lib.sendPlayer(p, Main.system + "あなたは探偵に役職を宣言をされています。");
+				return;
+			}
+
 			role = ChatColor.AQUA + "妖狐" + ChatColor.RESET;
 			if(Main.CO.containsKey(p.getName()) && Main.CO.get(p.getName()).equalsIgnoreCase("JACKAL")) {
 				lib.sendPlayer(p, Main.system + "すでに"+ role + "を宣言をしています。");
@@ -144,6 +171,7 @@ public class ChatListener implements Listener {
 
 		if (click.equals(GameItemManager.CO_GRAY())){
 			b.setCancelled(true);
+
 			role = ChatColor.GRAY + "グレー" + ChatColor.RESET;
 			if(Main.CO.containsKey(p.getName()) && Main.CO.get(p.getName()).equalsIgnoreCase("GRAY")) {
 				lib.sendPlayer(p, Main.system + "すでに"+ role + "を宣言をしています。");

@@ -101,11 +101,11 @@ public class DetectiveBookManager implements Listener {
 
 		for(String s : Main.PLAYER) {
 
-			if(!Main.FOUND.containsKey(s)) {
+			//if(!Main.FOUND.containsKey(s)) {
 				inv.addItem(SkullManager.baseHeads(s ,"",
 						ChatColor.RESET + "宣言: " + ChatListener.coNameChanger(s),
 						ChatColor.RESET + "このプレイヤーの占い結果を",ChatColor.RESET + "全体に知らせる。"));
-			}
+			//}
 		}
 
 		return inv;
@@ -254,6 +254,7 @@ public class DetectiveBookManager implements Listener {
 				String name = click.getItemMeta().getDisplayName();
 
 				if(Main.PLAYER.contains(name)) {
+
 					Inventory inv = Bukkit.createInventory(null, 9, name);
 					inv.clear();
 
@@ -299,6 +300,8 @@ public class DetectiveBookManager implements Listener {
 				if(sengen != null) {
 					String STR = Main.system + ChatListener.coNameChanger(pname) + " " +ChatColor.RESET + pname + ChatColor.GRAY + " の占い結果 --> " + ChatColor.YELLOW + openInv.getName() + ChatColor.GRAY +" は " + "[" + sengen + ChatColor.GRAY + "] でした。";
 					Bukkit.broadcastMessage(STR);
+
+					STR = Main.system + ChatListener.coNameChanger(pname) + " " +ChatColor.RESET + pname + ChatColor.GRAY + " 占い--> " + ChatColor.YELLOW + openInv.getName() + ChatColor.GRAY +" は " + "[" + sengen + ChatColor.GRAY + "]";
 					Main.KEKKA.add(STR);
 					lib.SoundAllPlayer(Sound.ENTITY_PLAYER_LEVELUP, 1.4F);
 
@@ -309,16 +312,19 @@ public class DetectiveBookManager implements Listener {
 						if(cl.equals(Color.GREEN)) {
 							lib.setLeatherHead(t, cl, GameItemManager.CO_INNOCENT_HEAD, Main.unbreakitem);
 							Main.CO.put(t.getName(), "INNOCENT");
+							Main.URANAI.add(t.getName());
 						}
 
 						if(cl.equals(Color.RED)) {
 							lib.setLeatherHead(t, cl, GameItemManager.CO_WEREWOLF_HEAD, Main.unbreakitem);
 							Main.CO.put(t.getName(), "WEREWOLF");
+							Main.URANAI.add(t.getName());
 						}
 
 						if(cl.equals(Color.AQUA)) {
 							lib.setLeatherHead(t, cl, GameItemManager.CO_JACKAL_HEAD, Main.unbreakitem);
 							Main.CO.put(t.getName(), "JACKAL");
+							Main.URANAI.add(t.getName());
 						}
 					}
 				}

@@ -2,6 +2,8 @@ package com.genpyon.Role;
 
 import java.util.Random;
 
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
 import com.genpyon.Main;
@@ -23,6 +25,18 @@ public class RoleManager implements Listener {
 
 		return;
 
+	}
+
+	public static int nokoriInteger(String ROLE){
+		int nokori = 0;
+
+		for(Player a : Bukkit.getOnlinePlayers()) {
+			if(Main.ROLE.containsKey(a.getName()) && Main.ROLE.get(a.getName()).equalsIgnoreCase(ROLE))
+				if(!Main.FOUND.containsKey(a.getName())){
+					nokori = nokori+1;
+				}
+		}
+		return nokori;
 	}
 
 

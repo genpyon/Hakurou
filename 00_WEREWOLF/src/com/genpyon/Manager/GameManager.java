@@ -75,6 +75,7 @@ public class GameManager implements Listener {
 
 		Main.CO.clear();
 		Main.KEKKA.clear();
+		Main.URANAI.clear();
 
 
 		Main.iMAGO = plugin.getConfig().getInt("STARTINT.MAGO");

@@ -126,6 +126,9 @@ public class Main extends JavaPlugin implements Listener {
 	public static ArrayList<String> HAKUROU = new ArrayList<String>();
 	public static ArrayList<String> JACKAL = new ArrayList<String>();
 
+	//占われた奴がブチこまれるところ
+	public static ArrayList<String> URANAI = new ArrayList<String>();
+
 	//ショップの金
 	public static HashMap <String, Integer> COIN = new HashMap<String, Integer>();
 
@@ -331,6 +334,35 @@ public class Main extends JavaPlugin implements Listener {
 								}
 							}
 							return ret;
+						}
+						return ret;
+					}
+
+					if(cmd.equalsIgnoreCase("set")){
+						if (args.length > 4) {
+							iMAGO = Integer.parseInt(args[1]);
+							iDETECTIVE = Integer.parseInt(args[2]);
+							iWEREWOLF = Integer.parseInt(args[3]);
+							iJACKAL = Integer.parseInt(args[4]);
+
+							getConfig().set("STARTINT.MAGO", iMAGO);
+							getConfig().set("STARTINT.DETECTIVE", iDETECTIVE);
+							getConfig().set("STARTINT.WEREWOLF", iWEREWOLF);
+							getConfig().set("STARTINT.JACKAL", iJACKAL);
+							saveConfig();
+							reloadConfig();
+
+						}
+						return ret;
+					}
+					
+					if(cmd.equalsIgnoreCase("kickall")){
+						for(Player a : Bukkit.getOnlinePlayers()) {
+							if(a.isOp() || a.isWhitelisted()) {
+								
+							} else {
+								a.kickPlayer("プレイヤーの入れ替えのため、一度ぶっ飛ばしました。");
+							}
 						}
 						return ret;
 					}
