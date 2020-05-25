@@ -22,6 +22,7 @@ import com.genpyon.Event.ChatListener;
 import com.genpyon.Event.DamageListener;
 import com.genpyon.Event.EventListener;
 import com.genpyon.Event.ShopListener;
+import com.genpyon.Event.SystemListener;
 import com.genpyon.Item.Wolf.BlinkTimer;
 import com.genpyon.Library.lib;
 import com.genpyon.Manager.DetectiveBookManager;
@@ -147,6 +148,7 @@ public class Main extends JavaPlugin implements Listener {
 	public ChatListener cl = null;
 	public DamageListener dl = null;
 	public DetectiveBookManager dbm = null;
+	public SystemListener ssl = null;
 
 
 	Random rnd = new Random();
@@ -164,6 +166,7 @@ public class Main extends JavaPlugin implements Listener {
 		cl = new ChatListener(this);
 		dl = new DamageListener(this);
 		dbm = new DetectiveBookManager(this);
+		ssl = new SystemListener(this);
 
 		saveConfig();
 		Timer();
@@ -355,11 +358,11 @@ public class Main extends JavaPlugin implements Listener {
 						}
 						return ret;
 					}
-					
+
 					if(cmd.equalsIgnoreCase("kickall")){
 						for(Player a : Bukkit.getOnlinePlayers()) {
 							if(a.isOp() || a.isWhitelisted()) {
-								
+
 							} else {
 								a.kickPlayer("プレイヤーの入れ替えのため、一度ぶっ飛ばしました。");
 							}

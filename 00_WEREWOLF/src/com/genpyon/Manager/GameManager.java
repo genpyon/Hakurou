@@ -62,6 +62,12 @@ public class GameManager implements Listener {
 
 	public void Reset(){
 
+		for(Player a : Bukkit.getOnlinePlayers()) {
+			for(Player a2 : Bukkit.getOnlinePlayers()) {
+				a.hidePlayer(a2);
+			}
+		}
+
 		Main.ROLE.clear();
 		Main.PLAYER.clear();
 		Main.DEATH.clear();
@@ -112,6 +118,12 @@ public class GameManager implements Listener {
 		}
 
 		Main.dropedItemsClear();
+
+		for(Player a : Bukkit.getOnlinePlayers()) {
+			for(Player a2 : Bukkit.getOnlinePlayers()) {
+				a.hidePlayer(a2);
+			}
+		}
 	}
 
 	public void setTabName(){
